@@ -1,0 +1,13 @@
+﻿1、要求应用本控件的网络页面必须启动 Session 会话。
+两种使用方法：
+	a、对于“用户登录页”和“用户登录信息输入验证页”为同一页面的情况，请使用方法“IsVerify”进行验证。示例代码如下：
+		if( ! this.VerifyCode1.IsVerify(this.VerifyCode.Text) )
+		{
+			this.Response.Write("您输入的验证码错误");
+		}
+
+	b、对于“用户登录页”和“用户登录信息输入验证页”为不同页面的情况，请使用静态方法“IsVerify”进行验证。示例代码如下：
+		if( ! Thinksea.WebControls.VerifyCode.VerifyCode.IsVerify(this.VerifyCode.Text, "VerifyCode1") )
+		{
+			this.Response.Write("您输入的验证码错误");
+		}

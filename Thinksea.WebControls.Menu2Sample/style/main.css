@@ -1,0 +1,98 @@
+﻿body {
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+	cursor: default;
+	text-align: center;
+}
+
+.OuterHead {
+	background-color: #799AE1;
+	color: #000000;
+	border:solid 1px black;
+	width:158px;
+}
+
+.MenuTitleBGShow
+{
+	position:relative;
+	color:#215DC6;
+	font-weight:bold;
+	background-image: url(../style/admin_title_bg_show.gif);
+	height: 25px;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuTitleBGHide
+{
+	position:relative;
+	color:#215DC6;
+	font-weight:bold;
+	background-image: url(../style/admin_title_bg_hide.gif);
+	height: 25px;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuTitleMouseOut
+{
+	position:relative;
+	color:#215DC6;
+	font-weight:bold;
+	top:7px;
+	left:8px;
+	width: 100%;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuTitleMouseIn
+{
+	position:relative;
+	color:#428EFF;
+	font-weight:bold;
+	top:7px;
+	left:8px;
+	width: 100%;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuPand
+{
+	border-left:1px solid white;
+	border-right:1px solid white;
+	border-bottom:1px solid white;
+	background:#D6DFF7;
+	padding: 5px 15px 5px 15px;
+	text-align:left;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuItem {
+	color: #215DC6;
+	text-decoration: none;
+	line-height:150%;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuItem:hover {
+	color: #428EFF;
+	text-decoration: underline;
+	line-height:150%;
+	font-size: 9pt;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.MenuGroupSeparator
+{
+	height:5px;
+}
+
+.MenuItemSeparator
+{
+	width:10px;
+}
+

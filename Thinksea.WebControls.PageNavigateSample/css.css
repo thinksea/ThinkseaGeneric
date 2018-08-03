@@ -1,0 +1,93 @@
+﻿.Page {
+    border: 1px solid #bbbbbb;
+    background-color: #f0f0f0;
+    font-family: Arial, 宋体;
+    padding: 3px;
+}
+
+    .Page * {
+        font-size: small;
+    }
+
+    .Page td {
+        padding: 0px 2px 0px 2px;
+    }
+
+    .Page DIV {
+        border: 1px solid #cccccc;
+        padding: 3px 7px 0px 7px;
+        cursor: pointer;
+        height: 16px;
+    }
+
+    .Page A:link {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .Page A:visited {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .Page A:hover {
+        color: #ff0000;
+        text-decoration: underline;
+    }
+
+    .Page .CurrentPageNumber DIV {
+        padding-top: 0px;
+        padding-bottom: 3px;
+        font-size: large;
+        color: red;
+        font-weight: bold;
+        cursor: auto;
+    }
+
+    .Page input {
+        border: 1px solid #cfcfcf;
+        text-align:center;
+        width:50px;
+    }
+
+.Page2 {
+    border: 1px solid #bbbbbb;
+    background-color: #f0f0f0;
+    font-family: Arial, 宋体;
+    padding: 3px;
+}
+
+    .Page2 * {
+        font-size: small;
+    }
+
+    .Page2 td {
+        padding: 0px 4px 0px 4px;
+    }
+
+    .Page2 A:link {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .Page2 A:visited {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .Page2 A:hover {
+        color: #ff0000;
+        text-decoration: underline;
+    }
+
+    .Page2 .CurrentPageNumber {
+        font-size: large;
+        color: red;
+        font-weight: bold;
+    }
+
+    .Page2 input {
+        border: 1px solid #cfcfcf;
+        text-align:center;
+        width:50px;
+    }

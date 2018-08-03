@@ -1,0 +1,40 @@
+29 Apr 2007
+. Add new method TearOff to deattach a tab
+. Add the event EndDrag
+. rename the event Draging to Dragging
+
+19 Jan 2007
+. Fix a bug when dragging a tab and the adjacent tab is bigger than the current one.
+
+14 Dec 2006
+. Included keyboard support
+. Included new event SelectedTabChanged
+
+02 Dec 2006
+. Included a ToolStripMenuItem in the TabPage 
+. TabControl uses the new menuitem to render the WinMenu instead of create all the itemm each time
+
+30 Nov 2006
+. Add the Method SetColors to set up the colors programaticaly based in a ProfessionalColorTable
+. Add the property Icon to the tabpage
+. The demo project was changed a little bit too to show the new properties
+
+25 Nov 2006
+. Include a new Property RenderMode - Default is ManagerRenderMode (the property colors will be used)
+                                    - System and Professional will use predefined colors
+. The Menu renderMode changes as RenderMode property Changes
+. Exposed the WinMenu.Renderer as MenuRenderer property
+. Add a new property TabGlassGradient as boolean - default is false (no glass look)
+. Add a new property TabBorderEnhanced as boolean - default is false (add an extra line to the tab border)
+. Changed the Tab Background paint to invert the highColor with the LowColor when the Alignment is Bottom
+. Changed the way how the tab close button is rendered using a DrawIcon instead of DrawImage (looks like the resize is better!)
+. Add a new property TabsDirection as FlowDirection (LeftToRight or RightToLeft) - when there is part of a tab on the top of the other the direction will decide which one will be on top.
+. Changed some default properties
+. Other minor changes
+
+. The demo project was changed a little bit too to show the new properties
+
+23 Nov 2006
+. Change the Type of the property TabPage.Form to Object instead of Form
+. Change the ContextMenu WinMenu property RenderMode to the default value 'ManagerRenderMode'
+. Include the new readonly property SelectedForm as Object on TabControl

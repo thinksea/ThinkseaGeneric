@@ -1,0 +1,321 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea", "Thinksea\Thinksea.csproj", "{2A81EE0A-8289-42E7-927D-3B07A44A2B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.IIS", "Thinksea.IIS\Thinksea.IIS.csproj", "{909038F2-AC6F-4355-BF27-3F05E5FBA473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.SQL", "Thinksea.SQL\Thinksea.SQL.csproj", "{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.VisualStudio", "Thinksea.VisualStudio\Thinksea.VisualStudio.csproj", "{3293FEA7-30F1-447B-9833-37C70D1F7A17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.DateTimePicker", "Thinksea.WebControls.DateTimePicker\Thinksea.WebControls.DateTimePicker.csproj", "{1EA684B5-5343-4B23-AA95-C60C2812237A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.DateTimePickerSample", "Thinksea.WebControls.DateTimePickerSample\Thinksea.WebControls.DateTimePickerSample.csproj", "{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.HtmlRotator", "Thinksea.WebControls.HtmlRotator\Thinksea.WebControls.HtmlRotator.csproj", "{F8FDD5B1-31DC-45D8-A961-E636A5C71841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.HtmlRotatorSample", "Thinksea.WebControls.HtmlRotatorSample\Thinksea.WebControls.HtmlRotatorSample.csproj", "{E417AA79-BFB4-4C07-B526-D87D513CCD57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.Menu2", "Thinksea.WebControls.Menu2\Thinksea.WebControls.Menu2.csproj", "{3B5276BB-E423-4566-9BFE-916426236EE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.Menu2Sample", "Thinksea.WebControls.Menu2Sample\Thinksea.WebControls.Menu2Sample.csproj", "{076D228B-17A0-42DB-8BFE-F9044796E3E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.PageNavigate", "Thinksea.WebControls.PageNavigate\Thinksea.WebControls.PageNavigate.csproj", "{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.PageNavigateSample", "Thinksea.WebControls.PageNavigateSample\Thinksea.WebControls.PageNavigateSample.csproj", "{6D3D5C97-E126-4876-8CFB-9BDDE6711462}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList", "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList.csproj", "{435A5926-9B26-4EF0-8E79-3433A97E2099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo", "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo.csproj", "{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCode", "Thinksea.WebControls.VerifyCode\Thinksea.WebControls.VerifyCode.csproj", "{F41B4069-F78E-406D-94D4-259048DDF78F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCodeSample", "Thinksea.WebControls.VerifyCodeSample\Thinksea.WebControls.VerifyCodeSample.csproj", "{9AD9ADCF-15F0-4293-990D-50948EB139CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.UserSystemDemo", "Thinksea.Windows.UserSystemDemo\Thinksea.Windows.UserSystemDemo.csproj", "{2CE3A930-913E-4861-9EB1-7BA83BBCF214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms", "Thinksea.Windows.Forms\Thinksea.Windows.Forms.csproj", "{EF523069-0BFE-4434-8461-69CA1FF2A76D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.IPAddress", "Thinksea.Windows.Forms.IPAddress\Thinksea.Windows.Forms.IPAddress.csproj", "{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.MdiTabControl", "Thinksea.Windows.Forms.MdiTabControl\Thinksea.Windows.Forms.MdiTabControl.csproj", "{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thinksea.Windows.Forms.Demos", "Thinksea.Windows.Forms.Demos", "{A2FEECBB-91BC-4E71-8FDD-8544B154FA60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.MdiTabControlTest", "Thinksea.Windows.Forms.MdiTabControlTest\Thinksea.Windows.Forms.MdiTabControlTest.csproj", "{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonDemo", "Thinksea.Windows.Forms.Demos\ButtonDemo\ButtonDemo.csproj", "{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewPageDemo", "Thinksea.Windows.Forms.Demos\DataGridViewPageDemo\DataGridViewPageDemo.csproj", "{1EBA560B-760B-4370-807E-96D8452D60ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllipsisControlDemo", "Thinksea.Windows.Forms.Demos\EllipsisControlDemo\EllipsisControlDemo.csproj", "{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectedDynamicTreeNodeDemo", "Thinksea.Windows.Forms.Demos\SelectedDynamicTreeNodeDemo\SelectedDynamicTreeNodeDemo.csproj", "{51650598-E5E9-4A26-AA01-5EB17EA288C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.TcpPoolTest", "Thinksea.TcpPoolTest\Thinksea.TcpPoolTest.csproj", "{252BBD7D-3E02-480B-A545-94E111D1C15A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows", "Thinksea.Windows\Thinksea.Windows.csproj", "{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.LogTest", "Thinksea.LogTest\Thinksea.LogTest.csproj", "{8AC52DB8-4AB8-4DB0-8759-328D9708719E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Web.UriParameterDemo", "Thinksea.Web.UriParameterDemo\Thinksea.Web.UriParameterDemo.csproj", "{F9899612-0712-429A-9749-5863A6DF7156}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader", "Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj", "{BB413D66-495E-41E2-B136-FE769025E893}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "引用的第三方资源", "引用的第三方资源", "{E904B30B-9552-4EC5-9EED-96083F23C163}"
+	ProjectSection(SolutionItems) = preProject
+		引用的第三方资源\Newtonsoft.Json.dll = 引用的第三方资源\Newtonsoft.Json.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A81EE0A-8289-42E7-927D-3B07A44A2B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A81EE0A-8289-42E7-927D-3B07A44A2B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A81EE0A-8289-42E7-927D-3B07A44A2B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A81EE0A-8289-42E7-927D-3B07A44A2B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{909038F2-AC6F-4355-BF27-3F05E5FBA473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{909038F2-AC6F-4355-BF27-3F05E5FBA473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{909038F2-AC6F-4355-BF27-3F05E5FBA473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{909038F2-AC6F-4355-BF27-3F05E5FBA473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3293FEA7-30F1-447B-9833-37C70D1F7A17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3293FEA7-30F1-447B-9833-37C70D1F7A17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3293FEA7-30F1-447B-9833-37C70D1F7A17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3293FEA7-30F1-447B-9833-37C70D1F7A17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA684B5-5343-4B23-AA95-C60C2812237A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA684B5-5343-4B23-AA95-C60C2812237A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA684B5-5343-4B23-AA95-C60C2812237A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA684B5-5343-4B23-AA95-C60C2812237A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8FDD5B1-31DC-45D8-A961-E636A5C71841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8FDD5B1-31DC-45D8-A961-E636A5C71841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8FDD5B1-31DC-45D8-A961-E636A5C71841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8FDD5B1-31DC-45D8-A961-E636A5C71841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E417AA79-BFB4-4C07-B526-D87D513CCD57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E417AA79-BFB4-4C07-B526-D87D513CCD57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E417AA79-BFB4-4C07-B526-D87D513CCD57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E417AA79-BFB4-4C07-B526-D87D513CCD57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5276BB-E423-4566-9BFE-916426236EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5276BB-E423-4566-9BFE-916426236EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5276BB-E423-4566-9BFE-916426236EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5276BB-E423-4566-9BFE-916426236EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{076D228B-17A0-42DB-8BFE-F9044796E3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{076D228B-17A0-42DB-8BFE-F9044796E3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{076D228B-17A0-42DB-8BFE-F9044796E3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{076D228B-17A0-42DB-8BFE-F9044796E3E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3D5C97-E126-4876-8CFB-9BDDE6711462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3D5C97-E126-4876-8CFB-9BDDE6711462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3D5C97-E126-4876-8CFB-9BDDE6711462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3D5C97-E126-4876-8CFB-9BDDE6711462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{435A5926-9B26-4EF0-8E79-3433A97E2099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435A5926-9B26-4EF0-8E79-3433A97E2099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435A5926-9B26-4EF0-8E79-3433A97E2099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435A5926-9B26-4EF0-8E79-3433A97E2099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41B4069-F78E-406D-94D4-259048DDF78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41B4069-F78E-406D-94D4-259048DDF78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41B4069-F78E-406D-94D4-259048DDF78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41B4069-F78E-406D-94D4-259048DDF78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF523069-0BFE-4434-8461-69CA1FF2A76D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF523069-0BFE-4434-8461-69CA1FF2A76D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF523069-0BFE-4434-8461-69CA1FF2A76D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF523069-0BFE-4434-8461-69CA1FF2A76D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EBA560B-760B-4370-807E-96D8452D60ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EBA560B-760B-4370-807E-96D8452D60ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EBA560B-760B-4370-807E-96D8452D60ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EBA560B-760B-4370-807E-96D8452D60ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51650598-E5E9-4A26-AA01-5EB17EA288C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51650598-E5E9-4A26-AA01-5EB17EA288C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51650598-E5E9-4A26-AA01-5EB17EA288C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51650598-E5E9-4A26-AA01-5EB17EA288C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{252BBD7D-3E02-480B-A545-94E111D1C15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{252BBD7D-3E02-480B-A545-94E111D1C15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{252BBD7D-3E02-480B-A545-94E111D1C15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{252BBD7D-3E02-480B-A545-94E111D1C15A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC52DB8-4AB8-4DB0-8759-328D9708719E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC52DB8-4AB8-4DB0-8759-328D9708719E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC52DB8-4AB8-4DB0-8759-328D9708719E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC52DB8-4AB8-4DB0-8759-328D9708719E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9899612-0712-429A-9749-5863A6DF7156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9899612-0712-429A-9749-5863A6DF7156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9899612-0712-429A-9749-5863A6DF7156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9899612-0712-429A-9749-5863A6DF7156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB413D66-495E-41E2-B136-FE769025E893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB413D66-495E-41E2-B136-FE769025E893}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB413D66-495E-41E2-B136-FE769025E893}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB413D66-495E-41E2-B136-FE769025E893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22515738-2B4B-46A4-B91C-4A9FDBB99F1A} = {A2FEECBB-91BC-4E71-8FDD-8544B154FA60}
+		{1EBA560B-760B-4370-807E-96D8452D60ED} = {A2FEECBB-91BC-4E71-8FDD-8544B154FA60}
+		{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9} = {A2FEECBB-91BC-4E71-8FDD-8544B154FA60}
+		{51650598-E5E9-4A26-AA01-5EB17EA288C5} = {A2FEECBB-91BC-4E71-8FDD-8544B154FA60}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DFD0079-6DDE-4776-A274-854533DC06D1}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 32
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://desktop-gq7llgu:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Thinksea.WebControls.DateTimePicker\\Thinksea.WebControls.DateTimePicker.csproj
+		SccProjectName1 = Thinksea.WebControls.DateTimePicker
+		SccLocalPath1 = Thinksea.WebControls.DateTimePicker
+		SccProjectUniqueName2 = Thinksea.WebControls.DateTimePickerSample\\Thinksea.WebControls.DateTimePickerSample.csproj
+		SccProjectName2 = Thinksea.WebControls.DateTimePickerSample
+		SccLocalPath2 = Thinksea.WebControls.DateTimePickerSample
+		SccProjectUniqueName3 = Thinksea.WebControls.HtmlRotator\\Thinksea.WebControls.HtmlRotator.csproj
+		SccProjectName3 = Thinksea.WebControls.HtmlRotator
+		SccLocalPath3 = Thinksea.WebControls.HtmlRotator
+		SccProjectUniqueName4 = Thinksea.WebControls.HtmlRotatorSample\\Thinksea.WebControls.HtmlRotatorSample.csproj
+		SccProjectName4 = Thinksea.WebControls.HtmlRotatorSample
+		SccLocalPath4 = Thinksea.WebControls.HtmlRotatorSample
+		SccProjectUniqueName5 = Thinksea.WebControls.Menu2\\Thinksea.WebControls.Menu2.csproj
+		SccProjectName5 = Thinksea.WebControls.Menu2
+		SccLocalPath5 = Thinksea.WebControls.Menu2
+		SccProjectUniqueName6 = Thinksea.WebControls.Menu2Sample\\Thinksea.WebControls.Menu2Sample.csproj
+		SccProjectName6 = Thinksea.WebControls.Menu2Sample
+		SccLocalPath6 = Thinksea.WebControls.Menu2Sample
+		SccProjectUniqueName7 = Thinksea.WebControls.PageNavigate\\Thinksea.WebControls.PageNavigate.csproj
+		SccProjectName7 = Thinksea.WebControls.PageNavigate
+		SccLocalPath7 = Thinksea.WebControls.PageNavigate
+		SccProjectUniqueName8 = Thinksea.WebControls.PageNavigateSample\\Thinksea.WebControls.PageNavigateSample.csproj
+		SccProjectName8 = Thinksea.WebControls.PageNavigateSample
+		SccLocalPath8 = Thinksea.WebControls.PageNavigateSample
+		SccProjectUniqueName9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList\\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList.csproj
+		SccProjectName9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList
+		SccLocalPath9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList
+		SccProjectUniqueName10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo\\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo.csproj
+		SccProjectName10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo
+		SccLocalPath10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo
+		SccProjectUniqueName11 = Thinksea.WebControls.VerifyCode\\Thinksea.WebControls.VerifyCode.csproj
+		SccProjectName11 = Thinksea.WebControls.VerifyCode
+		SccLocalPath11 = Thinksea.WebControls.VerifyCode
+		SccProjectUniqueName12 = Thinksea.WebControls.VerifyCodeSample\\Thinksea.WebControls.VerifyCodeSample.csproj
+		SccProjectName12 = Thinksea.WebControls.VerifyCodeSample
+		SccLocalPath12 = Thinksea.WebControls.VerifyCodeSample
+		SccProjectUniqueName13 = Thinksea.Windows.UserSystemDemo\\Thinksea.Windows.UserSystemDemo.csproj
+		SccProjectName13 = Thinksea.Windows.UserSystemDemo
+		SccLocalPath13 = Thinksea.Windows.UserSystemDemo
+		SccProjectUniqueName14 = Thinksea.SQL\\Thinksea.SQL.csproj
+		SccProjectName14 = Thinksea.SQL
+		SccLocalPath14 = Thinksea.SQL
+		SccProjectUniqueName15 = Thinksea.VisualStudio\\Thinksea.VisualStudio.csproj
+		SccProjectName15 = Thinksea.VisualStudio
+		SccLocalPath15 = Thinksea.VisualStudio
+		SccProjectUniqueName16 = Thinksea.Windows.Forms\\Thinksea.Windows.Forms.csproj
+		SccProjectName16 = Thinksea.Windows.Forms
+		SccLocalPath16 = Thinksea.Windows.Forms
+		SccProjectUniqueName17 = Thinksea.Windows.Forms.IPAddress\\Thinksea.Windows.Forms.IPAddress.csproj
+		SccProjectName17 = Thinksea.Windows.Forms.IPAddress
+		SccLocalPath17 = Thinksea.Windows.Forms.IPAddress
+		SccProjectUniqueName18 = Thinksea.Windows.Forms.MdiTabControl\\Thinksea.Windows.Forms.MdiTabControl.csproj
+		SccProjectName18 = Thinksea.Windows.Forms.MdiTabControl
+		SccLocalPath18 = Thinksea.Windows.Forms.MdiTabControl
+		SccProjectUniqueName19 = Thinksea.Windows.Forms.MdiTabControlTest\\Thinksea.Windows.Forms.MdiTabControlTest.csproj
+		SccProjectName19 = Thinksea.Windows.Forms.MdiTabControlTest
+		SccLocalPath19 = Thinksea.Windows.Forms.MdiTabControlTest
+		SccProjectUniqueName20 = Thinksea.TcpPoolTest\\Thinksea.TcpPoolTest.csproj
+		SccProjectName20 = Thinksea.TcpPoolTest
+		SccLocalPath20 = Thinksea.TcpPoolTest
+		SccProjectUniqueName21 = Thinksea.Windows\\Thinksea.Windows.csproj
+		SccProjectName21 = Thinksea.Windows
+		SccLocalPath21 = Thinksea.Windows
+		SccProjectUniqueName22 = Thinksea.LogTest\\Thinksea.LogTest.csproj
+		SccProjectName22 = Thinksea.LogTest
+		SccLocalPath22 = Thinksea.LogTest
+		SccProjectUniqueName23 = Thinksea.Windows.Forms.Demos\\ButtonDemo\\ButtonDemo.csproj
+		SccProjectTopLevelParentUniqueName23 = ThinkseaGeneric.sln
+		SccProjectName23 = Thinksea.Windows.Forms.Demos/ButtonDemo
+		SccLocalPath23 = Thinksea.Windows.Forms.Demos\\ButtonDemo
+		SccProjectUniqueName24 = Thinksea.Windows.Forms.Demos\\DataGridViewPageDemo\\DataGridViewPageDemo.csproj
+		SccProjectTopLevelParentUniqueName24 = ThinkseaGeneric.sln
+		SccProjectName24 = Thinksea.Windows.Forms.Demos/DataGridViewPageDemo
+		SccLocalPath24 = Thinksea.Windows.Forms.Demos\\DataGridViewPageDemo
+		SccProjectUniqueName25 = Thinksea.Windows.Forms.Demos\\EllipsisControlDemo\\EllipsisControlDemo.csproj
+		SccProjectTopLevelParentUniqueName25 = ThinkseaGeneric.sln
+		SccProjectName25 = Thinksea.Windows.Forms.Demos/EllipsisControlDemo
+		SccLocalPath25 = Thinksea.Windows.Forms.Demos\\EllipsisControlDemo
+		SccProjectUniqueName26 = Thinksea.Windows.Forms.Demos\\SelectedDynamicTreeNodeDemo\\SelectedDynamicTreeNodeDemo.csproj
+		SccProjectTopLevelParentUniqueName26 = ThinkseaGeneric.sln
+		SccProjectName26 = Thinksea.Windows.Forms.Demos/SelectedDynamicTreeNodeDemo
+		SccLocalPath26 = Thinksea.Windows.Forms.Demos\\SelectedDynamicTreeNodeDemo
+		SccProjectUniqueName27 = Thinksea.IIS\\Thinksea.IIS.csproj
+		SccProjectName27 = Thinksea.IIS
+		SccLocalPath27 = Thinksea.IIS
+		SccProjectUniqueName28 = Thinksea\\Thinksea.csproj
+		SccProjectName28 = Thinksea
+		SccLocalPath28 = Thinksea
+		SccProjectUniqueName29 = Thinksea.Web.UriParameterDemo\\Thinksea.Web.UriParameterDemo.csproj
+		SccProjectName29 = Thinksea.Web.UriParameterDemo
+		SccLocalPath29 = Thinksea.Web.UriParameterDemo
+		SccProjectUniqueName30 = Thinksea.Net.FileUploader\\Thinksea.Net.FileUploader.csproj
+		SccProjectName30 = Thinksea.Net.FileUploader
+		SccLocalPath30 = Thinksea.Net.FileUploader
+		SccProjectUniqueName31 = Thinksea.Text.Chinese2SpellDemo\\Thinksea.Text.Chinese2SpellDemo.csproj
+		SccProjectName31 = Thinksea.Text.Chinese2SpellDemo
+		SccLocalPath31 = Thinksea.Text.Chinese2SpellDemo
+	EndGlobalSection
+EndGlobal
