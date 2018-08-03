@@ -72,6 +72,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "引用的第三方资源", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2D41EDC6-5FED-4A6F-B1DF-47D0E9F39F21}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

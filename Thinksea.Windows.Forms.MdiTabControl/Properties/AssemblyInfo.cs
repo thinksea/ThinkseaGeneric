@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Thinksea.Windows.Forms.MdiTabControl")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("一个选项卡控件。")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Thinksea.Windows.Forms.MdiTabControl")]
