@@ -9,8 +9,8 @@
 ###### version：2018-8-13
 
 新增方法：
-+ public static string Thinksea.General.Bytes2HexString(byte[] bytes)
-+ public static byte[] Thinksea.General.HexString2Bytes(string hexStr)
++ public static string Thinksea.General.Bytes2HexString(byte[] bytes) //byte 数组转 16 进制字符串。
++ public static byte[] Thinksea.General.HexString2Bytes(string hexStr) //将 16 进制字符串转为 byte 数组。
 
 重要修改：
 + Thinksea.Net.FileUploader 文件上传校验码参数改为直接传递 16 进制字符串，而非  base64 编码格式字符串。
