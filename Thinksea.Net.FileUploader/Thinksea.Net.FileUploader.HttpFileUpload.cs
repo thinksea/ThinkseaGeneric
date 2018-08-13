@@ -250,7 +250,7 @@
                     , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
                     , System.Web.HttpUtility.UrlEncode(this.FileName)
                     , this.FileSize
-                    , System.Web.HttpUtility.UrlEncode(System.Convert.ToBase64String(this.CheckCode))
+                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
                     , this.CustomParameter
                     );
 
@@ -333,7 +333,7 @@
                 , System.Web.HttpUtility.UrlEncode(this.FileName)
                 , this.FileSize
                 , this.BytesUploaded
-                , System.Web.HttpUtility.UrlEncode(System.Convert.ToBase64String(this.CheckCode))
+                , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
                 , this.CustomParameter
                 );
 

@@ -37,21 +37,6 @@
         }
 
         /// <summary>
-        /// byte 数组转16进制字符串。
-        /// </summary>
-        /// <param name="bytes">一个 byte 数组。</param>
-        /// <returns>16进制字符串。</returns>
-        private string Bytes2HexString(byte[] bytes)
-        {
-            string r = "";
-            foreach (byte tmp in bytes)
-            {
-                r += tmp.ToString("X2");
-            }
-            return r;
-        }
-
-        /// <summary>
         /// 分配一个临时上传文件名。
         /// </summary>
         /// <param name="fileName">以此文件名为基础文件名生成临时文件名。如果设置为 null，则分配一个随机的名称。</param>
@@ -151,8 +136,8 @@
                         string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
                         long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
                         string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
-                        byte[] clientSha1Datas = System.Convert.FromBase64String(sCheckCode);
-                        string tempFile = this.GetTempFile(this.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
+                        byte[] clientSha1Datas = Thinksea.General.HexString2Bytes(sCheckCode);
+                        string tempFile = this.GetTempFile(Thinksea.General.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
                         {
@@ -171,7 +156,7 @@
                         string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
                         long fileSize = string.IsNullOrEmpty(context.Request.QueryString["filesize"]) ? 0 : long.Parse(context.Request.QueryString["filesize"]); //文件大小。
                         string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
-                        byte[] clientSha1Datas = string.IsNullOrEmpty(sCheckCode) ? null : System.Convert.FromBase64String(sCheckCode);
+                        byte[] clientSha1Datas = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
                         string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
                         long startByte = string.IsNullOrEmpty(context.Request.QueryString["offset"]) ? 0 : long.Parse(context.Request.QueryString["offset"]); //上传数据起始偏移地址。
                         #endregion
@@ -196,7 +181,7 @@
                         }
                         else
                         {
-                            tempFile = this.GetTempFile(this.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
+                            tempFile = this.GetTempFile(Thinksea.General.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
                         }
 
                         if (this._BeginUpload != null)

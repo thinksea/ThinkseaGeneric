@@ -2580,6 +2580,38 @@
         #endregion
 
         /// <summary>
+        /// byte 数组转 16 进制字符串。
+        /// </summary>
+        /// <param name="bytes">一个 byte 数组。</param>
+        /// <returns>16 进制字符串。</returns>
+        public static string Bytes2HexString(byte[] bytes)
+        {
+            string r = "";
+            foreach (byte tmp in bytes)
+            {
+                r += tmp.ToString("X2");
+            }
+            return r;
+        }
+
+        /// <summary>
+        /// 将 16 进制字符串转为 byte 数组。
+        /// </summary>
+        /// <param name="hexStr">16 进制字符串。</param>
+        /// <returns>byte 数组。</returns>
+        public static byte[] HexString2Bytes(string hexStr)
+        {
+            string strTemp = "";
+            byte[] b = new byte[hexStr.Length / 2];
+            for (int i = 0; i < hexStr.Length / 2; i++)
+            {
+                strTemp = hexStr.Substring(i * 2, 2);
+                b[i] = System.Convert.ToByte(strTemp, 16);
+            }
+            return b;
+        }
+
+        /// <summary>
         /// 构造方法。
         /// </summary>
         static General()
