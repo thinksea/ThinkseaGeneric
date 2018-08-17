@@ -238,6 +238,16 @@
                                 serverSha1Datas = Thinksea.General.GetSHA1(outputStream, 0); //获取SHA1码。
                                 if (clientSha1Datas != null && !Thinksea.General.CompareArray(clientSha1Datas, serverSha1Datas))
                                 {
+                                    if (outputStream != null)
+                                    {
+                                        outputStream.Close();
+                                        outputStream.Dispose();
+                                        outputStream = null;
+                                    }
+                                    if (System.IO.File.Exists(tempFile))
+                                    {
+                                        System.IO.File.Delete(tempFile);
+                                    }
                                     throw new System.Exception("上传失败，未通过最后的文件校验过程。");
                                 }
                                 #endregion
@@ -250,9 +260,12 @@
                         }
                         finally
                         {
-                            outputStream.Close();
-                            outputStream.Dispose();
-                            outputStream = null;
+                            if (outputStream != null)
+                            {
+                                outputStream.Close();
+                                outputStream.Dispose();
+                                outputStream = null;
+                            }
                         }
 
                         if (updateFinish)
