@@ -225,13 +225,13 @@
                             }
                             writeDataSize = this.SaveFile(inputStream, outputStream);
 #if DEBUG
-                        System.Diagnostics.Debug.WriteLine("写数据到磁盘成功。");
+                            System.Diagnostics.Debug.WriteLine("写数据到磁盘成功。");
 #endif
 
                             if (outputStream.Position == fileSize) //如果上传完成。
                             {
 #if DEBUG
-                            System.Diagnostics.Debug.WriteLine("写入最后一个数据块完成。");
+                                System.Diagnostics.Debug.WriteLine("写入最后一个数据块完成。");
 #endif
 
                                 #region 校验文件SHA1码是否相同。

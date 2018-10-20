@@ -95,6 +95,38 @@
         #endregion
 
         #region 事件。
+        private event BeforeUploadEventHandler _BeforeUpload;
+        /// <summary>
+        /// 当计算文件校验码完成之后开始上传文件之前引发此事件。
+        /// </summary>
+        public event BeforeUploadEventHandler BeforeUpload
+        {
+            add
+            {
+                this._BeforeUpload += value;
+            }
+            remove
+            {
+                this._BeforeUpload -= value;
+            }
+        }
+
+        private event BreakpointUploadEventHandler _FindBreakpoint;
+        /// <summary>
+        /// 当发现可用的断点上传信息时引发此事件。
+        /// </summary>
+        public event BreakpointUploadEventHandler FindBreakpoint
+        {
+            add
+            {
+                this._FindBreakpoint += value;
+            }
+            remove
+            {
+                this._FindBreakpoint -= value;
+            }
+        }
+
         private event UploadProgressChangedEventHandler _UploadProgressChanged;
         /// <summary>
         /// 当上传进度更改时引发此事件。
@@ -127,21 +159,6 @@
             }
         }
 
-        private event BreakpointUploadEventHandler _FindBreakpoint;
-        /// <summary>
-        /// 当发现可用的断点上传信息时引发此事件。
-        /// </summary>
-        public event BreakpointUploadEventHandler FindBreakpoint
-        {
-            add
-            {
-                this._FindBreakpoint += value;
-            }
-            remove
-            {
-                this._FindBreakpoint -= value;
-            }
-        }
         #endregion
 
         #region 方法。
@@ -155,7 +172,7 @@
         }
 
         /// <summary>
-        /// 开始上传指定文件数据。
+        /// 开始上传指定文件。
         /// </summary>
         /// <param name="FileStream">文件数据流。</param>
         /// <param name="FileName">文件名。</param>
@@ -166,7 +183,7 @@
         }
 
         /// <summary>
-        /// 开始上传指定文件数据。
+        /// 开始上传指定文件。
         /// </summary>
         /// <param name="FileStream">文件数据流。</param>
         /// <param name="FileName">文件名。</param>
@@ -198,7 +215,56 @@
             //    thread = new System.Threading.Thread(new System.Threading.ThreadStart(this.StartBreakpointUpload));
             //    thread.Start();
             //}
+            if (this._FileStream == null || this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            if (this.CheckCode == null) //解决避免重复计算文件校验码，当重复调用方法“StartUpload”（例如重新启动这个文件上传任务）时。
+            {
+                this.GetCheckCode();
+            }
+            if (this._BeforeUpload != null)
+            {
+                this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
+            }
             this.StartBreakpointUpload();
+        }
+
+        /// <summary>
+        /// 计算文件校验码。
+        /// </summary>
+        private void GetCheckCode()
+        {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            long p = this._FileStream.Position;
+            try
+            {
+                try
+                {
+                    this.CheckCode = Thinksea.General.GetSHA1(this._FileStream, 0);
+                }
+                catch
+                {
+                    if (this.Cancelling)
+                    {
+                        this.Cancelling = false;
+                        return;
+                    }
+                    throw;
+                }
+            }
+            finally
+            {
+                if (this._FileStream != null && this._FileStream.CanSeek)
+                {
+                    this._FileStream.Position = p;
+                }
+            }
         }
 
         #region 断点续传方法。
@@ -207,38 +273,6 @@
         /// </summary>
         private void StartBreakpointUpload()
         {
-            if (this._FileStream == null || this.Cancelling)
-            {
-                this.Cancelling = false;
-                return;
-            }
-            if (this.CheckCode == null)
-            {
-                long p = this._FileStream.Position;
-                try
-                {
-                    try
-                    {
-                        this.CheckCode = Thinksea.General.GetSHA1(this._FileStream, 0);
-                    }
-                    catch
-                    {
-                        if (this.Cancelling)
-                        {
-                            this.Cancelling = false;
-                            return;
-                        }
-                        throw;
-                    }
-                }
-                finally
-                {
-                    if (this._FileStream != null && this._FileStream.CanSeek)
-                    {
-                        this._FileStream.Position = p;
-                    }
-                }
-            }
             if (this.Cancelling)
             {
                 this.Cancelling = false;
@@ -309,7 +343,7 @@
                     webRequest = null;
                 }
 
-                this.StartUpload();//开始上传数据。
+                this.StartUploadContent();//开始上传数据。
 
             }
             catch (System.Exception ex)
@@ -323,10 +357,15 @@
         #endregion
 
         /// <summary>
-        /// 开始上传文件。
+        /// 开始上传文件内容。
         /// </summary>
-        private void StartUpload()
+        private void StartUploadContent()
         {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
             System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
             httpHandlerUrlBuilder.Query = string.Format("{0}filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
                 , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
@@ -450,12 +489,12 @@
 
                 if (this.BytesUploaded < this.FileSize)
                 {
-                    if (this.Cancelling)
-                    {
-                        this.Cancelling = false;
-                        return;
-                    }
-                    StartUpload();//继续上传下一块文件数据。
+                    //if (this.Cancelling)
+                    //{
+                    //    this.Cancelling = false;
+                    //    return;
+                    //}
+                    this.StartUploadContent();//继续上传下一块文件数据。
                 }
                 else //文件上传完成。
                 {
@@ -514,6 +553,38 @@
     }
 
     #region 定义代理和事件参数。
+    /// <summary>
+    /// 上传前事件参数。
+    /// </summary>
+    public class BeforeUploadEventArgs : System.EventArgs
+    {
+        /// <summary>
+        /// 获取文件完整性校验码。
+        /// </summary>
+        public byte[] CheckCode
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 用指定的数据初始化此实例。
+        /// </summary>
+        /// <param name="CheckCode">文件完整性校验码。</param>
+        /// <param name="DataSize">数据总大小。</param>
+        public BeforeUploadEventArgs(byte[] CheckCode)
+        {
+            this.CheckCode = CheckCode;
+        }
+    }
+
+    /// <summary>
+    /// 上传前事件代理。
+    /// </summary>
+    /// <param name="sender">事件引发对象。</param>
+    /// <param name="e">事件参数。</param>
+    public delegate void BeforeUploadEventHandler(object sender, BeforeUploadEventArgs e);
+
     /// <summary>
     /// 上传出错事件参数。
     /// </summary>
