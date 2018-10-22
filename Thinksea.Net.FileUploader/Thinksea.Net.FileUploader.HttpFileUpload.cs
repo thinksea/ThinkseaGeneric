@@ -215,6 +215,7 @@
             //    thread = new System.Threading.Thread(new System.Threading.ThreadStart(this.StartBreakpointUpload));
             //    thread.Start();
             //}
+            #region 获取文件完整性校验码，例如 SHA1 或 MD5 等。
             if (this._FileStream == null || this.Cancelling)
             {
                 this.Cancelling = false;
@@ -222,8 +223,36 @@
             }
             if (this.CheckCode == null) //解决避免重复计算文件校验码，当重复调用方法“StartUpload”（例如重新启动这个文件上传任务）时。
             {
-                this.GetCheckCode();
+                if (this.Cancelling)
+                {
+                    this.Cancelling = false;
+                    return;
+                }
+                long p = this._FileStream.Position;
+                try
+                {
+                    try
+                    {
+                        this._FileStream.Position = 0;
+                        this.CheckCode = this.GetCheckCode(this._FileStream);
+                    }
+                    catch
+                    {
+                        if (this.Cancelling)
+                        {
+                            this.Cancelling = false;
+                            return;
+                        }
+                        throw;
+                    }
+                }
+                finally
+                {
+                    this._FileStream.Position = p;
+                }
             }
+            #endregion
+
             if (this._BeforeUpload != null)
             {
                 this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
@@ -232,39 +261,13 @@
         }
 
         /// <summary>
-        /// 计算文件校验码。
+        /// 获取文件完整性校验码，例如 SHA1 或 MD5 等。
         /// </summary>
-        private void GetCheckCode()
+        /// <param name="stream">文件流。</param>
+        /// <returns>文件完整性校验码。</returns>
+        public virtual byte[] GetCheckCode(System.IO.Stream stream)
         {
-            if (this.Cancelling)
-            {
-                this.Cancelling = false;
-                return;
-            }
-            long p = this._FileStream.Position;
-            try
-            {
-                try
-                {
-                    this.CheckCode = Thinksea.General.GetSHA1(this._FileStream, 0);
-                }
-                catch
-                {
-                    if (this.Cancelling)
-                    {
-                        this.Cancelling = false;
-                        return;
-                    }
-                    throw;
-                }
-            }
-            finally
-            {
-                if (this._FileStream != null && this._FileStream.CanSeek)
-                {
-                    this._FileStream.Position = p;
-                }
-            }
+            return Thinksea.General.GetSHA1(stream); //获取SHA1码。
         }
 
         #region 断点续传方法。
@@ -541,6 +544,9 @@
             }
         }
 
+        /// <summary>
+        /// 释放此对象占用的资源。
+        /// </summary>
         public void Dispose()
         {
             this._FileStream = null;

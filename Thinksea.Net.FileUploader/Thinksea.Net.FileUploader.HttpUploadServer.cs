@@ -14,9 +14,40 @@
     /// checkcode：文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
     /// param：用户自定义参数
     /// </remarks>
-    public class HttpUploadServer
+    public abstract class HttpUploadServer
     {
-        #region 方法。
+        private string _TempExtension = ".config";
+        /// <summary>
+        /// 获取或设置临时文件扩展名。
+        /// </summary>
+        public string TempExtension
+        {
+            get
+            {
+                return this._TempExtension;
+            }
+            set
+            {
+                this._TempExtension = value;
+            }
+        }
+
+        private string _FileUploadTempDirectory = null;
+        /// <summary>
+        /// 获取文件上传临时存储目录
+        /// </summary>
+        public virtual string FileUploadTempDirectory
+        {
+            get
+            {
+                if (this._FileUploadTempDirectory == null)
+                {
+                    this._FileUploadTempDirectory = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, @"UploadTemp");
+                }
+                return this._FileUploadTempDirectory;
+            }
+        }
+
         /// <summary>
         /// 从指定的数据流读取数据并保存到文件流。
         /// </summary>
@@ -39,17 +70,16 @@
         /// <summary>
         /// 分配一个临时上传文件名。
         /// </summary>
-        /// <param name="fileName">以此文件名为基础文件名生成临时文件名。如果设置为 null，则分配一个随机的名称。</param>
+        /// <param name="checkCode">文件完整性校验码。如果设置为 null，则分配一个随机的名称。</param>
         /// <returns>临时文件名。</returns>
-        private string GetTempFile(string fileName)
+        public virtual string GetTempFile(byte[] checkCode)
         {
-            string d = this.FileUploadTempDirectory;
             #region 保证文件上传物理根目录存在。
-            if (!System.IO.Directory.Exists(d))
+            if (!System.IO.Directory.Exists(this.FileUploadTempDirectory))
             {
                 try
                 {
-                    System.IO.Directory.CreateDirectory(d);
+                    System.IO.Directory.CreateDirectory(this.FileUploadTempDirectory);
                 }
                 catch (System.IO.IOException)
                 {
@@ -66,16 +96,26 @@
             }
             #endregion
 
-            if (!string.IsNullOrEmpty(fileName))
+            string tempFile;
+            if (checkCode == null)
             {
-                //string r = this.BytesToHexString(checkCode);
-                //if (!string.IsNullOrEmpty(r))
-                //{
-                //    return System.IO.Path.Combine(d, r + TempExtension);
-                //}
-                return System.IO.Path.Combine(d, fileName + TempExtension);
+                tempFile = System.Guid.NewGuid().ToString("N"); //上传临时存盘文件名。
             }
-            return System.IO.Path.Combine(d, System.Guid.NewGuid().ToString("N") + TempExtension);
+            else
+            {
+                tempFile = Thinksea.General.Bytes2HexString(checkCode); //上传临时存盘文件名。
+            }
+            return System.IO.Path.Combine(this.FileUploadTempDirectory, tempFile + TempExtension);
+        }
+
+        /// <summary>
+        /// 获取文件完整性校验码，例如 SHA1 或 MD5 等。
+        /// </summary>
+        /// <param name="stream">文件流。</param>
+        /// <returns>文件完整性校验码。</returns>
+        public virtual byte[] GetCheckCode(System.IO.Stream stream)
+        {
+            return Thinksea.General.GetSHA1(stream); //获取SHA1码。
         }
 
         /// <summary>
@@ -83,7 +123,7 @@
         /// </summary>
         /// <param name="taskFile">任务文件。</param>
         /// <returns>返回找到的续传位置，否则返回 0 表示重头开始上传；</returns>
-        private long GetContinueUploadPosition(string taskFile)
+        public virtual long GetContinueUploadPosition(string taskFile)
         {
             if (!System.IO.File.Exists(taskFile))
             {
@@ -136,8 +176,8 @@
                         string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
                         long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
                         string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
-                        byte[] clientSha1Datas = Thinksea.General.HexString2Bytes(sCheckCode);
-                        string tempFile = this.GetTempFile(Thinksea.General.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
+                        byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
+                        string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
                         {
@@ -156,7 +196,7 @@
                         string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
                         long fileSize = string.IsNullOrEmpty(context.Request.QueryString["filesize"]) ? 0 : long.Parse(context.Request.QueryString["filesize"]); //文件大小。
                         string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
-                        byte[] clientSha1Datas = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
+                        byte[] clientCheckCode = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
                         string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
                         long startByte = string.IsNullOrEmpty(context.Request.QueryString["offset"]) ? 0 : long.Parse(context.Request.QueryString["offset"]); //上传数据起始偏移地址。
                         #endregion
@@ -174,20 +214,9 @@
                             }
                         }
 
-                        string tempFile;
-                        if (string.IsNullOrEmpty(sCheckCode))
-                        {
-                            tempFile = this.GetTempFile(System.Guid.NewGuid().ToString("N")); //上传临时存盘文件名。
-                        }
-                        else
-                        {
-                            tempFile = this.GetTempFile(Thinksea.General.Bytes2HexString(clientSha1Datas)); //上传临时存盘文件名。
-                        }
+                        string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
 
-                        if (this._BeginUpload != null)
-                        {
-                            this._BeginUpload(this, new FileUploadEventArgs(tempFile, clientFileName, customParameters, startByte));
-                        }
+                        this.BeginUpload(new FileUploadEventArgs(tempFile, clientFileName, customParameters, startByte));
 
                         //如果是第一次上传数据则删除同名文件。
                         if (startByte == 0)
@@ -198,7 +227,9 @@
 
                             //删除临时文件。
                             if (System.IO.File.Exists(tempFile))
+                            {
                                 System.IO.File.Delete(tempFile);
+                            }
 
                         }
 
@@ -207,7 +238,7 @@
 #endif
 
                         bool updateFinish = false;
-                        byte[] serverSha1Datas = null;
+                        byte[] serverCheckCode = null;
                         long writeDataSize = 0;
                         System.IO.FileStream outputStream = System.IO.File.Open(tempFile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.None);//System.IO.IOException
                         try
@@ -235,15 +266,21 @@
 #endif
 
                                 #region 校验文件SHA1码是否相同。
-                                serverSha1Datas = Thinksea.General.GetSHA1(outputStream, 0); //获取SHA1码。
-                                if (clientSha1Datas != null && !Thinksea.General.CompareArray(clientSha1Datas, serverSha1Datas))
+                                long p = outputStream.Position;
+                                try
                                 {
-                                    if (outputStream != null)
-                                    {
-                                        outputStream.Close();
-                                        outputStream.Dispose();
-                                        outputStream = null;
-                                    }
+                                    outputStream.Position = 0;
+                                    serverCheckCode = this.GetCheckCode(outputStream);
+                                }
+                                finally
+                                {
+                                    outputStream.Position = p;
+                                }
+                                if (clientCheckCode != null && !Thinksea.General.CompareArray(clientCheckCode, serverCheckCode))
+                                {
+                                    outputStream.Close();
+                                    outputStream.Dispose();
+                                    outputStream = null;
                                     if (System.IO.File.Exists(tempFile))
                                     {
                                         System.IO.File.Delete(tempFile);
@@ -270,11 +307,8 @@
 
                         if (updateFinish)
                         {
-                            UploadFinishedEventArgs finishedFileUploadEventArgs = new UploadFinishedEventArgs(tempFile, clientFileName, serverSha1Datas, customParameters);
-                            if (this._UploadFinished != null)
-                            {
-                                this._UploadFinished(this, finishedFileUploadEventArgs);
-                            }
+                            UploadFinishedEventArgs finishedFileUploadEventArgs = new UploadFinishedEventArgs(tempFile, clientFileName, serverCheckCode, customParameters);
+                            this.UploadFinished(finishedFileUploadEventArgs);
                             //string targetFile = this.GetTargetFile(finishedFileUploadEventArgs.ClientFileName);
                             //if (finishedFileUploadEventArgs.ServerFile != targetFile)
                             //{
@@ -306,78 +340,17 @@
             }
         }
 
-        #endregion
-
-        #region 用户业务功能扩展接口。
-        private string _TempExtension = ".config";
         /// <summary>
-        /// 获取或设置临时文件扩展名。
+        /// 每次与客户端建立连接准备上传文件时调用此方法。注意：一个文件的上传过程可能会多次调用此方法。
         /// </summary>
-        public string TempExtension
+        public virtual void BeginUpload(FileUploadEventArgs e)
         {
-            get
-            {
-                return this._TempExtension;
-            }
-            set
-            {
-                this._TempExtension = value;
-            }
         }
 
-        private string _FileUploadTempDirectory = null;
         /// <summary>
-        /// 获取或设置文件上传临时存储目录
+        /// 当文件上传完成时调用此方法。
         /// </summary>
-        public string FileUploadTempDirectory
-        {
-            get
-            {
-                if (this._FileUploadTempDirectory == null)
-                {
-                    this._FileUploadTempDirectory = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, @"UploadTemp");
-                }
-                return this._FileUploadTempDirectory;
-            }
-            set
-            {
-                this._FileUploadTempDirectory = value;
-            }
-        }
-
-        private event BeginUploadEventHandler _BeginUpload;
-        /// <summary>
-        /// 每次与客户端建立连接准备上传文件时引发此事件。注意：一个文件的上传过程可能会多次引发此事件。
-        /// </summary>
-        public event BeginUploadEventHandler BeginUpload
-        {
-            add
-            {
-                this._BeginUpload += value;
-            }
-            remove
-            {
-                this._BeginUpload -= value;
-            }
-        }
-
-        private event UploadFinishedEventHandler _UploadFinished;
-        /// <summary>
-        /// 当文件上传完成时引发此事件。
-        /// </summary>
-        public event UploadFinishedEventHandler UploadFinished
-        {
-            add
-            {
-                this._UploadFinished += value;
-            }
-            remove
-            {
-                this._UploadFinished -= value;
-            }
-        }
-
-        #endregion
+        public abstract void UploadFinished(UploadFinishedEventArgs e);
 
     }
 
@@ -438,13 +411,6 @@
         }
 
     }
-
-    /// <summary>
-    /// 开始上传事件代理。
-    /// </summary>
-    /// <param name="sender">事件引发对象。</param>
-    /// <param name="e">事件参数。</param>
-    public delegate void BeginUploadEventHandler(object sender, FileUploadEventArgs e);
 
     /// <summary>
     /// 文件上传完成事件参数。
@@ -512,11 +478,4 @@
         }
 
     }
-
-    /// <summary>
-    /// 文件上传完成事件代理。
-    /// </summary>
-    /// <param name="sender">事件引发对象。</param>
-    /// <param name="e">事件参数。</param>
-    public delegate void UploadFinishedEventHandler(object sender, UploadFinishedEventArgs e);
 }
