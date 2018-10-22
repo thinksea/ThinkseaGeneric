@@ -6,8 +6,9 @@
     /// <remarks>
     /// 支持的 URL 参数及其示意：
     /// cmd：调用服务器端指令名称。可用指令名称如下：
-    ///     upload：上传文件。（默认指令，当未指定cmd参数时执行此指令。）
-    ///     getoffset：查询续传起始地址。
+    ///     fastupload (filename,filesize,checkcode,param)：尝试秒传指定的文件。
+    ///     upload (filename,filesize,checkcode,param)：上传文件。（默认指令，当未指定cmd参数时执行此指令。）
+    ///     getoffset (filename,filesize,checkcode,param,offset)：查询续传起始地址。
     /// filename：客户端文件名
     /// filesize：文件大小
     /// offset：上传数据起始偏移地址。
@@ -171,12 +172,29 @@
         {
             switch (context.Request.QueryString["cmd"])
             {
+                case "fastupload": //尝试秒传指定的文件。
+                    {
+                        string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
+                        long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
+                        string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
+                        byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
+                        string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
+                        FastUploadEventArgs e = new FastUploadEventArgs(clientFileName, clientCheckCode, customParameters);
+                        this.FastUpload(e);
+                        string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                        {
+                            ErrorCode = 0,
+                            Data = e.ResultData,//将需要返回到客户端的数据写回客户端。
+                        });
+                        return JSON;
+                    }
                 case "getoffset": //客户端获取断点续传起始位置。
                     {
                         string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
                         long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
                         string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
+                        string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
@@ -189,7 +207,6 @@
                         //_httpContext.Response.End();
                         return JSON;
                     }
-                    break;
                 default: //上传文件内容。
                     {
                         #region 解析查询参数。
@@ -265,7 +282,7 @@
                                 System.Diagnostics.Debug.WriteLine("写入最后一个数据块完成。");
 #endif
 
-                                #region 校验文件SHA1码是否相同。
+                                #region 对比文件完整性校验码是否相同。
                                 long p = outputStream.Position;
                                 try
                                 {
@@ -305,6 +322,7 @@
                             }
                         }
 
+                        string JSON;
                         if (updateFinish)
                         {
                             UploadFinishedEventArgs finishedFileUploadEventArgs = new UploadFinishedEventArgs(tempFile, clientFileName, serverCheckCode, customParameters);
@@ -320,24 +338,31 @@
                             //}
 
                             //return finishedFileUploadEventArgs.ResultData;
-                            string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 0,
                                 Data = finishedFileUploadEventArgs.ResultData,//将需要返回到客户端的数据写回客户端。
                             });
-                            return JSON;
                         }
                         else
                         {
-                            string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 0,
                             });
-                            return JSON;
                         }
+                        return JSON;
                     }
-                    break;
             }
+        }
+
+        /// <summary>
+        /// 当客户端请求尝试秒传文件时调用此方法。
+        /// </summary>
+        /// <param name="e">秒传需要的数据。</param>
+        public virtual void FastUpload(FastUploadEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -351,6 +376,62 @@
         /// 当文件上传完成时调用此方法。
         /// </summary>
         public abstract void UploadFinished(UploadFinishedEventArgs e);
+
+    }
+
+    /// <summary>
+    /// 文件秒传事件参数。
+    /// </summary>
+    public class FastUploadEventArgs : System.EventArgs
+    {
+        /// <summary>
+        /// 获取客户端文件名。
+        /// </summary>
+        public string ClientFileName
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取客户端提交的自定义参数。
+        /// </summary>
+        public string Parameters
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取文件完整性校验码。
+        /// </summary>
+        public byte[] CheckCode
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取或设置需要返回到客户端的数据。
+        /// </summary>
+        public object ResultData
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 一个构造方法。
+        /// </summary>
+        /// <param name="clientFileName">客户端文件名。</param>
+        /// <param name="checkCode">文件完整性校验码。</param>
+        /// <param name="parameters">客户端提交的自定义参数。</param>
+        public FastUploadEventArgs(string clientFileName, byte[] checkCode, string parameters)
+        {
+            this.ClientFileName = clientFileName;
+            this.CheckCode = checkCode;
+            this.Parameters = parameters;
+        }
 
     }
 
@@ -445,9 +526,9 @@
         }
 
         /// <summary>
-        /// 获取文件的 SHA1 码。
+        /// 获取文件完整性校验码。
         /// </summary>
-        public byte[] SHA1
+        public byte[] CheckCode
         {
             get;
             private set;
@@ -467,13 +548,13 @@
         /// </summary>
         /// <param name="serverFile">上传到服务器的文件全名。</param>
         /// <param name="clientFileName">客户端文件名。</param>
-        /// <param name="SHA1">文件的 SHA1 码。</param>
+        /// <param name="checkCode">文件完整性校验码。</param>
         /// <param name="parameters">客户端提交的自定义参数。</param>
-        public UploadFinishedEventArgs(string serverFile, string clientFileName, byte[] SHA1, string parameters)
+        public UploadFinishedEventArgs(string serverFile, string clientFileName, byte[] checkCode, string parameters)
         {
             this.ServerFile = serverFile;
             this.ClientFileName = clientFileName;
-            this.SHA1 = SHA1;
+            this.CheckCode = checkCode;
             this.Parameters = parameters;
         }
 

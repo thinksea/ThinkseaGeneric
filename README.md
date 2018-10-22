@@ -6,6 +6,12 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2018-10-22
+
+重要修改：
++ 重构组件 Thinksea.Net.FileUploader。
++ 新增功能：组件 Thinksea.Net.FileUploader 支持秒传。
+
 ###### version：2018-10-20
 
 重要修改：

@@ -257,7 +257,7 @@
             {
                 this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
             }
-            this.StartBreakpointUpload();
+            this.StartFastUpload();
         }
 
         /// <summary>
@@ -269,6 +269,98 @@
         {
             return Thinksea.General.GetSHA1(stream); //获取SHA1码。
         }
+
+        #region 秒传方法。
+        /// <summary>
+        /// 开始上传文件，支持秒传。
+        /// </summary>
+        private void StartFastUpload()
+        {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            {
+                System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
+                httpHandlerUrlBuilder.Query = string.Format("{0}cmd=fastupload&filename={1}&filesize={2}&checkcode={3}&param={4}"
+                    , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
+                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , this.FileSize
+                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , this.CustomParameter
+                    );
+
+                System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
+                webRequest.Method = "POST";
+                webRequest.ContentType = "text/xml";
+                webRequest.ContentLength = 0;
+                //获取服务器端返回的信息。
+                webRequest.BeginGetResponse(new System.AsyncCallback(FastUpload_ReadHttpResponseCallback), webRequest);
+            }
+        }
+
+        /// <summary>
+        /// 接收服务器回执。
+        /// </summary>
+        /// <param name="asynchronousResult"></param>
+        private void FastUpload_ReadHttpResponseCallback(System.IAsyncResult asynchronousResult)
+        {
+            try
+            {
+                string responsestring = "";
+                System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)asynchronousResult.AsyncState;
+                System.Net.HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.EndGetResponse(asynchronousResult);
+                try
+                {
+                    System.IO.StreamReader reader = new System.IO.StreamReader(webResponse.GetResponseStream());
+                    try
+                    {
+                        responsestring = reader.ReadToEnd();
+                    }
+                    finally
+                    {
+                        reader.Close();
+                        reader.Dispose();
+                        reader = null;
+                    }
+                }
+                finally
+                {
+                    webResponse.Close();
+                    //webResponse.Dispose();
+                    webResponse = null;
+                    webRequest.Abort();
+                    webRequest = null;
+                }
+
+                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                if (result.ErrorCode != 0)
+                {
+                    this.OnError("上传出错。详细信息：" + result.Message, null);
+                    return;
+                }
+
+                if (result.Data != null) //断点续传成功
+                {
+                    this.BytesUploaded = this.FileSize;
+                    this.Finished = true;
+                    this.OnUploadProgressChanged(result.Data);
+                }
+                else //无法秒传，开始尝试断点续传。
+                {
+                    this.StartBreakpointUpload();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.Cancelling = false;
+                this.OnError(string.Format("文件“{0}”上传出错。", this.FileName), ex);
+            }
+
+        }
+
+        #endregion
 
         #region 断点续传方法。
         /// <summary>
@@ -486,9 +578,21 @@
                     webRequest = null;
                 }
 
+                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                if (result.ErrorCode != 0)
+                {
+                    this.OnError("上传出错。详细信息：" + result.Message, null);
+                    return;
+                }
+
                 this.BytesUploaded += this.TempUploadDataSize;
 
-                this.OnUploadProgressChanged(responsestring);
+                if (this.BytesUploaded >= this.FileSize) //文件上传完成。
+                {
+                    this.Finished = true;
+                }
+
+                this.OnUploadProgressChanged(result.Data);
 
                 if (this.BytesUploaded < this.FileSize)
                 {
@@ -499,11 +603,6 @@
                     //}
                     this.StartUploadContent();//继续上传下一块文件数据。
                 }
-                else //文件上传完成。
-                {
-                    this.Finished = true;
-                }
-
             }
             catch (System.Exception ex)
             {
@@ -517,17 +616,11 @@
         /// 通知上传进度已经更改。
         /// </summary>
         /// <param name="resultData">需要返回到客户端的数据。</param>
-        private void OnUploadProgressChanged(string resultData)
+        private void OnUploadProgressChanged(object resultData)
         {
             if (this._UploadProgressChanged != null)
             {
-                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(resultData);
-                if (result.ErrorCode != 0)
-                {
-                    this.OnError("上传出错。详细信息：" + result.Message, null);
-                    return;
-                }
-                this._UploadProgressChanged(this, new UploadProgressChangedEventArgs(this.FileSize, this.BytesUploaded, result.Data));
+                this._UploadProgressChanged(this, new UploadProgressChangedEventArgs(this.FileSize, this.BytesUploaded, resultData));
             }
         }
 
