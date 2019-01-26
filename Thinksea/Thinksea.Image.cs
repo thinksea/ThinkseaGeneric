@@ -224,28 +224,42 @@
                 }
             }
 
+            System.Drawing.Imaging.PixelFormat outputFormat;
+
             System.Drawing.Bitmap bitmap = null;
 
             if (Image.IsPixelFormatIndexed(image.PixelFormat))
             {
+                outputFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
                 if (KeepWhite)
                 {
-                    bitmap = new System.Drawing.Bitmap(Width, Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                    bitmap = new System.Drawing.Bitmap(Width, Height, outputFormat);
                 }
                 else
                 {
-                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), outputFormat);
                 }
             }
             else
             {
+                switch (image.PixelFormat)
+                {
+                    case System.Drawing.Imaging.PixelFormat.Format48bppRgb:
+                    case System.Drawing.Imaging.PixelFormat.Format64bppPArgb:
+                    case System.Drawing.Imaging.PixelFormat.Format64bppArgb:
+                        outputFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+                        break;
+                    default:
+                        outputFormat = image.PixelFormat;
+                        break;
+                }
                 if (KeepWhite)
                 {
-                    bitmap = new System.Drawing.Bitmap(Width, Height);
+                    bitmap = new System.Drawing.Bitmap(Width, Height, outputFormat);
                 }
                 else
                 {
-                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), image.PixelFormat);
+                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), outputFormat);
                 }
             }
 
