@@ -670,7 +670,6 @@
         /// 用指定的数据初始化此实例。
         /// </summary>
         /// <param name="CheckCode">文件完整性校验码。</param>
-        /// <param name="DataSize">数据总大小。</param>
         public BeforeUploadEventArgs(byte[] CheckCode)
         {
             this.CheckCode = CheckCode;
