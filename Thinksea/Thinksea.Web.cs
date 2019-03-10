@@ -11,7 +11,7 @@
         /// <summary>
         /// 从指定的 HTML 文本中清除脚本标签“SCRIPT”。
         /// </summary>
-        /// <param name="Html">具有 HTML 格式的代码文本。</param>
+        /// <param name="html">具有 HTML 格式的代码文本。</param>
         /// <returns>清除“SCRIPT”标签后的返回值。</returns>
         /// <example>
         /// <para lang="C#">
@@ -30,22 +30,22 @@
         /// <br/>abc
         /// </para>
         /// </example>
-        public static string RemoveScriptLable(string Html)
+        public static string RemoveScriptLable(string html)
         {
             System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
 
             string reSCRIPT = @"<SCRIPT(?:[^>]*)>(?:.*?)</SCRIPT>";
 
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reSCRIPT, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reSCRIPT, "", regexOptions);
 
-            return Html;
+            return html;
 
         }
 
         /// <summary>
         /// 从指定的 HTML 文本中清除 HTML 标签和脚本标签“SCRIPT”等不可显示代码，只保留可显示文本。
         /// </summary>
-        /// <param name="Html">具有 HTML 格式的代码文本。</param>
+        /// <param name="html">具有 HTML 格式的代码文本。</param>
         /// <returns>清除不可显示代码后的返回值。</returns>
         /// <example>
         /// <para lang="C#">
@@ -65,7 +65,7 @@
         /// <br/>用户名密 码验证码
         /// </para>
         /// </example>
-        public static string RemoveHtmlLable(string Html)
+        public static string RemoveHtmlLable(string html)
         {
             System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
 
@@ -78,15 +78,15 @@
             string reSpace = @"\s+";
             //string reOther = @"<(?:[^>]*)>|</(?:[^>]*)>";
 
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reHTML, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reContain, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reComment, "", regexOptions);
-            //Html = System.Text.RegularExpressions.Regex.Replace( Html, reBODY, "", regexOptions );
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reLable, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reSpace, "", regexOptions);
-            //Html = System.Text.RegularExpressions.Regex.Replace( Html, reOther, "", regexOptions );
+            html = System.Text.RegularExpressions.Regex.Replace(html, reHTML, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reContain, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reComment, "", regexOptions);
+            //html = System.Text.RegularExpressions.Regex.Replace( html, reBODY, "", regexOptions );
+            html = System.Text.RegularExpressions.Regex.Replace(html, reLable, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reSpace, "", regexOptions);
+            //html = System.Text.RegularExpressions.Regex.Replace( html, reOther, "", regexOptions );
 
-            return Html;
+            return html;
 
         }
 
@@ -142,7 +142,7 @@
         /// <summary>
         /// 将纯文本转换成具有相似格式编排的 HTML 代码文本。
         /// </summary>
-        /// <param name="Text">一个 string 对象。可能具有格式编排的文本。</param>
+        /// <param name="text">一个 string 对象。可能具有格式编排的文本。</param>
         /// <returns>具有 HTML 格式的文本对象。</returns>
         /// <remarks>
         /// 为了保证转换后的内容尽可能保持之前的文本编排格式，将换行符和空格符号等内容进行相应的转换。
@@ -160,10 +160,10 @@
         /// ]]>
         /// </code>
         /// </example>
-        public static string TextToHtml(string Text)
+        public static string TextToHtml(string text)
         {
             System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
-            string r = System.Web.HttpUtility.HtmlEncode(Text).Replace("\t", "    ");
+            string r = System.Web.HttpUtility.HtmlEncode(text).Replace("\t", "    ");
             r = System.Text.RegularExpressions.Regex.Replace(r, @"^ (?<notspace>[^ ]|$)",
                 delegate(System.Text.RegularExpressions.Match m)
                 {
@@ -179,17 +179,17 @@
             r = System.Text.RegularExpressions.Regex.Replace(r, @"\n\r|\r\n|\r|\n", "<br />", regexOptions);
             return r;
             ////System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
-            ////return System.Text.RegularExpressions.Regex.Replace(System.Web.HttpUtility.HtmlEncode(Text).Replace(" ", "&nbsp;").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"), @"\n\r|\r\n|\r|\n", "<br />", regexOptions);
-            //if(Text==null) return null;
-            //return Text.replace(/&/gi, "&amp;").replace(/\"/gi, "&quot;").replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\t/gi, "&nbsp;&nbsp;&nbsp;&nbsp;").replace(/\n\r|\r\n|\r|\n/gi, "<br />");
-            //return System.Web.HttpUtility.HtmlEncode(Text).Replace(" ", "&nbsp;").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").Replace("\n\r", "<br />").Replace("\r\n", "<br />").Replace("\r", "<br />").Replace("\n", "<br />");
+            ////return System.Text.RegularExpressions.Regex.Replace(System.Web.HttpUtility.HtmlEncode(text).Replace(" ", "&nbsp;").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"), @"\n\r|\r\n|\r|\n", "<br />", regexOptions);
+            //if(text==null) return null;
+            //return text.replace(/&/gi, "&amp;").replace(/\"/gi, "&quot;").replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/ /gi, "&nbsp;").replace(/\t/gi, "&nbsp;&nbsp;&nbsp;&nbsp;").replace(/\n\r|\r\n|\r|\n/gi, "<br />");
+            //return System.Web.HttpUtility.HtmlEncode(text).Replace(" ", "&nbsp;").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;").Replace("\n\r", "<br />").Replace("\r\n", "<br />").Replace("\r", "<br />").Replace("\n", "<br />");
 
         }
 
         /// <summary>
         /// 将 HTML 代码片段转换成具有相似格式编排的纯文本形式。
         /// </summary>
-        /// <param name="Html">一段 HTML 片段。</param>
+        /// <param name="html">一段 HTML 片段。</param>
         /// <returns>具有 HTML 格式的文本对象。</returns>
         /// <remarks>
         /// <![CDATA[为了保证转换后的内容尽可能保持之前的文本编排格式，将换行“<br />”和空格符号“&nbsp;”等内容进行相应的转换。]]>
@@ -207,7 +207,7 @@
         /// ]]>
         /// </code>
         /// </example>
-        public static string HtmlToText(string Html)
+        public static string HtmlToText(string html)
         {
             System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
 
@@ -227,23 +227,23 @@
             string reGT = @"&gt;";
             string reAMP = @"&amp;";
 
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reSpace, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reHTML, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reContain, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reComment, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reTD, "${Block}\t", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reBlock, "\r\n${Block}", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reParagraph, "\r\n${Paragraph}\r\n", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reBR, "\r\n", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reLable, "", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reNBSP4, "\t", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reNBSP, " ", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reQUOT, "\"", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reLT, "<", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reGT, ">", regexOptions);
-            Html = System.Text.RegularExpressions.Regex.Replace(Html, reAMP, "&", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reSpace, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reHTML, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reContain, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reComment, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reTD, "${Block}\t", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reBlock, "\r\n${Block}", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reParagraph, "\r\n${Paragraph}\r\n", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reBR, "\r\n", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reLable, "", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reNBSP4, "\t", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reNBSP, " ", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reQUOT, "\"", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reLT, "<", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reGT, ">", regexOptions);
+            html = System.Text.RegularExpressions.Regex.Replace(html, reAMP, "&", regexOptions);
 
-            return Html;
+            return html;
             /*
                         <?php
                         // $document 应包含一个 HTML 文档。
@@ -313,12 +313,12 @@
                 /// <summary>
                 /// 用指定的数据初始化此实例。
                 /// </summary>
-                /// <param name="Key">参数名</param>
-                /// <param name="Value">参数值</param>
-                public QueryItem(string Key, string Value)
+                /// <param name="key">参数名</param>
+                /// <param name="value">参数值</param>
+                public QueryItem(string key, string value)
                 {
-                    this.Key = Key;
-                    this.Value = Value;
+                    this.Key = key;
+                    this.Value = value;
                 }
 
                 /// <summary>
@@ -456,15 +456,15 @@
             /// <summary>
             /// 从指定的 URI 中获取指定的参数的值。
             /// </summary>
-            /// <param name="Name">参数名。</param>
+            /// <param name="name">参数名。</param>
             /// <returns>指定参数的值，如果找不到这个参数则返回 null。</returns>
-            public string GetUriParameter(string Name)
+            public string GetUriParameter(string name)
             {
                 if (this.query != null)
                 {
                     foreach (var item in this.query)
                     {
-                        if (item.Key.ToLower() == Name.ToLower())
+                        if (item.Key.ToLower() == name.ToLower())
                         {
                             if (item.Value == null)
                             {
@@ -484,18 +484,18 @@
             /// <summary>
             /// 为指定的 URI 设置参数。
             /// </summary>
-            /// <param name="Name">参数名。</param>
-            /// <param name="Value">新的参数值。</param>
-            public void SetUriParameter(string Name, string Value)
+            /// <param name="name">参数名。</param>
+            /// <param name="value">新的参数值。</param>
+            public void SetUriParameter(string name, string value)
             {
                 if (this.query != null)
                 {
                     for (int i = 0; i < this.query.Count; i++)
                     {
                         var item = this.query[i];
-                        if (item.Key.ToLower() == Name.ToLower())
+                        if (item.Key.ToLower() == name.ToLower())
                         {
-                            this.query[i] = new QueryItem(Name, (Value == null ? null : System.Uri.EscapeDataString(Value)));
+                            this.query[i] = new QueryItem(name, (value == null ? null : System.Uri.EscapeDataString(value)));
                             return;
                         }
                     }
@@ -504,21 +504,21 @@
                 {
                     this.query = new System.Collections.Generic.List<QueryItem>();
                 }
-                this.query.Add(new QueryItem(Name, (Value == null ? null : System.Uri.EscapeDataString(Value))));
+                this.query.Add(new QueryItem(name, (value == null ? null : System.Uri.EscapeDataString(value))));
             }
 
             /// <summary>
             /// 从指定的 URI 删除参数。
             /// </summary>
-            /// <param name="Name">参数名。</param>
-            public void RemoveUriParameter(string Name)
+            /// <param name="name">参数名。</param>
+            public void RemoveUriParameter(string name)
             {
                 if (this.query != null)
                 {
                     for (int i = 0; i < this.query.Count; i++)
                     {
                         var item = this.query[i];
-                        if (item.Key.ToLower() == Name.ToLower())
+                        if (item.Key.ToLower() == name.ToLower())
                         {
                             this.query.Remove(item);
                         }
@@ -546,7 +546,7 @@
         /// 从指定的 URI 中获取指定的参数的值。
         /// </summary>
         /// <param name="uri">一个可能包含参数的 uri 字符串。</param>
-        /// <param name="Name">参数名。</param>
+        /// <param name="name">参数名。</param>
         /// <returns>指定参数的值，如果找不到这个参数则返回 null。</returns>
         /// <example>
         /// <para lang="C#">
@@ -563,18 +563,18 @@
         /// <br/>Par:1
         /// </para>
         /// </example>
-        public static string GetUriParameter(string uri, string Name)
+        public static string GetUriParameter(string uri, string name)
         {
             var r = UriExtTool.Create(uri);
-            return r.GetUriParameter(Name);
+            return r.GetUriParameter(name);
         }
 
         /// <summary>
         /// 为指定的 URI 设置参数。
         /// </summary>
         /// <param name="uri">一个可能包含参数的 uri 字符串。</param>
-        /// <param name="Name">参数名。</param>
-        /// <param name="Value">新的参数值。</param>
+        /// <param name="name">参数名。</param>
+        /// <param name="value">新的参数值。</param>
         /// <returns>已经设置了指定参数名和参数值的 uri 字符串。</returns>
         /// <remarks>
         /// 如果指定的参数存在，则更改参数值为指定的新的参数值，否则，添加一个具有指定参数名和新的参数值的参数。
@@ -594,10 +594,10 @@
         /// <br/><![CDATA[http://www.thinksea.com/default.aspx?id=2&name=thinksea]]>
         /// </para>
         /// </example>
-        public static string SetUriParameter(string uri, string Name, string Value)
+        public static string SetUriParameter(string uri, string name, string value)
         {
             var r = UriExtTool.Create(uri);
-            r.SetUriParameter(Name, Value);
+            r.SetUriParameter(name, value);
             return r.ToString();
         }
 
@@ -605,7 +605,7 @@
         /// 从指定的 URI 删除参数。
         /// </summary>
         /// <param name="uri">一个可能包含参数的 uri 字符串。</param>
-        /// <param name="Name">参数名。</param>
+        /// <param name="name">参数名。</param>
         /// <returns>已经移除了指定参数的 uri 字符串。</returns>
         /// <example>
         /// <para lang="C#">
@@ -622,10 +622,10 @@
         /// <br/>http://www.thinksea.com/default.aspx?name=thinksea
         /// </para>
         /// </example>
-        public static string RemoveUriParameter(string uri, string Name)
+        public static string RemoveUriParameter(string uri, string name)
         {
             var r = UriExtTool.Create(uri);
-            r.RemoveUriParameter(Name);
+            r.RemoveUriParameter(name);
             return r.ToString();
         }
 

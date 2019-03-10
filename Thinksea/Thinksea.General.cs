@@ -2106,16 +2106,16 @@
         /// <summary>
         /// 批量执行 SQL 代码。（支持 GO 语句）
         /// </summary>
-        /// <param name="Connection">已经打开的数据库联接。</param>
-        /// <param name="SQLString">SQL 代码。</param>
-        public static void ExecuteSQL(System.Data.SqlClient.SqlConnection Connection, string SQLString)
+        /// <param name="connection">已经打开的数据库联接。</param>
+        /// <param name="sqlString">SQL 代码。</param>
+        public static void ExecuteSQL(System.Data.SqlClient.SqlConnection connection, string sqlString)
         {
             System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            sqlCommand.Connection = Connection;
+            sqlCommand.Connection = connection;
 
             System.Collections.Generic.List<string> al = new System.Collections.Generic.List<string>();
             System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"^(\s*)go(\s*)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.ExplicitCapture);
-            al.AddRange(reg.Split(SQLString));
+            al.AddRange(reg.Split(sqlString));
             foreach (string tmp in al)
             {
                 sqlCommand.CommandText = tmp.Trim();
@@ -2130,7 +2130,7 @@
         /// <summary>
         /// 将指定的字符串按照 SQL 的字符串语法规则进行字符串转义处理。这个被处理的字符串将置于两个单引号之间共同构成符合 SQL 语法的字符串。
         /// </summary>
-        /// <param name="CommandText">需要进行转义处理的字符串。</param>
+        /// <param name="commandText">需要进行转义处理的字符串。</param>
         /// <returns>转义后的符合 SQL 语法规则的字符串。</returns>
         /// <remarks>
         /// 当我们需要执行一条这样的 SQL 语句，其中查询条件[Name]的取值为“abx'de”，如果我们写成 SELECT * FROM [abc] WHERE [Name]='abx'de' 显然是不符合 SQL 语法的，正确的写法应该是 SELECT * FROM [abc] WHERE [Name]='abx''de'，这个方法就是用来处理这种问题的，它会将参数指定的字符串中包含的这些需要作转义处理的内容（类似于单引号“'”等容易导致 SQL 语法错误特殊符号）进行符合 SQL 语法规则的转义处理。
@@ -2148,16 +2148,16 @@
         /// <br/>SELECT * FROM [abc] WHERE [Name]='abx''de'
         /// </para>
         /// </example>
-        public static System.String FixSQLCommandText(System.String CommandText)
+        public static System.String FixSQLCommandText(System.String commandText)
         {
-            CommandText = CommandText.Replace("'", "''");
-            return CommandText;
+            commandText = commandText.Replace("'", "''");
+            return commandText;
         }
 
         /// <summary>
         /// 将指定的字符串按照 SQL 的 LIKE 命令语法规则进行字符串转义处理。这个被处理的字符串将作为 LIKE 命令参数。
         /// </summary>
-        /// <param name="CommandText">需要进行转义处理的字符串。</param>
+        /// <param name="commandText">需要进行转义处理的字符串。</param>
         /// <returns>转义后的符合 SQL 语法规则的字符串。</returns>
         /// <remarks>
         /// 当我们需要执行一条这样的 SQL 语句，其中查询条件[Name]的取值为“a%b'x[de”，如果我们写成 SELECT * FROM [abc] WHERE [Name] LIKE 'a%b'x[de' 显然是不符合 SQL 语法的，正确的写法应该是 SELECT * FROM [abc] WHERE [Name] LIKE 'a[%]b''x[[]de'，这个方法就是用来处理这种问题的，它会将参数指定的字符串中包含的这些需要作转义处理的内容（类似于百分号“%”等容易导致 SQL 语法错误特殊符号）进行符合 SQL LIKE 命令语法规则的转义处理。
@@ -2175,19 +2175,19 @@
         /// <br/>SELECT * FROM [abc] WHERE [Name] LIKE 'a[%]b''x[[]de'
         /// </para>
         /// </example>
-        public static System.String FixSQLCommandTextLike(System.String CommandText)
+        public static System.String FixSQLCommandTextLike(System.String commandText)
         {
-            CommandText = CommandText.Replace("[", "[[]");
-            CommandText = CommandText.Replace("'", "''");
-            CommandText = CommandText.Replace("%", "[%]");
-            CommandText = CommandText.Replace("_", "[_]");
-            return CommandText;
+            commandText = commandText.Replace("[", "[[]");
+            commandText = commandText.Replace("'", "''");
+            commandText = commandText.Replace("%", "[%]");
+            commandText = commandText.Replace("_", "[_]");
+            return commandText;
         }
 
         /// <summary>
         /// 将指定的字段名按照 SQL 的字段语法规则进行字符串转义处理。这个被处理的字符串将被用作 SQL 字段名称。
         /// </summary>
-        /// <param name="FieldName">需要进行转义处理的字段名。</param>
+        /// <param name="fieldName">需要进行转义处理的字段名。</param>
         /// <returns>转义后的符合 SQL 字段语法规则的字符串。</returns>
         /// <remarks>
         /// 假设我们需要创建一个命名为“Name]Sex”的 SQL 字段，如果不进行转义处理显然是不符合 SQL 语法的，正确的写法应该是“[Name]]Sex]”，这个方法就是用来处理这种问题的，它会将参数指定的字段名中包含的这些需要作转义处理的内容进行符合 SQL 字段语法规则的转义处理。
@@ -2205,10 +2205,10 @@
         /// <br/>SELECT * FROM [abc] WHERE [Name]]Sex]='abcde'
         /// </para>
         /// </example>
-        public static string FixSQLFieldName(string FieldName)
+        public static string FixSQLFieldName(string fieldName)
         {
-            FieldName = FieldName.Replace("]", "]]");
-            return FieldName;
+            fieldName = fieldName.Replace("]", "]]");
+            return fieldName;
 
         }
 
@@ -2349,15 +2349,15 @@
         /// 生成一个密码，密码内容取决于 PasswordSeed。
         /// </summary>
         /// <param name="passwordLength">生成的密码长度。</param>
-        /// <param name="PasswordSeed">密码字符种子列表。</param>
+        /// <param name="passwordSeed">密码字符种子列表。</param>
         /// <returns>生成的密码字符串。</returns>
-        public static string GeneratePassword(int passwordLength, string PasswordSeed)
+        public static string GeneratePassword(int passwordLength, string passwordSeed)
         {
             System.Random rand = new System.Random();
             string result = "";
             for (int i = 0; i < passwordLength; i++)
             {
-                result += PasswordSeed[rand.Next(PasswordSeed.Length - 1)];
+                result += passwordSeed[rand.Next(passwordSeed.Length - 1)];
             }
             return result;
 

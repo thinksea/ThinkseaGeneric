@@ -36,50 +36,50 @@
         /// <summary>
         /// 将指定的图片尺寸计算为不大于指定的缩略图最大尺寸的等比例缩略图尺寸。（返回值不会大于缩略图最大尺寸）
         /// </summary>
-        /// <param name="Width">原图像宽度</param>
-        /// <param name="Height">原图像高度</param>
-        /// <param name="ThumbnailWidth">缩略图最大宽度。取值为 0 时表示忽略此参数。</param>
-        /// <param name="ThumbnailHeight">缩略图最大高度。取值为 0 时表示忽略此参数。</param>
-        /// <param name="LockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
+        /// <param name="width">原图像宽度</param>
+        /// <param name="height">原图像高度</param>
+        /// <param name="thumbnailWidth">缩略图最大宽度。取值为 0 时表示忽略此参数。</param>
+        /// <param name="thumbnailHeight">缩略图最大高度。取值为 0 时表示忽略此参数。</param>
+        /// <param name="lockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
         /// <returns>缩略图在图片框中的位置和缩略图的尺寸</returns>
-        public static System.Drawing.RectangleF GetThumbnailImageSize(float Width, float Height, float ThumbnailWidth, float ThumbnailHeight, bool LockSmallImage)
+        public static System.Drawing.RectangleF GetThumbnailImageSize(float width, float height, float thumbnailWidth, float thumbnailHeight, bool lockSmallImage)
         {
             int defaultSize = 0;
             System.Drawing.RectangleF Result = System.Drawing.RectangleF.Empty;
 
             #region 计算缩略图尺寸。
-            Result.Width = Width;
-            Result.Height = Height;
-            if (ThumbnailWidth != defaultSize && ThumbnailHeight != defaultSize)
+            Result.Width = width;
+            Result.Height = height;
+            if (thumbnailWidth != defaultSize && thumbnailHeight != defaultSize)
             {
-                if (LockSmallImage == false || Width > ThumbnailWidth || Height > ThumbnailHeight)
+                if (lockSmallImage == false || width > thumbnailWidth || height > thumbnailHeight)
                 {
-                    if (Width / Height < ThumbnailWidth / ThumbnailHeight)
+                    if (width / height < thumbnailWidth / thumbnailHeight)
                     {
-                        Result.Height = ThumbnailHeight;
-                        Result.Width = System.Convert.ToInt32(Width * ThumbnailHeight / Height);
+                        Result.Height = thumbnailHeight;
+                        Result.Width = System.Convert.ToInt32(width * thumbnailHeight / height);
                     }
                     else
                     {
-                        Result.Width = ThumbnailWidth;
-                        Result.Height = System.Convert.ToInt32(Height * ThumbnailWidth / Width);
+                        Result.Width = thumbnailWidth;
+                        Result.Height = System.Convert.ToInt32(height * thumbnailWidth / width);
                     }
                 }
             }
-            else if (ThumbnailWidth != defaultSize)
+            else if (thumbnailWidth != defaultSize)
             {
-                if (LockSmallImage == false || Width > ThumbnailWidth)
+                if (lockSmallImage == false || width > thumbnailWidth)
                 {
-                    Result.Width = ThumbnailWidth;
-                    Result.Height = System.Convert.ToInt32(Height * ThumbnailWidth / Width);
+                    Result.Width = thumbnailWidth;
+                    Result.Height = System.Convert.ToInt32(height * thumbnailWidth / width);
                 }
             }
-            else if (ThumbnailHeight != defaultSize)
+            else if (thumbnailHeight != defaultSize)
             {
-                if (LockSmallImage == false || Height > ThumbnailHeight)
+                if (lockSmallImage == false || height > thumbnailHeight)
                 {
-                    Result.Height = ThumbnailHeight;
-                    Result.Width = System.Convert.ToInt32(Width * ThumbnailHeight / Height);
+                    Result.Height = thumbnailHeight;
+                    Result.Width = System.Convert.ToInt32(width * thumbnailHeight / height);
                 }
             }
             #endregion
@@ -116,13 +116,13 @@
             #endregion
 
             #region 计算缩略图在图片框中的位置。
-            if (Result.Width < ThumbnailWidth && ThumbnailWidth != defaultSize)
+            if (Result.Width < thumbnailWidth && thumbnailWidth != defaultSize)
             {
-                Result.X = (ThumbnailWidth - Result.Width) / 2;
+                Result.X = (thumbnailWidth - Result.Width) / 2;
             }
-            if (Result.Height < ThumbnailHeight && ThumbnailHeight != defaultSize)
+            if (Result.Height < thumbnailHeight && thumbnailHeight != defaultSize)
             {
-                Result.Y = (ThumbnailHeight - Result.Height) / 2;
+                Result.Y = (thumbnailHeight - Result.Height) / 2;
             }
             #endregion
 
@@ -133,15 +133,15 @@
         /// <summary>
         /// 从指定的文件装载图像。
         /// </summary>
-        /// <param name="FileName">文件全名。</param>
+        /// <param name="fileName">文件全名。</param>
         /// <returns>一个 System.Drawing.Image 实例。</returns>
         /// <remarks>
         /// 这个函数用于解决 System.Drawing.Image.FromFile 装载图片后不能及时释放文件的问题。
         /// </remarks>
-        public static System.Drawing.Image GetImageFromFile(string FileName)
+        public static System.Drawing.Image GetImageFromFile(string fileName)
         {
             System.Drawing.Image bitmap = null;
-            System.IO.FileStream fs = new System.IO.FileStream(FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
             try
             {
                 bitmap = GetImageFromStream(fs);
@@ -188,15 +188,15 @@
         /// 获取指定图像的等比例缩略图。
         /// </summary>
         /// <param name="image">用于提供图像数据的 System.Drawing.Image 实例。</param>
-        /// <param name="Width">缩略图宽度。</param>
-        /// <param name="Height">缩略图高度。</param>
-        /// <param name="Proportion">缩放时维持等比例。</param>
-        /// <param name="LockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
-        /// <param name="ImageQuality">输出图片质量。</param>
-        /// <param name="KeepWhite">指示是否保留空白边距。如果保留空白边距则使用指定的颜色填充，以确保输出的图像的尺寸与指定的尺寸相等。否则输出的图像的尺寸可能小于指定的尺寸。</param>
-        /// <param name="WhiteFillColor">空白区域填充颜色。</param>
+        /// <param name="width">缩略图宽度。</param>
+        /// <param name="height">缩略图高度。</param>
+        /// <param name="proportion">缩放时维持等比例。</param>
+        /// <param name="lockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
+        /// <param name="imageQuality">输出图片质量。</param>
+        /// <param name="keepWhite">指示是否保留空白边距。如果保留空白边距则使用指定的颜色填充，以确保输出的图像的尺寸与指定的尺寸相等。否则输出的图像的尺寸可能小于指定的尺寸。</param>
+        /// <param name="whiteFillColor">空白区域填充颜色。</param>
         /// <returns>一个 System.Drawing.Image 实例。</returns>
-        public static System.Drawing.Bitmap GetThumbnailImage(System.Drawing.Image image, int Width, int Height, bool Proportion, bool LockSmallImage, Thinksea.eImageQuality ImageQuality, bool KeepWhite, System.Drawing.Color WhiteFillColor)
+        public static System.Drawing.Bitmap GetThumbnailImage(System.Drawing.Image image, int width, int height, bool proportion, bool lockSmallImage, Thinksea.eImageQuality imageQuality, bool keepWhite, System.Drawing.Color whiteFillColor)
         {
             if (image == null)
             {
@@ -204,20 +204,20 @@
             }
 
             System.Drawing.RectangleF ImageRectangleF;
-            if (Proportion || (LockSmallImage && KeepWhite))
+            if (proportion || (lockSmallImage && keepWhite))
             {
-                ImageRectangleF = Thinksea.Image.GetThumbnailImageSize(image.Width, image.Height, Width, Height, LockSmallImage);
+                ImageRectangleF = Thinksea.Image.GetThumbnailImageSize(image.Width, image.Height, width, height, lockSmallImage);
             }
             else
             {
-                ImageRectangleF = new System.Drawing.RectangleF(0, 0, Width, Height);
-                if (LockSmallImage)
+                ImageRectangleF = new System.Drawing.RectangleF(0, 0, width, height);
+                if (lockSmallImage)
                 {
-                    if (image.Width < Width)
+                    if (image.Width < width)
                     {
                         ImageRectangleF.Width = image.Width;
                     }
-                    if (image.Height < Height)
+                    if (image.Height < height)
                     {
                         ImageRectangleF.Height = image.Height;
                     }
@@ -231,9 +231,9 @@
             if (Image.IsPixelFormatIndexed(image.PixelFormat))
             {
                 outputFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
-                if (KeepWhite)
+                if (keepWhite)
                 {
-                    bitmap = new System.Drawing.Bitmap(Width, Height, outputFormat);
+                    bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
                 }
                 else
                 {
@@ -253,9 +253,9 @@
                         outputFormat = image.PixelFormat;
                         break;
                 }
-                if (KeepWhite)
+                if (keepWhite)
                 {
-                    bitmap = new System.Drawing.Bitmap(Width, Height, outputFormat);
+                    bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
                 }
                 else
                 {
@@ -265,7 +265,7 @@
 
             using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
             {
-                switch (ImageQuality)
+                switch (imageQuality)
                 {
                     case Thinksea.eImageQuality.High:
                         {
@@ -301,11 +301,11 @@
                         break;
                 }
 
-                if (KeepWhite)
+                if (keepWhite)
                 {
-                    if (WhiteFillColor != System.Drawing.Color.Transparent)
+                    if (whiteFillColor != System.Drawing.Color.Transparent)
                     {
-                        g.Clear(WhiteFillColor);
+                        g.Clear(whiteFillColor);
                     }
                     g.DrawImage(image, ImageRectangleF);
                 }
@@ -348,21 +348,21 @@
         /// <summary>
         /// 获取指定文件的等比例缩略图。
         /// </summary>
-        /// <param name="FileName">图片文件全名。</param>
-        /// <param name="Width">缩略图宽度。</param>
-        /// <param name="Height">缩略图高度。</param>
-        /// <param name="Proportion">缩放时维持等比例。</param>
-        /// <param name="LockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
-        /// <param name="ImageQuality">输出图片质量。</param>
-        /// <param name="KeepWhite">指示是否保留空白边距。如果保留空白边距则使用指定的颜色填充，以确保输出的图像的尺寸与指定的尺寸相等。否则输出的图像的尺寸可能小于指定的尺寸。</param>
-        /// <param name="WhiteFillColor">空白区域填充颜色。</param>
+        /// <param name="fileName">图片文件全名。</param>
+        /// <param name="width">缩略图宽度。</param>
+        /// <param name="height">缩略图高度。</param>
+        /// <param name="proportion">缩放时维持等比例。</param>
+        /// <param name="lockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
+        /// <param name="imageQuality">输出图片质量。</param>
+        /// <param name="keepWhite">指示是否保留空白边距。如果保留空白边距则使用指定的颜色填充，以确保输出的图像的尺寸与指定的尺寸相等。否则输出的图像的尺寸可能小于指定的尺寸。</param>
+        /// <param name="whiteFillColor">空白区域填充颜色。</param>
         /// <returns>一个 System.Drawing.Image 实例。</returns>
-        public static System.Drawing.Bitmap GetThumbnailImage(string FileName, int Width, int Height, bool Proportion, bool LockSmallImage, Thinksea.eImageQuality ImageQuality, bool KeepWhite, System.Drawing.Color WhiteFillColor)
+        public static System.Drawing.Bitmap GetThumbnailImage(string fileName, int width, int height, bool proportion, bool lockSmallImage, Thinksea.eImageQuality imageQuality, bool keepWhite, System.Drawing.Color whiteFillColor)
         {
-            System.Drawing.Image img = Thinksea.Image.GetImageFromFile(FileName);
+            System.Drawing.Image img = Thinksea.Image.GetImageFromFile(fileName);
             try
             {
-                return Thinksea.Image.GetThumbnailImage(img, Width, Height, Proportion, LockSmallImage, ImageQuality, KeepWhite, WhiteFillColor);
+                return Thinksea.Image.GetThumbnailImage(img, width, height, proportion, lockSmallImage, imageQuality, keepWhite, whiteFillColor);
             }
             finally
             {
@@ -373,9 +373,9 @@
         /// <summary>
         /// 获取图片尺寸。
         /// </summary>
-        /// <param name="sFileName">图片文件名。</param>
+        /// <param name="fileName">图片文件名。</param>
         /// <returns></returns>
-        public static System.Drawing.Size GetImageSize(string sFileName)
+        public static System.Drawing.Size GetImageSize(string fileName)
         {
             System.Drawing.Size GetImageSize = new System.Drawing.Size();
             byte[] bTemp = new byte[4];
@@ -389,7 +389,7 @@
             byte bDone = 0;
             int iCount;
 
-            System.IO.FileStream fs = new System.IO.FileStream(sFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
             try
             {
                 System.IO.BinaryReader br = new System.IO.BinaryReader(fs);
@@ -525,7 +525,7 @@
                 }
                 else
                 {
-                    System.Drawing.Image img = System.Drawing.Bitmap.FromFile(sFileName);
+                    System.Drawing.Image img = System.Drawing.Bitmap.FromFile(fileName);
                     GetImageSize = img.Size;
                 }
             }
@@ -536,11 +536,115 @@
             return GetImageSize;
         }
 
+        /// <summary>
+        /// 获取 SVG 格式图片尺寸。
+        /// </summary>
+        /// <param name="fileName">图片文件名。</param>
+        /// <returns>图片尺寸。</returns>
+        public static Thinksea.Image.Size GetSvgImageSize(string fileName)
+        {
+            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            try
+            {
+                //SVG 文件
+                {
+                    fs.Seek(0, System.IO.SeekOrigin.Begin);
+                    System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs);
+                    while (xmlReader.Read())
+                    {
+                        if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
+                        {
+                            string width = xmlReader["width"];
+                            string height = xmlReader["height"];
+                            return new Thinksea.Image.Size(new System.Web.UI.WebControls.Unit(width), new System.Web.UI.WebControls.Unit(height));
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                fs.Close();
+            }
+            return Thinksea.Image.Size.Empty;
+        }
+
         private static int CombineBytes(byte lsb, byte msb)
         {
             return System.Convert.ToInt32(lsb) + System.Convert.ToInt32(msb) * 256;
         }
 
+        /// <summary>
+        /// 定义一个表示尺寸的数据结构。
+        /// </summary>
+        public class Size
+        {
+            /// <summary>
+            /// 获取 <see cref="Height"/> 和 <see cref="Width"/> 值为空的 <see cref="Size"/> 结构。
+            /// </summary>
+            public static readonly Size Empty;
+
+            /// <summary>
+            /// 获取一个值，该值指示 <see cref="Size"/> 是否为空。
+            /// </summary>
+            [System.ComponentModel.Browsable(false)]
+            public bool IsEmpty
+            {
+                get
+                {
+                    return (this._Width.IsEmpty && this._Height.IsEmpty);
+                }
+            }
+
+            private System.Web.UI.WebControls.Unit _Width = System.Web.UI.WebControls.Unit.Empty;
+            /// <summary>
+            /// 宽度。
+            /// </summary>
+            public System.Web.UI.WebControls.Unit Width
+            {
+                get
+                {
+                    return this._Width;
+                }
+                set
+                {
+                    this._Width = value;
+                }
+            }
+
+            private System.Web.UI.WebControls.Unit _Height = System.Web.UI.WebControls.Unit.Empty;
+            /// <summary>
+            /// 高度。
+            /// </summary>
+            public System.Web.UI.WebControls.Unit Height
+            {
+                get
+                {
+                    return this._Height;
+                }
+                set
+                {
+                    this._Height = value;
+                }
+            }
+
+            /// <summary>
+            /// 一个构造方法。
+            /// </summary>
+            public Size()
+            {
+            }
+
+            /// <summary>
+            /// 用指定的数据初始化此实例。
+            /// </summary>
+            /// <param name="width">宽度。</param>
+            /// <param name="height">高度。</param>
+            public Size(System.Web.UI.WebControls.Unit width, System.Web.UI.WebControls.Unit height)
+            {
+                this._Width = width;
+                this._Height = height;
+            }
+        }
     }
 
     /// <summary>

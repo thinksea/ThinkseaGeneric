@@ -69,10 +69,10 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public CRC32(int Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public CRC32(int polynomial)
         {
-            this.Init(Polynomial);
+            this.Init(polynomial);
         }
 
         /// <summary>
@@ -82,10 +82,10 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public CRC32(long Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public CRC32(long polynomial)
         {
-            this.Init(Polynomial);
+            this.Init(polynomial);
         }
 
         /// <summary>
@@ -95,10 +95,10 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public CRC32(uint Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public CRC32(uint polynomial)
         {
-            this.Init(Polynomial);
+            this.Init(polynomial);
         }
 
 
@@ -117,11 +117,11 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public void Init(int Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public void Init(int polynomial)
         {
             // 使用 BitConverter 类转换有符号值为无符号值，因为我们不想引发异常。
-            byte[] intBytes = System.BitConverter.GetBytes(Polynomial);
+            byte[] intBytes = System.BitConverter.GetBytes(polynomial);
             uint poly = System.BitConverter.ToUInt32(intBytes, 0);
             // 既然我们获得了无符号表示，用它来初始化这个类。
             Init(poly);
@@ -134,11 +134,11 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public void Init(long Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public void Init(long polynomial)
         {
             const uint Mask = 0xffffffff;
-            uint poly = (uint)(Polynomial & Mask);
+            uint poly = (uint)(polynomial & Mask);
             Init(poly);
         }
 
@@ -149,10 +149,10 @@
         /// 一个初始化变量的方法，在你允许调用 Crc32 方法之前必须调用此方法。
         /// 用指定的多项式初始化 CRC 表。
         /// </remarks>
-        /// <param name="Polynomial">初始化表时使用的多项式。</param>
-        public void Init(uint Polynomial)
+        /// <param name="polynomial">初始化表时使用的多项式。</param>
+        public void Init(uint polynomial)
         {
-            _Polynomial = Polynomial;
+            _Polynomial = polynomial;
             // 计数器
             uint i = 0, j = 0;
             // 创建表的变量
@@ -302,24 +302,24 @@
         /// <summary>
         /// 计算一个文件数据的循环冗余效验。使用指定的编码方案。
         /// </summary>
-        /// <param name="File">文件。</param>
-        /// <param name="BuffLength">允许使用的缓冲区大小。</param>
+        /// <param name="file">文件。</param>
+        /// <param name="buffLength">允许使用的缓冲区大小。</param>
         /// <returns></returns>
         /// <remarks>
         /// 计算循环冗余效验码时文件长度也在计算之内。
         /// </remarks>
-        public byte[] Crc32OfFile(string File, int BuffLength)
+        public byte[] Crc32OfFile(string file, int buffLength)
         {
             const int CRCLength = 4;//定义 CRC 长度。
             byte[] crc = null;
-            byte[] buff = new byte[CRCLength + BuffLength];
+            byte[] buff = new byte[CRCLength + buffLength];
             int rl = -1;
-            System.IO.FileStream fs = new System.IO.FileStream(File, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
             try
             {
                 while (fs.Position < fs.Length)
                 {
-                    rl = fs.Read(buff, CRCLength, BuffLength);//从文件读取数据存放到 CRC 空间后。
+                    rl = fs.Read(buff, CRCLength, buffLength);//从文件读取数据存放到 CRC 空间后。
                     if (rl > 0)
                     {
                         if (crc == null)
@@ -344,7 +344,7 @@
 
             long fileLength = 0;
             {
-                System.IO.FileInfo fi = new System.IO.FileInfo(File);
+                System.IO.FileInfo fi = new System.IO.FileInfo(file);
                 fileLength = fi.Length;
             }
 
@@ -362,14 +362,14 @@
         /// <summary>
         /// 计算一个文件数据的循环冗余效验。使用指定的编码方案。
         /// </summary>
-        /// <param name="File">文件。</param>
+        /// <param name="file">文件。</param>
         /// <returns></returns>
         /// <remarks>
         /// 计算循环冗余效验码时文件长度也在计算之内。
         /// </remarks>
-        public byte[] Crc32OfFile(string File)
+        public byte[] Crc32OfFile(string file)
         {
-            return this.Crc32OfFile(File, 1024 * 8);
+            return this.Crc32OfFile(file, 1024 * 8);
         }
 
     }
