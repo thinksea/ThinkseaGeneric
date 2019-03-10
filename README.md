@@ -6,6 +6,11 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2019-03-10
+
+新增方法：
++ Thinksea.Image.Size Thinksea.Image.GetSvgImageSize(string fileName); //获取 SVG 格式图片尺寸
+
 ###### version：2019-01-26
 
 新增功能 Web 输出图片质量：
@@ -18,7 +23,6 @@
 + public static bool Thinksea.Web.isMobileOrPad() //判断用户端访问设备是否手机或平板。
 + public static bool Thinksea.Web.IsWeixinBrowser() //判断是否在微信浏览器内访问网页。
 
-=======
 ###### version：2018-10-22
 
 重要修改：
