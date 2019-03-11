@@ -543,13 +543,17 @@
         /// <returns>图片尺寸。</returns>
         public static Thinksea.Image.Size GetSvgImageSize(string fileName)
         {
+            System.Xml.XmlReaderSettings xs = new System.Xml.XmlReaderSettings();
+            xs.XmlResolver = null;
+            xs.DtdProcessing = System.Xml.DtdProcessing.Ignore;
+
             System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
             try
             {
                 //SVG 文件
                 {
                     fs.Seek(0, System.IO.SeekOrigin.Begin);
-                    System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs);
+                    System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs, xs);
                     while (xmlReader.Read())
                     {
                         if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
@@ -576,7 +580,7 @@
         /// <summary>
         /// 定义一个表示尺寸的数据结构。
         /// </summary>
-        public class Size
+        public struct Size
         {
             /// <summary>
             /// 获取 <see cref="Height"/> 和 <see cref="Width"/> 值为空的 <see cref="Size"/> 结构。
@@ -595,7 +599,7 @@
                 }
             }
 
-            private System.Web.UI.WebControls.Unit _Width = System.Web.UI.WebControls.Unit.Empty;
+            private System.Web.UI.WebControls.Unit _Width;
             /// <summary>
             /// 宽度。
             /// </summary>
@@ -611,7 +615,7 @@
                 }
             }
 
-            private System.Web.UI.WebControls.Unit _Height = System.Web.UI.WebControls.Unit.Empty;
+            private System.Web.UI.WebControls.Unit _Height;
             /// <summary>
             /// 高度。
             /// </summary>
@@ -627,12 +631,14 @@
                 }
             }
 
-            /// <summary>
-            /// 一个构造方法。
-            /// </summary>
-            public Size()
-            {
-            }
+            ///// <summary>
+            ///// 一个构造方法。
+            ///// </summary>
+            //public Size()
+            //{
+            //    this._Width = System.Web.UI.WebControls.Unit.Empty;
+            //    this._Height = System.Web.UI.WebControls.Unit.Empty;
+            //}
 
             /// <summary>
             /// 用指定的数据初始化此实例。
@@ -643,6 +649,15 @@
             {
                 this._Width = width;
                 this._Height = height;
+            }
+
+            /// <summary>
+            /// 获取此实例的字符串表示形式。
+            /// </summary>
+            /// <returns>一个 <see cref="string"/> 实例。</returns>
+            public override string ToString()
+            {
+                return "{Width=" + this.Width.ToString() + ", Height=" + this.Height.ToString() + "}";
             }
         }
     }
