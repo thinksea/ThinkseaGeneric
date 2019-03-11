@@ -553,14 +553,16 @@
                 //SVG 文件
                 {
                     fs.Seek(0, System.IO.SeekOrigin.Begin);
-                    System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs, xs);
-                    while (xmlReader.Read())
+                    using (System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs, xs))
                     {
-                        if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
+                        while (xmlReader.Read())
                         {
-                            string width = xmlReader["width"];
-                            string height = xmlReader["height"];
-                            return new Thinksea.Image.Size(new System.Web.UI.WebControls.Unit(width), new System.Web.UI.WebControls.Unit(height));
+                            if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
+                            {
+                                string width = xmlReader["width"];
+                                string height = xmlReader["height"];
+                                return new Thinksea.Image.Size(new System.Web.UI.WebControls.Unit(width), new System.Web.UI.WebControls.Unit(height));
+                            }
                         }
                     }
                 }
