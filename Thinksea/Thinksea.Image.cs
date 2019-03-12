@@ -141,17 +141,11 @@
         public static System.Drawing.Image GetImageFromFile(string fileName)
         {
             System.Drawing.Image bitmap = null;
-            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
-            try
+            using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
             {
                 bitmap = GetImageFromStream(fs);
             }
-            finally
-            {
-                fs.Close();
-            }
             return bitmap;
-
         }
 
         /// <summary>
@@ -359,23 +353,18 @@
         /// <returns>一个 System.Drawing.Image 实例。</returns>
         public static System.Drawing.Bitmap GetThumbnailImage(string fileName, int width, int height, bool proportion, bool lockSmallImage, Thinksea.eImageQuality imageQuality, bool keepWhite, System.Drawing.Color whiteFillColor)
         {
-            System.Drawing.Image img = Thinksea.Image.GetImageFromFile(fileName);
-            try
+            using (System.Drawing.Image img = Thinksea.Image.GetImageFromFile(fileName))
             {
                 return Thinksea.Image.GetThumbnailImage(img, width, height, proportion, lockSmallImage, imageQuality, keepWhite, whiteFillColor);
-            }
-            finally
-            {
-                img.Dispose();
             }
         }
 
         /// <summary>
         /// 获取图片尺寸。
         /// </summary>
-        /// <param name="fileName">图片文件名。</param>
-        /// <returns></returns>
-        public static System.Drawing.Size GetImageSize(string fileName)
+        /// <param name="input">图片数据输入流。</param>
+        /// <returns>图片尺寸。</returns>
+        public static System.Drawing.Size GetImageSize(System.IO.Stream input)
         {
             System.Drawing.Size GetImageSize = new System.Drawing.Size();
             byte[] bTemp = new byte[4];
@@ -389,189 +378,314 @@
             byte bDone = 0;
             int iCount;
 
-            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
-            try
+            System.IO.BinaryReader br = new System.IO.BinaryReader(input);
+            lFlen = input.Length;
+            //iFN = FreeFile
+            //Open sFileName For Binary As iFN
+            input.Read(bTemp, 0, bTemp.Length);//Get #iFN, 1, bTemp()
+
+            //PNG file
+            if (bTemp[0] == 0x89 && bTemp[1] == 0x50 && bTemp[2] == 0x4E && bTemp[3] == 0x47)
             {
-                System.IO.BinaryReader br = new System.IO.BinaryReader(fs);
-                lFlen = fs.Length;
-                //iFN = FreeFile
-                //Open sFileName For Binary As iFN
-                fs.Read(bTemp, 0, bTemp.Length);//Get #iFN, 1, bTemp()
+                //Get #iFN, 19, bWmsb
+                //Get #iFN, 20, bWlsb
+                //Get #iFN, 23, bHmsb
+                //Get #iFN, 24, bHlsb
+                //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
+                //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
+                input.Seek(18, System.IO.SeekOrigin.Begin);
+                bWmsb = br.ReadByte();
+                bWlsb = br.ReadByte();
+                input.Seek(22, System.IO.SeekOrigin.Begin);
+                bHmsb = br.ReadByte();
+                bHlsb = br.ReadByte();
+                GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
+                GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
+            }
 
-                //PNG file
-                if (bTemp[0] == 0x89 && bTemp[1] == 0x50 && bTemp[2] == 0x4E && bTemp[3] == 0x47)
+            //GIF file
+            else if (bTemp[0] == 0x47 && bTemp[1] == 0x49 && bTemp[2] == 0x46 && bTemp[3] == 0x38)
+            {
+                //Get #iFN, 7, bWlsb
+                //Get #iFN, 8, bWmsb
+                //Get #iFN, 9, bHlsb
+                //Get #iFN, 10, bHmsb
+                //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
+                //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
+                input.Seek(6, System.IO.SeekOrigin.Begin);
+                bWlsb = br.ReadByte();
+                bWmsb = br.ReadByte();
+                bHlsb = br.ReadByte();
+                bHmsb = br.ReadByte();
+                GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
+                GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
+            }
+
+
+            //JPEG file
+            else if (bTemp[0] == 0xFF && bTemp[1] == 0xD8 && bTemp[2] == 0xFF)
+            {
+                //Debug.Print "JPEG"
+                //    lPos = 3
+                //    Do
+                //        Do
+                //            Get #iFN, lPos, bBuf(1)
+                //            Get #iFN, lPos + 1, bBuf(2)
+                //            lPos = lPos + 1
+                //        Loop Until (bBuf(1) = 0xFF && bBuf(2) <> 0xFF) Or lPos > lFlen
+
+                //        For iCount = 0 To 7
+                //            Get #iFN, lPos + iCount, bBuf(iCount)
+                //        Next iCount
+                //        If bBuf(0) >= 0xC0 && bBuf(0) <= 0xC3 Then
+                //            bHmsb = bBuf(4)
+                //            bHlsb = bBuf(5)
+                //            bWmsb = bBuf(6)
+                //            bWlsb = bBuf(7)
+                //            bDone = 1
+                //        Else
+                //            lPos = lPos + (CombineBytes(bBuf(2), bBuf(1))) + 1
+                //        End If
+                //    Loop While lPos < lFlen && bDone = 0
+                //    GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
+                //    GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
+
+                bWlsb = 0;
+                bWmsb = 0;
+                bHlsb = 0;
+                bHmsb = 0;
+
+                lPos = 2;
+                do
                 {
-                    //Get #iFN, 19, bWmsb
-                    //Get #iFN, 20, bWlsb
-                    //Get #iFN, 23, bHmsb
-                    //Get #iFN, 24, bHlsb
-                    //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
-                    //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
-                    fs.Seek(18, System.IO.SeekOrigin.Begin);
-                    bWmsb = br.ReadByte();
-                    bWlsb = br.ReadByte();
-                    fs.Seek(22, System.IO.SeekOrigin.Begin);
-                    bHmsb = br.ReadByte();
-                    bHlsb = br.ReadByte();
-                    GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
-                    GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
-                }
-
-                //GIF file
-                else if (bTemp[0] == 0x47 && bTemp[1] == 0x49 && bTemp[2] == 0x46 && bTemp[3] == 0x38)
-                {
-                    //Get #iFN, 7, bWlsb
-                    //Get #iFN, 8, bWmsb
-                    //Get #iFN, 9, bHlsb
-                    //Get #iFN, 10, bHmsb
-                    //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
-                    //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
-                    fs.Seek(6, System.IO.SeekOrigin.Begin);
-                    bWlsb = br.ReadByte();
-                    bWmsb = br.ReadByte();
-                    bHlsb = br.ReadByte();
-                    bHmsb = br.ReadByte();
-                    GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
-                    GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
-                }
-
-
-                //JPEG file
-                else if (bTemp[0] == 0xFF && bTemp[1] == 0xD8 && bTemp[2] == 0xFF)
-                {
-                    //Debug.Print "JPEG"
-                    //    lPos = 3
-                    //    Do
-                    //        Do
-                    //            Get #iFN, lPos, bBuf(1)
-                    //            Get #iFN, lPos + 1, bBuf(2)
-                    //            lPos = lPos + 1
-                    //        Loop Until (bBuf(1) = 0xFF && bBuf(2) <> 0xFF) Or lPos > lFlen
-
-                    //        For iCount = 0 To 7
-                    //            Get #iFN, lPos + iCount, bBuf(iCount)
-                    //        Next iCount
-                    //        If bBuf(0) >= 0xC0 && bBuf(0) <= 0xC3 Then
-                    //            bHmsb = bBuf(4)
-                    //            bHlsb = bBuf(5)
-                    //            bWmsb = bBuf(6)
-                    //            bWlsb = bBuf(7)
-                    //            bDone = 1
-                    //        Else
-                    //            lPos = lPos + (CombineBytes(bBuf(2), bBuf(1))) + 1
-                    //        End If
-                    //    Loop While lPos < lFlen && bDone = 0
-                    //    GetImageSize.Width = CombineBytes(bWlsb, bWmsb)
-                    //    GetImageSize.Height = CombineBytes(bHlsb, bHmsb)
-
-                    bWlsb = 0;
-                    bWmsb = 0;
-                    bHlsb = 0;
-                    bHmsb = 0;
-
-                    lPos = 2;
                     do
                     {
-                        do
-                        {
-                            fs.Seek(lPos, System.IO.SeekOrigin.Begin);
-                            bBuf[1] = br.ReadByte();
-                            fs.Seek(lPos + 1, System.IO.SeekOrigin.Begin);
-                            bBuf[2] = br.ReadByte();
-                            lPos = lPos + 1;
-                        } while ((bBuf[1] == 0xFF && bBuf[2] != 0xFF) == false && lPos < lFlen);
+                        input.Seek(lPos, System.IO.SeekOrigin.Begin);
+                        bBuf[1] = br.ReadByte();
+                        input.Seek(lPos + 1, System.IO.SeekOrigin.Begin);
+                        bBuf[2] = br.ReadByte();
+                        lPos = lPos + 1;
+                    } while ((bBuf[1] == 0xFF && bBuf[2] != 0xFF) == false && lPos < lFlen);
 
-                        for (iCount = 0; iCount < bBuf.Length; iCount++)
-                        {
-                            fs.Seek(lPos + iCount, System.IO.SeekOrigin.Begin);
-                            bBuf[iCount] = br.ReadByte();
-                        }
+                    for (iCount = 0; iCount < bBuf.Length; iCount++)
+                    {
+                        input.Seek(lPos + iCount, System.IO.SeekOrigin.Begin);
+                        bBuf[iCount] = br.ReadByte();
+                    }
 
-                        if (bBuf[0] >= 0xC0 && bBuf[0] <= 0xC3)
-                        {
-                            bHmsb = bBuf[4];
-                            bHlsb = bBuf[5];
-                            bWmsb = bBuf[6];
-                            bWlsb = bBuf[7];
-                            bDone = 1;
-                        }
-                        else
-                        {
-                            lPos = lPos + (CombineBytes(bBuf[2], bBuf[1])) + 1;
-                        }
-                    } while (lPos < lFlen && bDone == 0);
+                    if (bBuf[0] >= 0xC0 && bBuf[0] <= 0xC3)
+                    {
+                        bHmsb = bBuf[4];
+                        bHlsb = bBuf[5];
+                        bWmsb = bBuf[6];
+                        bWlsb = bBuf[7];
+                        bDone = 1;
+                    }
+                    else
+                    {
+                        lPos = lPos + (CombineBytes(bBuf[2], bBuf[1])) + 1;
+                    }
+                } while (lPos < lFlen && bDone == 0);
 
-                    GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
-                    GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
-                }
-
-                //BMP 文件        
-                else if (bTemp[0] == 0x42 && bTemp[1] == 0x4D)
-                {
-                    //Get #iFN, 19, bWlsb            
-                    //Get #iFN, 20, bWmsb            
-                    //Get #iFN, 23, bHlsb            
-                    //Get #iFN, 24, bHmsb            
-                    //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)            
-                    //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)        
-                    fs.Seek(18, System.IO.SeekOrigin.Begin);
-                    bWmsb = br.ReadByte();
-                    bWlsb = br.ReadByte();
-                    fs.Seek(22, System.IO.SeekOrigin.Begin);
-                    bHmsb = br.ReadByte();
-                    bHlsb = br.ReadByte();
-                    GetImageSize.Width = CombineBytes(bWmsb, bWlsb);
-                    GetImageSize.Height = CombineBytes(bHmsb, bHlsb);
-                }
-                else
-                {
-                    System.Drawing.Image img = System.Drawing.Bitmap.FromFile(fileName);
-                    GetImageSize = img.Size;
-                }
+                GetImageSize.Width = CombineBytes(bWlsb, bWmsb);
+                GetImageSize.Height = CombineBytes(bHlsb, bHmsb);
             }
-            finally
+
+            //BMP 文件        
+            else if (bTemp[0] == 0x42 && bTemp[1] == 0x4D)
             {
-                fs.Close();
+                //Get #iFN, 19, bWlsb            
+                //Get #iFN, 20, bWmsb            
+                //Get #iFN, 23, bHlsb            
+                //Get #iFN, 24, bHmsb            
+                //GetImageSize.Width = CombineBytes(bWlsb, bWmsb)            
+                //GetImageSize.Height = CombineBytes(bHlsb, bHmsb)        
+                input.Seek(18, System.IO.SeekOrigin.Begin);
+                bWmsb = br.ReadByte();
+                bWlsb = br.ReadByte();
+                input.Seek(22, System.IO.SeekOrigin.Begin);
+                bHmsb = br.ReadByte();
+                bHlsb = br.ReadByte();
+                GetImageSize.Width = CombineBytes(bWmsb, bWlsb);
+                GetImageSize.Height = CombineBytes(bHmsb, bHlsb);
+            }
+            else
+            {
+                input.Seek(0, System.IO.SeekOrigin.Begin);
+                System.Drawing.Image img = System.Drawing.Bitmap.FromStream(input);
+                GetImageSize = img.Size;
             }
             return GetImageSize;
         }
 
         /// <summary>
-        /// 获取 SVG 格式图片尺寸。
+        /// 获取图片尺寸。
         /// </summary>
         /// <param name="fileName">图片文件名。</param>
         /// <returns>图片尺寸。</returns>
-        public static Thinksea.Image.Size GetSvgImageSize(string fileName)
+        public static System.Drawing.Size GetImageSize(string fileName)
+        {
+            using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
+            {
+                return GetImageSize(fs);
+            }
+        }
+
+        /// <summary>
+        /// 获取 SVG 格式图片尺寸。
+        /// </summary>
+        /// <param name="input">SVG 矢量图数据输入流。</param>
+        /// <returns>图片尺寸。</returns>
+        private static System.Drawing.SizeF GetSvgImageSize(System.IO.Stream input)
         {
             System.Xml.XmlReaderSettings xs = new System.Xml.XmlReaderSettings();
             xs.XmlResolver = null;
             xs.DtdProcessing = System.Xml.DtdProcessing.Ignore;
 
-            System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            //SVG 文件
+            {
+                System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(input, xs);
+                while (xmlReader.Read())
+                {
+                    if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
+                    {
+                        string width = xmlReader["width"];
+                        string height = xmlReader["height"];
+                        string viewBox = xmlReader["viewBox"];
+
+                        double? viewBox_Width = null, viewBox_Height = null;
+                        if (!string.IsNullOrEmpty(viewBox))
+                        {
+                            viewBox = viewBox.Trim();
+                            string[] sp = System.Text.RegularExpressions.Regex.Split(viewBox, @"\s+");
+                            if (sp.Length > 2)
+                            {
+                                viewBox_Width = System.Convert.ToDouble(sp[2]);
+                            }
+                            if (sp.Length > 3)
+                            {
+                                viewBox_Height = System.Convert.ToDouble(sp[3]);
+                            }
+                        }
+
+                        System.Web.UI.WebControls.Unit uWidth, uHeight;
+                        //参考 SVG 标准“https://www.w3.org/TR/SVG2/”
+                        if (string.IsNullOrEmpty(width) || width == "auto")
+                        {
+                            uWidth = new System.Web.UI.WebControls.Unit("100%");
+                        }
+                        else
+                        {
+                            uWidth = new System.Web.UI.WebControls.Unit(width);
+                        }
+                        if (string.IsNullOrEmpty(height) || height == "auto")
+                        {
+                            uHeight = new System.Web.UI.WebControls.Unit("100%");
+                        }
+                        else
+                        {
+                            uHeight = new System.Web.UI.WebControls.Unit(height);
+                        }
+
+                        if (uWidth.Type == System.Web.UI.WebControls.UnitType.Percentage)
+                        {
+                            if (viewBox_Width != null)
+                            {
+                                uWidth = new System.Web.UI.WebControls.Unit(viewBox_Width.Value * (uWidth.Value / 100));
+                            }
+                            else
+                            {
+                                uWidth = new System.Web.UI.WebControls.Unit(1600); //当无法计算宽度则使用自定义的默认值 1600（注意：非 SVG 标准规定）
+                            }
+                        }
+                        if (uHeight.Type == System.Web.UI.WebControls.UnitType.Percentage)
+                        {
+                            if (viewBox_Height != null)
+                            {
+                                uHeight = new System.Web.UI.WebControls.Unit(viewBox_Height.Value);
+                            }
+                            else
+                            {
+                                uHeight = new System.Web.UI.WebControls.Unit("900"); //当无法计算高度则使用自定义的默认值 900（注意：非 SVG 标准规定）
+                            }
+                        }
+                        return new System.Drawing.SizeF(System.Convert.ToSingle(uWidth.Value), System.Convert.ToSingle(uHeight.Value));
+                    }
+                }
+            }
+            return System.Drawing.SizeF.Empty;
+        }
+
+        /// <summary>
+        /// 判断指定的图像资源是否为 SVG 格式。
+        /// </summary>
+        /// <param name="input">输入数据流。</param>
+        /// <returns>如果是 SVG 格式返回 true；否则返回 false。</returns>
+        private static bool IsSvgImage(System.IO.Stream input)
+        {
+            System.Xml.XmlReaderSettings xs = new System.Xml.XmlReaderSettings();
+            xs.XmlResolver = null;
+            xs.DtdProcessing = System.Xml.DtdProcessing.Ignore;
+
             try
             {
-                //SVG 文件
+                using (System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(input, xs))
                 {
-                    fs.Seek(0, System.IO.SeekOrigin.Begin);
-                    using (System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(fs, xs))
+                    while (xmlReader.Read())
                     {
-                        while (xmlReader.Read())
+                        if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
                         {
-                            if (xmlReader.NodeType == System.Xml.XmlNodeType.Element && xmlReader.Name == "svg")
-                            {
-                                string width = xmlReader["width"];
-                                string height = xmlReader["height"];
-                                return new Thinksea.Image.Size(new System.Web.UI.WebControls.Unit(width), new System.Web.UI.WebControls.Unit(height));
-                            }
+                            return true;
                         }
                     }
                 }
             }
-            finally
+            catch
             {
-                fs.Close();
             }
-            return Thinksea.Image.Size.Empty;
+            return false;
+        }
+
+        /// <summary>
+        /// 获取图片尺寸。支持 SVG 矢量图。
+        /// </summary>
+        /// <param name="input">图片数据输入流。</param>
+        /// <returns>图片尺寸。</returns>
+        /// <remarks>
+        /// 对于 SVG 格式矢量图，百分比尺寸转换为像素单位“px”的尺寸。
+        /// 因为 SVG 矢量图的尺寸允许实型数据，所以返回结果统一为 <see cref="System.Drawing.SizeF"/> 数据类型。
+        /// </remarks>
+        public static System.Drawing.SizeF GetImageSizeExt(System.IO.Stream input)
+        {
+            if (IsSvgImage(input))
+            {
+                input.Seek(0, System.IO.SeekOrigin.Begin);
+                System.Drawing.SizeF imageSize = Thinksea.Image.GetSvgImageSize(input);
+                return imageSize;
+            }
+            else
+            {
+                input.Seek(0, System.IO.SeekOrigin.Begin);
+                System.Drawing.SizeF imageSize = Thinksea.Image.GetImageSize(input);
+                return imageSize;
+            }
+        }
+
+        /// <summary>
+        /// 获取图片尺寸。支持 SVG 矢量图。
+        /// </summary>
+        /// <param name="fileName">图片文件名。</param>
+        /// <returns>图片尺寸。</returns>
+        /// <remarks>
+        /// 对于 SVG 格式矢量图，百分比尺寸转换为像素单位“px”的尺寸。
+        /// 因为 SVG 矢量图的尺寸允许实型数据，所以返回结果统一为 <see cref="System.Drawing.SizeF"/> 数据类型。
+        /// </remarks>
+        public static System.Drawing.SizeF GetImageSizeExt(string fileName)
+        {
+            using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
+            {
+                return GetImageSizeExt(fs);
+            }
         }
 
         private static int CombineBytes(byte lsb, byte msb)
@@ -579,89 +693,89 @@
             return System.Convert.ToInt32(lsb) + System.Convert.ToInt32(msb) * 256;
         }
 
-        /// <summary>
-        /// 定义一个表示尺寸的数据结构。
-        /// </summary>
-        public struct Size
-        {
-            /// <summary>
-            /// 获取 <see cref="Height"/> 和 <see cref="Width"/> 值为空的 <see cref="Size"/> 结构。
-            /// </summary>
-            public static readonly Size Empty;
+        ///// <summary>
+        ///// 定义一个表示尺寸的数据结构。
+        ///// </summary>
+        //public struct Size
+        //{
+        //    /// <summary>
+        //    /// 获取 <see cref="Height"/> 和 <see cref="Width"/> 值为空的 <see cref="Size"/> 结构。
+        //    /// </summary>
+        //    public static readonly Size Empty;
 
-            /// <summary>
-            /// 获取一个值，该值指示 <see cref="Size"/> 是否为空。
-            /// </summary>
-            [System.ComponentModel.Browsable(false)]
-            public bool IsEmpty
-            {
-                get
-                {
-                    return (this._Width.IsEmpty && this._Height.IsEmpty);
-                }
-            }
+        //    /// <summary>
+        //    /// 获取一个值，该值指示 <see cref="Size"/> 是否为空。
+        //    /// </summary>
+        //    [System.ComponentModel.Browsable(false)]
+        //    public bool IsEmpty
+        //    {
+        //        get
+        //        {
+        //            return (this._Width.IsEmpty && this._Height.IsEmpty);
+        //        }
+        //    }
 
-            private System.Web.UI.WebControls.Unit _Width;
-            /// <summary>
-            /// 宽度。
-            /// </summary>
-            public System.Web.UI.WebControls.Unit Width
-            {
-                get
-                {
-                    return this._Width;
-                }
-                set
-                {
-                    this._Width = value;
-                }
-            }
+        //    private System.Web.UI.WebControls.Unit _Width;
+        //    /// <summary>
+        //    /// 宽度。
+        //    /// </summary>
+        //    public System.Web.UI.WebControls.Unit Width
+        //    {
+        //        get
+        //        {
+        //            return this._Width;
+        //        }
+        //        set
+        //        {
+        //            this._Width = value;
+        //        }
+        //    }
 
-            private System.Web.UI.WebControls.Unit _Height;
-            /// <summary>
-            /// 高度。
-            /// </summary>
-            public System.Web.UI.WebControls.Unit Height
-            {
-                get
-                {
-                    return this._Height;
-                }
-                set
-                {
-                    this._Height = value;
-                }
-            }
+        //    private System.Web.UI.WebControls.Unit _Height;
+        //    /// <summary>
+        //    /// 高度。
+        //    /// </summary>
+        //    public System.Web.UI.WebControls.Unit Height
+        //    {
+        //        get
+        //        {
+        //            return this._Height;
+        //        }
+        //        set
+        //        {
+        //            this._Height = value;
+        //        }
+        //    }
 
-            ///// <summary>
-            ///// 一个构造方法。
-            ///// </summary>
-            //public Size()
-            //{
-            //    this._Width = System.Web.UI.WebControls.Unit.Empty;
-            //    this._Height = System.Web.UI.WebControls.Unit.Empty;
-            //}
+        //    ///// <summary>
+        //    ///// 一个构造方法。
+        //    ///// </summary>
+        //    //public Size()
+        //    //{
+        //    //    this._Width = System.Web.UI.WebControls.Unit.Empty;
+        //    //    this._Height = System.Web.UI.WebControls.Unit.Empty;
+        //    //}
 
-            /// <summary>
-            /// 用指定的数据初始化此实例。
-            /// </summary>
-            /// <param name="width">宽度。</param>
-            /// <param name="height">高度。</param>
-            public Size(System.Web.UI.WebControls.Unit width, System.Web.UI.WebControls.Unit height)
-            {
-                this._Width = width;
-                this._Height = height;
-            }
+        //    /// <summary>
+        //    /// 用指定的数据初始化此实例。
+        //    /// </summary>
+        //    /// <param name="width">宽度。</param>
+        //    /// <param name="height">高度。</param>
+        //    public Size(System.Web.UI.WebControls.Unit width, System.Web.UI.WebControls.Unit height)
+        //    {
+        //        this._Width = width;
+        //        this._Height = height;
+        //    }
 
-            /// <summary>
-            /// 获取此实例的字符串表示形式。
-            /// </summary>
-            /// <returns>一个 <see cref="string"/> 实例。</returns>
-            public override string ToString()
-            {
-                return "{Width=" + this.Width.ToString() + ", Height=" + this.Height.ToString() + "}";
-            }
-        }
+        //    /// <summary>
+        //    /// 获取此实例的字符串表示形式。
+        //    /// </summary>
+        //    /// <returns>一个 <see cref="string"/> 实例。</returns>
+        //    public override string ToString()
+        //    {
+        //        return "{Width=" + this.Width.ToString() + ", Height=" + this.Height.ToString() + "}";
+        //    }
+        //}
     }
 
     /// <summary>
