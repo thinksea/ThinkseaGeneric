@@ -517,63 +517,98 @@
                         string height = xmlReader["height"];
                         string viewBox = xmlReader["viewBox"];
 
-                        double? viewBox_Width = null, viewBox_Height = null;
+                        float? viewBox_Width = null, viewBox_Height = null;
                         if (!string.IsNullOrEmpty(viewBox))
                         {
                             viewBox = viewBox.Trim();
                             string[] sp = System.Text.RegularExpressions.Regex.Split(viewBox, @"\s+");
                             if (sp.Length > 2)
                             {
-                                viewBox_Width = System.Convert.ToDouble(sp[2]);
+                                viewBox_Width = System.Convert.ToSingle(sp[2]);
                             }
                             if (sp.Length > 3)
                             {
-                                viewBox_Height = System.Convert.ToDouble(sp[3]);
+                                viewBox_Height = System.Convert.ToSingle(sp[3]);
                             }
                         }
 
-                        System.Web.UI.WebControls.Unit uWidth, uHeight;
+                        float uWidth, uHeight;
+                        bool widthUnitIsPercentage, heightUnitIsPercentage;
                         //参考 SVG 标准“https://www.w3.org/TR/SVG2/”
                         if (string.IsNullOrEmpty(width) || width == "auto")
                         {
-                            uWidth = new System.Web.UI.WebControls.Unit("100%");
+                            uWidth = 100;
+                            widthUnitIsPercentage = true;
                         }
                         else
                         {
-                            uWidth = new System.Web.UI.WebControls.Unit(width);
+                            if (width.EndsWith("%"))
+                            {
+                                uWidth = System.Convert.ToSingle(width.TrimEnd('%'));
+                                widthUnitIsPercentage = true;
+                            }
+                            else
+                            {
+                                if (width.EndsWith("px"))
+                                {
+                                    uWidth = System.Convert.ToSingle(width.Substring(0, width.Length - 2));
+                                }
+                                else
+                                {
+                                    uWidth = System.Convert.ToSingle(width);
+                                }
+                                widthUnitIsPercentage = false;
+                            }
                         }
                         if (string.IsNullOrEmpty(height) || height == "auto")
                         {
-                            uHeight = new System.Web.UI.WebControls.Unit("100%");
+                            uHeight = 100;
+                            heightUnitIsPercentage = true;
                         }
                         else
                         {
-                            uHeight = new System.Web.UI.WebControls.Unit(height);
+                            if (height.EndsWith("%"))
+                            {
+                                uHeight = System.Convert.ToSingle(height.TrimEnd('%'));
+                                heightUnitIsPercentage = true;
+                            }
+                            else
+                            {
+                                if (height.EndsWith("px"))
+                                {
+                                    uHeight = System.Convert.ToSingle(height.Substring(0, height.Length - 2));
+                                }
+                                else
+                                {
+                                    uHeight = System.Convert.ToSingle(height);
+                                }
+                                heightUnitIsPercentage = false;
+                            }
                         }
 
-                        if (uWidth.Type == System.Web.UI.WebControls.UnitType.Percentage)
+                        if (widthUnitIsPercentage)
                         {
                             if (viewBox_Width != null)
                             {
-                                uWidth = new System.Web.UI.WebControls.Unit(viewBox_Width.Value * (uWidth.Value / 100));
+                                uWidth = viewBox_Width.Value * (uWidth / 100);
                             }
                             else
                             {
-                                uWidth = new System.Web.UI.WebControls.Unit(1600); //当无法计算宽度则使用自定义的默认值 1600（注意：非 SVG 标准规定）
+                                uWidth = 1600; //当无法计算宽度则使用自定义的默认值 1600（注意：非 SVG 标准规定）
                             }
                         }
-                        if (uHeight.Type == System.Web.UI.WebControls.UnitType.Percentage)
+                        if (heightUnitIsPercentage)
                         {
                             if (viewBox_Height != null)
                             {
-                                uHeight = new System.Web.UI.WebControls.Unit(viewBox_Height.Value);
+                                uHeight = viewBox_Height.Value * (uHeight / 100);
                             }
                             else
                             {
-                                uHeight = new System.Web.UI.WebControls.Unit("900"); //当无法计算高度则使用自定义的默认值 900（注意：非 SVG 标准规定）
+                                uHeight = 900; //当无法计算高度则使用自定义的默认值 900（注意：非 SVG 标准规定）
                             }
                         }
-                        return new System.Drawing.SizeF(System.Convert.ToSingle(uWidth.Value), System.Convert.ToSingle(uHeight.Value));
+                        return new System.Drawing.SizeF(uWidth, uHeight);
                     }
                 }
             }
@@ -657,89 +692,6 @@
             return System.Convert.ToInt32(lsb) + System.Convert.ToInt32(msb) * 256;
         }
 
-        ///// <summary>
-        ///// 定义一个表示尺寸的数据结构。
-        ///// </summary>
-        //public struct Size
-        //{
-        //    /// <summary>
-        //    /// 获取 <see cref="Height"/> 和 <see cref="Width"/> 值为空的 <see cref="Size"/> 结构。
-        //    /// </summary>
-        //    public static readonly Size Empty;
-
-        //    /// <summary>
-        //    /// 获取一个值，该值指示 <see cref="Size"/> 是否为空。
-        //    /// </summary>
-        //    [System.ComponentModel.Browsable(false)]
-        //    public bool IsEmpty
-        //    {
-        //        get
-        //        {
-        //            return (this._Width.IsEmpty && this._Height.IsEmpty);
-        //        }
-        //    }
-
-        //    private System.Web.UI.WebControls.Unit _Width;
-        //    /// <summary>
-        //    /// 宽度。
-        //    /// </summary>
-        //    public System.Web.UI.WebControls.Unit Width
-        //    {
-        //        get
-        //        {
-        //            return this._Width;
-        //        }
-        //        set
-        //        {
-        //            this._Width = value;
-        //        }
-        //    }
-
-        //    private System.Web.UI.WebControls.Unit _Height;
-        //    /// <summary>
-        //    /// 高度。
-        //    /// </summary>
-        //    public System.Web.UI.WebControls.Unit Height
-        //    {
-        //        get
-        //        {
-        //            return this._Height;
-        //        }
-        //        set
-        //        {
-        //            this._Height = value;
-        //        }
-        //    }
-
-        //    ///// <summary>
-        //    ///// 一个构造方法。
-        //    ///// </summary>
-        //    //public Size()
-        //    //{
-        //    //    this._Width = System.Web.UI.WebControls.Unit.Empty;
-        //    //    this._Height = System.Web.UI.WebControls.Unit.Empty;
-        //    //}
-
-        //    /// <summary>
-        //    /// 用指定的数据初始化此实例。
-        //    /// </summary>
-        //    /// <param name="width">宽度。</param>
-        //    /// <param name="height">高度。</param>
-        //    public Size(System.Web.UI.WebControls.Unit width, System.Web.UI.WebControls.Unit height)
-        //    {
-        //        this._Width = width;
-        //        this._Height = height;
-        //    }
-
-        //    /// <summary>
-        //    /// 获取此实例的字符串表示形式。
-        //    /// </summary>
-        //    /// <returns>一个 <see cref="string"/> 实例。</returns>
-        //    public override string ToString()
-        //    {
-        //        return "{Width=" + this.Width.ToString() + ", Height=" + this.Height.ToString() + "}";
-        //    }
-        //}
     }
 
     /// <summary>
