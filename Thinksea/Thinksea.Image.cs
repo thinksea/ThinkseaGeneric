@@ -182,8 +182,8 @@
         /// 获取指定图像的等比例缩略图。
         /// </summary>
         /// <param name="image">用于提供图像数据的 System.Drawing.Image 实例。</param>
-        /// <param name="width">缩略图宽度。</param>
-        /// <param name="height">缩略图高度。</param>
+        /// <param name="width">缩略图宽度。取值为 0 时表示忽略此参数。</param>
+        /// <param name="height">缩略图高度。取值为 0 时表示忽略此参数。</param>
         /// <param name="proportion">缩放时维持等比例。</param>
         /// <param name="lockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
         /// <param name="imageQuality">输出图片质量。</param>
@@ -198,11 +198,7 @@
             }
 
             System.Drawing.RectangleF ImageRectangleF;
-            if (proportion || (lockSmallImage && keepWhite))
-            {
-                ImageRectangleF = Thinksea.Image.GetThumbnailImageSize(image.Width, image.Height, width, height, lockSmallImage);
-            }
-            else
+            if (width > 0 && height > 0 && proportion == false && keepWhite == true)
             {
                 ImageRectangleF = new System.Drawing.RectangleF(0, 0, width, height);
                 if (lockSmallImage)
@@ -210,11 +206,25 @@
                     if (image.Width < width)
                     {
                         ImageRectangleF.Width = image.Width;
+                        ImageRectangleF.X = (width - image.Width) / 2.0F;
                     }
                     if (image.Height < height)
                     {
                         ImageRectangleF.Height = image.Height;
+                        ImageRectangleF.Y = (height - image.Height) / 2.0F;
                     }
+                }
+            }
+            else
+            {
+                ImageRectangleF = Thinksea.Image.GetThumbnailImageSize(image.Width, image.Height, width, height, lockSmallImage);
+                if (width == 0)
+                {
+                    width = (int)System.Math.Floor(ImageRectangleF.Right);
+                }
+                if (height == 0)
+                {
+                    height = (int)System.Math.Floor(ImageRectangleF.Bottom);
                 }
             }
 
@@ -225,14 +235,7 @@
             if (Image.IsPixelFormatIndexed(image.PixelFormat))
             {
                 outputFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
-                if (keepWhite)
-                {
-                    bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
-                }
-                else
-                {
-                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), outputFormat);
-                }
+                bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
             }
             else
             {
@@ -247,14 +250,7 @@
                         outputFormat = image.PixelFormat;
                         break;
                 }
-                if (keepWhite)
-                {
-                    bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
-                }
-                else
-                {
-                    bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), outputFormat);
-                }
+                bitmap = new System.Drawing.Bitmap(width, height, outputFormat);
             }
 
             using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
@@ -295,46 +291,14 @@
                         break;
                 }
 
-                if (keepWhite)
+                if (keepWhite && whiteFillColor != System.Drawing.Color.Transparent)
                 {
-                    if (whiteFillColor != System.Drawing.Color.Transparent)
-                    {
-                        g.Clear(whiteFillColor);
-                    }
-                    g.DrawImage(image, ImageRectangleF);
+                    g.Clear(whiteFillColor);
                 }
-                else
-                {
-                    g.DrawImage(image, 0, 0, bitmap.Width, bitmap.Height);
-                }
+                g.DrawImage(image, ImageRectangleF);
 
             }
 
-            //switch (ImageQuality)
-            //{
-            //    case Thinksea.eImageQuality.High:
-            //        {
-            //        }
-            //        break;
-            //    case Thinksea.eImageQuality.Low:
-            //        {
-            //            //System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height));
-            //            //System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap);
-            //            //g.DrawImage(image, 0, 0, bitmap.Width, bitmap.Height);
-
-            //            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            //            //g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Bilinear;
-            //            //g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
-
-
-
-            //            bitmap = new System.Drawing.Bitmap(image.GetThumbnailImage(System.Convert.ToInt32(ImageRectangleF.Width == 0 ? 1 : ImageRectangleF.Width), System.Convert.ToInt32(ImageRectangleF.Height == 0 ? 1 : ImageRectangleF.Height), delegate()
-            //            {
-            //                return false;
-            //            }, System.IntPtr.Zero));
-            //        }
-            //        break;
-            //}
             return bitmap;
 
         }
@@ -343,8 +307,8 @@
         /// 获取指定文件的等比例缩略图。
         /// </summary>
         /// <param name="fileName">图片文件全名。</param>
-        /// <param name="width">缩略图宽度。</param>
-        /// <param name="height">缩略图高度。</param>
+        /// <param name="width">缩略图宽度。取值为 0 时表示忽略此参数。</param>
+        /// <param name="height">缩略图高度。取值为 0 时表示忽略此参数。</param>
         /// <param name="proportion">缩放时维持等比例。</param>
         /// <param name="lockSmallImage">锁定小尺寸图片。如果此项设置为 true，当原图像尺寸小于缩略图限制尺寸时返回原图像尺寸。</param>
         /// <param name="imageQuality">输出图片质量。</param>
