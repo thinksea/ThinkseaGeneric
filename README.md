@@ -9,6 +9,7 @@
 ###### version：2019-03-13
 
 + 优化缩略图计算策略。
++ 修复 Thinksea.Image.Size Thinksea.Image.GetSvgImageSize 方法返回结果无法保留小数的 BUG
 
 ###### version：2019-03-12
 
