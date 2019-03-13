@@ -621,7 +621,7 @@
         /// </summary>
         /// <param name="input">输入数据流。</param>
         /// <returns>如果是 SVG 格式返回 true；否则返回 false。</returns>
-        private static bool IsSvgImage(System.IO.Stream input)
+        public static bool IsSvgImage(System.IO.Stream input)
         {
             System.Xml.XmlReaderSettings xs = new System.Xml.XmlReaderSettings();
             xs.XmlResolver = null;
