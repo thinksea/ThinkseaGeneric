@@ -6,6 +6,12 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2019-03-15
+
+移除方法 Thinksea.Image.GetSvgImageSize。因算法存在缺陷，并且有更好的替代方法 Svg.SvgDocument.GetDimensions()，详情参考：
++ https://archive.codeplex.com/?p=svg
++ https://github.com/vvvv/SVG
+
 ###### version：2019-03-13
 
 + 优化缩略图计算策略。
