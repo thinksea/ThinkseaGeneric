@@ -172,6 +172,95 @@
         }
 
         /// <summary>
+        /// 开始上传指定文件。（线程同步）
+        /// </summary>
+        /// <param name="FileStream">文件数据流。</param>
+        /// <param name="FileName">文件名。</param>
+        /// <param name="CustomParameter">自定义参数。</param>
+        public void StartUploadSync(System.IO.Stream FileStream, string FileName, string CustomParameter)
+        {
+            this.StartUploadSync(FileStream, FileName, CustomParameter, this.BufferSize, this.ChunkSize);
+        }
+
+        /// <summary>
+        /// 开始上传指定文件。（线程同步）
+        /// </summary>
+        /// <param name="FileStream">文件数据流。</param>
+        /// <param name="FileName">文件名。</param>
+        /// <param name="CustomParameter">自定义参数。</param>
+        /// <param name="BufferSize">缓冲区大小。</param>
+        /// <param name="ChunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
+        public void StartUploadSync(System.IO.Stream FileStream, string FileName, string CustomParameter, int BufferSize, int ChunkSize)
+        {
+            if (FileStream == null)
+            {
+                throw new System.ArgumentNullException("FileStream", "参数“FileStream”不能为 null。");
+                //return;
+            }
+            if (this.Finished || this.Cancelling) //如果已经完成上传，或者取消上传过程还未结束，则无法继续上传，直接结束流程。
+            {
+                return;
+            }
+            this.FileStream = FileStream;
+            this.FileName = FileName;
+            this.FileSize = FileStream.Length;
+            this.CustomParameter = CustomParameter;
+            this.BufferSize = BufferSize;
+            this.ChunkSize = ChunkSize;
+            this.Cancelling = false;
+
+            //System.Threading.Thread thread = null;
+            //if (thread == null)
+            //{
+            //    thread = new System.Threading.Thread(new System.Threading.ThreadStart(this.StartBreakpointUpload));
+            //    thread.Start();
+            //}
+            #region 获取文件完整性校验码，例如 SHA1 或 MD5 等。
+            if (this._FileStream == null || this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            if (this.CheckCode == null) //解决避免重复计算文件校验码，当重复调用方法“StartUpload”（例如重新启动这个文件上传任务）时。
+            {
+                if (this.Cancelling)
+                {
+                    this.Cancelling = false;
+                    return;
+                }
+                long p = this._FileStream.Position;
+                try
+                {
+                    try
+                    {
+                        this._FileStream.Position = 0;
+                        this.CheckCode = this.GetCheckCode(this._FileStream);
+                    }
+                    catch
+                    {
+                        if (this.Cancelling)
+                        {
+                            this.Cancelling = false;
+                            return;
+                        }
+                        throw;
+                    }
+                }
+                finally
+                {
+                    this._FileStream.Position = p;
+                }
+            }
+            #endregion
+
+            if (this._BeforeUpload != null)
+            {
+                this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
+            }
+            this.StartFastUploadSync();
+        }
+
+        /// <summary>
         /// 开始上传指定文件。
         /// </summary>
         /// <param name="FileStream">文件数据流。</param>
@@ -272,6 +361,36 @@
 
         #region 秒传方法。
         /// <summary>
+        /// 开始上传文件，支持秒传。（线程同步）
+        /// </summary>
+        private void StartFastUploadSync()
+        {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            {
+                System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
+                httpHandlerUrlBuilder.Query = string.Format("{0}cmd=fastupload&filename={1}&filesize={2}&checkcode={3}&param={4}"
+                    , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
+                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , this.FileSize
+                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , this.CustomParameter
+                    );
+
+                System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
+                webRequest.Method = "POST";
+                webRequest.ContentType = "text/xml";
+                webRequest.ContentLength = 0;
+                //获取服务器端返回的信息。
+                this.FastUpload_ReadHttpResponseCallbackSync(webRequest);
+                webRequest.Abort();
+            }
+        }
+
+        /// <summary>
         /// 开始上传文件，支持秒传。
         /// </summary>
         private void StartFastUpload()
@@ -296,8 +415,67 @@
                 webRequest.ContentType = "text/xml";
                 webRequest.ContentLength = 0;
                 //获取服务器端返回的信息。
-                webRequest.BeginGetResponse(new System.AsyncCallback(FastUpload_ReadHttpResponseCallback), webRequest);
+                webRequest.BeginGetResponse(new System.AsyncCallback(this.FastUpload_ReadHttpResponseCallback), webRequest);
             }
+        }
+
+        /// <summary>
+        /// 接收服务器回执。
+        /// </summary>
+        /// <param name="webRequest"></param>
+        private void FastUpload_ReadHttpResponseCallbackSync(System.Net.HttpWebRequest webRequest)
+        {
+            try
+            {
+                string responsestring = "";
+                System.Net.HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.GetResponse();
+                try
+                {
+                    System.IO.StreamReader reader = new System.IO.StreamReader(webResponse.GetResponseStream());
+                    try
+                    {
+                        responsestring = reader.ReadToEnd();
+                    }
+                    finally
+                    {
+                        reader.Close();
+                        reader.Dispose();
+                        reader = null;
+                    }
+                }
+                finally
+                {
+                    webResponse.Close();
+                    //webResponse.Dispose();
+                    webResponse = null;
+                    //webRequest.Abort();
+                    //webRequest = null;
+                }
+
+                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                if (result.ErrorCode != 0)
+                {
+                    this.OnError("上传出错。详细信息：" + result.Message, null);
+                    return;
+                }
+
+                if (result.Data != null) //断点续传成功
+                {
+                    this.BytesUploaded = this.FileSize;
+                    this.Finished = true;
+                    this.OnUploadProgressChanged(result.Data);
+                }
+                else //无法秒传，开始尝试断点续传。
+                {
+                    this.StartBreakpointUploadSync();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.Cancelling = false;
+                this.OnError(string.Format("文件“{0}”上传出错。", this.FileName), ex);
+            }
+
         }
 
         /// <summary>
@@ -364,6 +542,36 @@
 
         #region 断点续传方法。
         /// <summary>
+        /// 开始上传文件，支持断点续传。（线程同步）
+        /// </summary>
+        private void StartBreakpointUploadSync()
+        {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            {
+                System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
+                httpHandlerUrlBuilder.Query = string.Format("{0}cmd=getoffset&filename={1}&filesize={2}&checkcode={3}&param={4}"
+                    , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
+                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , this.FileSize
+                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , this.CustomParameter
+                    );
+
+                System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
+                webRequest.Method = "POST";
+                webRequest.ContentType = "text/xml";
+                webRequest.ContentLength = 0;
+                //获取服务器端返回的信息。
+                this.BreakpointUpload_ReadHttpResponseCallbackSync(webRequest);
+                webRequest.Abort();
+            }
+        }
+
+        /// <summary>
         /// 开始上传文件，支持断点续传。
         /// </summary>
         private void StartBreakpointUpload()
@@ -390,6 +598,62 @@
                 //获取服务器端返回的信息。
                 webRequest.BeginGetResponse(new System.AsyncCallback(BreakpointUpload_ReadHttpResponseCallback), webRequest);
             }
+        }
+
+        /// <summary>
+        /// 接收服务器回执。
+        /// </summary>
+        /// <param name="webRequest"></param>
+        private void BreakpointUpload_ReadHttpResponseCallbackSync(System.Net.HttpWebRequest webRequest)
+        {
+            try
+            {
+                System.Net.HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.GetResponse();
+                try
+                {
+                    System.IO.StreamReader reader = new System.IO.StreamReader(webResponse.GetResponseStream());
+                    try
+                    {
+                        string responsestring = reader.ReadToEnd();
+                        Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                        long breakpoint = System.Convert.ToInt64(result.Data);
+                        //long breakpoint = System.Convert.ToInt64(responsestring);
+                        if (this._FindBreakpoint != null && breakpoint != 0)
+                        {
+                            BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint);
+                            this._FindBreakpoint(this, p);
+                            this.BytesUploaded = p.Breakpoint;
+                        }
+                        else
+                        {
+                            this.BytesUploaded = breakpoint;
+                        }
+                    }
+                    finally
+                    {
+                        reader.Close();
+                        reader.Dispose();
+                        reader = null;
+                    }
+                }
+                finally
+                {
+                    webResponse.Close();
+                    //webResponse.Dispose();
+                    webResponse = null;
+                    //webRequest.Abort();
+                    //webRequest = null;
+                }
+
+                this.StartUploadContentSync();//开始上传数据。
+
+            }
+            catch (System.Exception ex)
+            {
+                //this.Canceled = true;
+                this.OnError(string.Format("文件“{0}”上传出错。", this.FileName), ex);
+            }
+
         }
 
         /// <summary>
@@ -452,6 +716,31 @@
         #endregion
 
         /// <summary>
+        /// 开始上传文件内容。（线程同步）
+        /// </summary>
+        private void StartUploadContentSync()
+        {
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                return;
+            }
+            System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
+            httpHandlerUrlBuilder.Query = string.Format("{0}filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
+                , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
+                , System.Web.HttpUtility.UrlEncode(this.FileName)
+                , this.FileSize
+                , this.BytesUploaded
+                , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
+                , this.CustomParameter
+                );
+
+            System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
+            webRequest.Method = "POST";
+            this.WriteToStreamCallbackSync(webRequest);
+        }
+
+        /// <summary>
         /// 开始上传文件内容。
         /// </summary>
         private void StartUploadContent()
@@ -482,6 +771,64 @@
         public void CancelUpload()
         {
             this.Cancelling = true;
+        }
+
+        /// <summary>
+        /// 发送文件数据到服务器。
+        /// </summary>
+        /// <param name="webRequest"></param>
+        private void WriteToStreamCallbackSync(System.Net.HttpWebRequest webRequest)
+        {
+            try
+            {
+                //if (this._FileStream == null || this.Cancelling)
+                //{
+                //    this.Cancelling = false;
+                //    return;
+                //}
+                System.IO.Stream requestStream = webRequest.GetRequestStream();
+                try
+                {
+                    byte[] buffer = new byte[this.BufferSize];
+                    int bytesRead = 0;
+                    this.TempUploadDataSize = 0;
+
+                    //设置文件流读取位置。
+                    this._FileStream.Position = this.BytesUploaded;
+
+                    //读取数据
+                    while ((bytesRead = this._FileStream.Read(buffer, 0, buffer.Length)) != 0
+                        && this.TempUploadDataSize + bytesRead <= this.ChunkSize
+                        && !this.Cancelling)
+                    {
+                        requestStream.Write(buffer, 0, bytesRead);
+                        requestStream.Flush();
+
+                        this.TempUploadDataSize += bytesRead;
+                    }
+
+                }
+                finally
+                {
+                    requestStream.Close();
+                    requestStream.Dispose();
+                    requestStream = null;
+                }
+                if (this.Cancelling)
+                {
+                    //webRequest.Abort();
+                    //webRequest = null;
+                    this.Cancelling = false;
+                    return;
+                }
+                //获取服务器端返回的信息。
+                this.ReadHttpResponseCallbackSync(webRequest);
+            }
+            catch (System.Exception ex)
+            {
+                this.Cancelling = false;
+                this.OnError("上传出错。", ex);
+            }
         }
 
         /// <summary>
@@ -541,6 +888,74 @@
                 this.Cancelling = false;
                 this.OnError("上传出错。", ex);
             }
+        }
+
+        /// <summary>
+        /// 接收服务器回执。
+        /// </summary>
+        /// <param name="webRequest"></param>
+        private void ReadHttpResponseCallbackSync(System.Net.HttpWebRequest webRequest)
+        {
+            //检查上传是否成功。
+            try
+            {
+                string responsestring = "";
+                System.Net.HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.GetResponse();
+                try
+                {
+                    System.IO.StreamReader reader = new System.IO.StreamReader(webResponse.GetResponseStream());
+                    try
+                    {
+                        responsestring = reader.ReadToEnd();
+                    }
+                    finally
+                    {
+                        reader.Close();
+                        reader.Dispose();
+                        reader = null;
+                    }
+                }
+                finally
+                {
+                    webResponse.Close();
+                    //webResponse.Dispose();
+                    webResponse = null;
+                    //webRequest.Abort();
+                    //webRequest = null;
+                }
+
+                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                if (result.ErrorCode != 0)
+                {
+                    this.OnError("上传出错。详细信息：" + result.Message, null);
+                    return;
+                }
+
+                this.BytesUploaded += this.TempUploadDataSize;
+
+                if (this.BytesUploaded >= this.FileSize) //文件上传完成。
+                {
+                    this.Finished = true;
+                }
+
+                this.OnUploadProgressChanged(result.Data);
+
+                if (this.BytesUploaded < this.FileSize)
+                {
+                    //if (this.Cancelling)
+                    //{
+                    //    this.Cancelling = false;
+                    //    return;
+                    //}
+                    this.StartUploadContentSync();//继续上传下一块文件数据。
+                }
+            }
+            catch (System.Exception ex)
+            {
+                this.Cancelling = false;
+                this.OnError("上传出错。", ex);
+            }
+
         }
 
         /// <summary>
@@ -712,7 +1127,7 @@
         /// <param name="exception">引发此错误的异常信息，或者null。</param>
         public UploadErrorEventArgs(string errorMessage, System.Exception exception)
         {
-            this.Message = ((string.IsNullOrEmpty(errorMessage) && exception != null)? exception.Message: errorMessage);
+            this.Message = ((string.IsNullOrEmpty(errorMessage) && exception != null) ? exception.Message : errorMessage);
             this.Exception = exception;
         }
     }
