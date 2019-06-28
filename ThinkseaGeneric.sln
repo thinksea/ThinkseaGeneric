@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea", "Thinksea\Thinksea.csproj", "{2A81EE0A-8289-42E7-927D-3B07A44A2B30}"
 EndProject
@@ -64,11 +64,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Web.UriParameterDemo", "Thinksea.Web.UriParameterDemo\Thinksea.Web.UriParameterDemo.csproj", "{F9899612-0712-429A-9749-5863A6DF7156}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader", "Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj", "{BB413D66-495E-41E2-B136-FE769025E893}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "引用的第三方资源", "引用的第三方资源", "{E904B30B-9552-4EC5-9EED-96083F23C163}"
-	ProjectSection(SolutionItems) = preProject
-		引用的第三方资源\Newtonsoft.Json.dll = 引用的第三方资源\Newtonsoft.Json.dll
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
 EndProject
@@ -220,108 +215,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8DFD0079-6DDE-4776-A274-854533DC06D1}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 32
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://desktop-gq7llgu:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Thinksea.WebControls.DateTimePicker\\Thinksea.WebControls.DateTimePicker.csproj
-		SccProjectName1 = Thinksea.WebControls.DateTimePicker
-		SccLocalPath1 = Thinksea.WebControls.DateTimePicker
-		SccProjectUniqueName2 = Thinksea.WebControls.DateTimePickerSample\\Thinksea.WebControls.DateTimePickerSample.csproj
-		SccProjectName2 = Thinksea.WebControls.DateTimePickerSample
-		SccLocalPath2 = Thinksea.WebControls.DateTimePickerSample
-		SccProjectUniqueName3 = Thinksea.WebControls.HtmlRotator\\Thinksea.WebControls.HtmlRotator.csproj
-		SccProjectName3 = Thinksea.WebControls.HtmlRotator
-		SccLocalPath3 = Thinksea.WebControls.HtmlRotator
-		SccProjectUniqueName4 = Thinksea.WebControls.HtmlRotatorSample\\Thinksea.WebControls.HtmlRotatorSample.csproj
-		SccProjectName4 = Thinksea.WebControls.HtmlRotatorSample
-		SccLocalPath4 = Thinksea.WebControls.HtmlRotatorSample
-		SccProjectUniqueName5 = Thinksea.WebControls.Menu2\\Thinksea.WebControls.Menu2.csproj
-		SccProjectName5 = Thinksea.WebControls.Menu2
-		SccLocalPath5 = Thinksea.WebControls.Menu2
-		SccProjectUniqueName6 = Thinksea.WebControls.Menu2Sample\\Thinksea.WebControls.Menu2Sample.csproj
-		SccProjectName6 = Thinksea.WebControls.Menu2Sample
-		SccLocalPath6 = Thinksea.WebControls.Menu2Sample
-		SccProjectUniqueName7 = Thinksea.WebControls.PageNavigate\\Thinksea.WebControls.PageNavigate.csproj
-		SccProjectName7 = Thinksea.WebControls.PageNavigate
-		SccLocalPath7 = Thinksea.WebControls.PageNavigate
-		SccProjectUniqueName8 = Thinksea.WebControls.PageNavigateSample\\Thinksea.WebControls.PageNavigateSample.csproj
-		SccProjectName8 = Thinksea.WebControls.PageNavigateSample
-		SccLocalPath8 = Thinksea.WebControls.PageNavigateSample
-		SccProjectUniqueName9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList\\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList.csproj
-		SccProjectName9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList
-		SccLocalPath9 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList
-		SccProjectUniqueName10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo\\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo.csproj
-		SccProjectName10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo
-		SccLocalPath10 = Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo
-		SccProjectUniqueName11 = Thinksea.WebControls.VerifyCode\\Thinksea.WebControls.VerifyCode.csproj
-		SccProjectName11 = Thinksea.WebControls.VerifyCode
-		SccLocalPath11 = Thinksea.WebControls.VerifyCode
-		SccProjectUniqueName12 = Thinksea.WebControls.VerifyCodeSample\\Thinksea.WebControls.VerifyCodeSample.csproj
-		SccProjectName12 = Thinksea.WebControls.VerifyCodeSample
-		SccLocalPath12 = Thinksea.WebControls.VerifyCodeSample
-		SccProjectUniqueName13 = Thinksea.Windows.UserSystemDemo\\Thinksea.Windows.UserSystemDemo.csproj
-		SccProjectName13 = Thinksea.Windows.UserSystemDemo
-		SccLocalPath13 = Thinksea.Windows.UserSystemDemo
-		SccProjectUniqueName14 = Thinksea.SQL\\Thinksea.SQL.csproj
-		SccProjectName14 = Thinksea.SQL
-		SccLocalPath14 = Thinksea.SQL
-		SccProjectUniqueName15 = Thinksea.VisualStudio\\Thinksea.VisualStudio.csproj
-		SccProjectName15 = Thinksea.VisualStudio
-		SccLocalPath15 = Thinksea.VisualStudio
-		SccProjectUniqueName16 = Thinksea.Windows.Forms\\Thinksea.Windows.Forms.csproj
-		SccProjectName16 = Thinksea.Windows.Forms
-		SccLocalPath16 = Thinksea.Windows.Forms
-		SccProjectUniqueName17 = Thinksea.Windows.Forms.IPAddress\\Thinksea.Windows.Forms.IPAddress.csproj
-		SccProjectName17 = Thinksea.Windows.Forms.IPAddress
-		SccLocalPath17 = Thinksea.Windows.Forms.IPAddress
-		SccProjectUniqueName18 = Thinksea.Windows.Forms.MdiTabControl\\Thinksea.Windows.Forms.MdiTabControl.csproj
-		SccProjectName18 = Thinksea.Windows.Forms.MdiTabControl
-		SccLocalPath18 = Thinksea.Windows.Forms.MdiTabControl
-		SccProjectUniqueName19 = Thinksea.Windows.Forms.MdiTabControlTest\\Thinksea.Windows.Forms.MdiTabControlTest.csproj
-		SccProjectName19 = Thinksea.Windows.Forms.MdiTabControlTest
-		SccLocalPath19 = Thinksea.Windows.Forms.MdiTabControlTest
-		SccProjectUniqueName20 = Thinksea.TcpPoolTest\\Thinksea.TcpPoolTest.csproj
-		SccProjectName20 = Thinksea.TcpPoolTest
-		SccLocalPath20 = Thinksea.TcpPoolTest
-		SccProjectUniqueName21 = Thinksea.Windows\\Thinksea.Windows.csproj
-		SccProjectName21 = Thinksea.Windows
-		SccLocalPath21 = Thinksea.Windows
-		SccProjectUniqueName22 = Thinksea.LogTest\\Thinksea.LogTest.csproj
-		SccProjectName22 = Thinksea.LogTest
-		SccLocalPath22 = Thinksea.LogTest
-		SccProjectUniqueName23 = Thinksea.Windows.Forms.Demos\\ButtonDemo\\ButtonDemo.csproj
-		SccProjectTopLevelParentUniqueName23 = ThinkseaGeneric.sln
-		SccProjectName23 = Thinksea.Windows.Forms.Demos/ButtonDemo
-		SccLocalPath23 = Thinksea.Windows.Forms.Demos\\ButtonDemo
-		SccProjectUniqueName24 = Thinksea.Windows.Forms.Demos\\DataGridViewPageDemo\\DataGridViewPageDemo.csproj
-		SccProjectTopLevelParentUniqueName24 = ThinkseaGeneric.sln
-		SccProjectName24 = Thinksea.Windows.Forms.Demos/DataGridViewPageDemo
-		SccLocalPath24 = Thinksea.Windows.Forms.Demos\\DataGridViewPageDemo
-		SccProjectUniqueName25 = Thinksea.Windows.Forms.Demos\\EllipsisControlDemo\\EllipsisControlDemo.csproj
-		SccProjectTopLevelParentUniqueName25 = ThinkseaGeneric.sln
-		SccProjectName25 = Thinksea.Windows.Forms.Demos/EllipsisControlDemo
-		SccLocalPath25 = Thinksea.Windows.Forms.Demos\\EllipsisControlDemo
-		SccProjectUniqueName26 = Thinksea.Windows.Forms.Demos\\SelectedDynamicTreeNodeDemo\\SelectedDynamicTreeNodeDemo.csproj
-		SccProjectTopLevelParentUniqueName26 = ThinkseaGeneric.sln
-		SccProjectName26 = Thinksea.Windows.Forms.Demos/SelectedDynamicTreeNodeDemo
-		SccLocalPath26 = Thinksea.Windows.Forms.Demos\\SelectedDynamicTreeNodeDemo
-		SccProjectUniqueName27 = Thinksea.IIS\\Thinksea.IIS.csproj
-		SccProjectName27 = Thinksea.IIS
-		SccLocalPath27 = Thinksea.IIS
-		SccProjectUniqueName28 = Thinksea\\Thinksea.csproj
-		SccProjectName28 = Thinksea
-		SccLocalPath28 = Thinksea
-		SccProjectUniqueName29 = Thinksea.Web.UriParameterDemo\\Thinksea.Web.UriParameterDemo.csproj
-		SccProjectName29 = Thinksea.Web.UriParameterDemo
-		SccLocalPath29 = Thinksea.Web.UriParameterDemo
-		SccProjectUniqueName30 = Thinksea.Net.FileUploader\\Thinksea.Net.FileUploader.csproj
-		SccProjectName30 = Thinksea.Net.FileUploader
-		SccLocalPath30 = Thinksea.Net.FileUploader
-		SccProjectUniqueName31 = Thinksea.Text.Chinese2SpellDemo\\Thinksea.Text.Chinese2SpellDemo.csproj
-		SccProjectName31 = Thinksea.Text.Chinese2SpellDemo
-		SccLocalPath31 = Thinksea.Text.Chinese2SpellDemo
 	EndGlobalSection
 EndGlobal
