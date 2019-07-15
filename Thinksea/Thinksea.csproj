@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2;net40</TargetFrameworks>
-    <Version>4.0.0.0</Version>
+    <Version>4.1.0.0</Version>
     <Copyright>Copyright © www.thinksea.com 2006-2019</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>

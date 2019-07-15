@@ -2111,7 +2111,6 @@
         public static void ExecuteSQL(System.Data.Common.DbConnection connection, string sqlString)
         {
             System.Data.Common.DbCommand comm = connection.CreateCommand();
-            comm.Connection = connection;
 
             System.Collections.Generic.List<string> al = new System.Collections.Generic.List<string>();
             System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"^(\s*)go(\s*)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.ExplicitCapture);
