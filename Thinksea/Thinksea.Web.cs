@@ -715,7 +715,7 @@
         }
 
         #region 设备类型判断。
-#if NET40
+#if NET
         /// <summary>
         /// 判断用户端访问设备是否手机。
         /// </summary>
@@ -757,7 +757,7 @@
             return false;
         }
 
-#if NET40
+#if NET
         /// <summary>
         /// 判断用户端访问设备是否手机或平板。
         /// </summary>
@@ -797,7 +797,7 @@
             return false;
         }
 
-#if NET40
+#if NET
         /// <summary>
         /// 判断是否在微信浏览器内访问网页。
         /// </summary>
