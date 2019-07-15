@@ -2108,20 +2108,20 @@
         /// </summary>
         /// <param name="connection">已经打开的数据库联接。</param>
         /// <param name="sqlString">SQL 代码。</param>
-        public static void ExecuteSQL(System.Data.SqlClient.SqlConnection connection, string sqlString)
+        public static void ExecuteSQL(System.Data.Common.DbConnection connection, string sqlString)
         {
-            System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            sqlCommand.Connection = connection;
+            System.Data.Common.DbCommand comm = connection.CreateCommand();
+            comm.Connection = connection;
 
             System.Collections.Generic.List<string> al = new System.Collections.Generic.List<string>();
             System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"^(\s*)go(\s*)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Multiline | System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.ExplicitCapture);
             al.AddRange(reg.Split(sqlString));
             foreach (string tmp in al)
             {
-                sqlCommand.CommandText = tmp.Trim();
-                if (sqlCommand.CommandText.Length > 0)
+                comm.CommandText = tmp.Trim();
+                if (comm.CommandText.Length > 0)
                 {
-                    sqlCommand.ExecuteNonQuery();
+                    comm.ExecuteNonQuery();
                 }
             }
 
