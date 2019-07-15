@@ -3518,7 +3518,7 @@
             基于此站点提供的内容修改。
             </remarks>
         </member>
-        <member name="M:Thinksea.Web.isMobileOrPad(System.String)">
+        <member name="M:Thinksea.Web.IsMobileOrPad(System.String)">
             <summary>
             判断用户端访问设备是否手机或平板。
             </summary>
