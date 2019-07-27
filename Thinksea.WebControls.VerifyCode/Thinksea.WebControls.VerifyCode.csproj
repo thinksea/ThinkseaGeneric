@@ -78,12 +78,6 @@
     <Content Include="控件使用帮助手册.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea\Thinksea.csproj">
-      <Project>{2A81EE0A-8289-42E7-927D-3B07A44A2B30}</Project>
-      <Name>Thinksea</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -99,6 +93,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thinksea\Thinksea.csproj">
+      <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
+      <Name>Thinksea</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
