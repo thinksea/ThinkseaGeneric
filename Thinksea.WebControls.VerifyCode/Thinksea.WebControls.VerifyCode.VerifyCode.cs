@@ -41,7 +41,8 @@ namespace Thinksea.WebControls.VerifyCode
     DefaultProperty("Length"),
         //	System.ComponentModel.DefaultEvent("PageSelectedCommand"),
         //	ValidationPropertyAttribute("Text"),
-    Designer(typeof(Thinksea.WebControls.VerifyCode.VerifyCodeDesigner))
+    Designer(typeof(Thinksea.WebControls.VerifyCode.VerifyCodeDesigner)),
+    System.Obsolete("鉴于.NET发展方向的改变，将放弃维护此服务器控件。请转为参考示例程序“Thinksea.WebControls.VerifyCode_WebFormDemo”描述的调用方式，或自行从基类“Thinksea.VerifyCode”扩展实现。")
     ]
     public class VerifyCode : System.Web.UI.Control, INamingContainer//, IPostBackEventHandler//, IStateManager
     {

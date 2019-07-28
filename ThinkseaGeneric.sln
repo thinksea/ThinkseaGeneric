@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea", "Thinksea\Thinksea.csproj", "{2A81EE0A-8289-42E7-927D-3B07A44A2B30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea", "Thinksea\Thinksea.csproj", "{2A81EE0A-8289-42E7-927D-3B07A44A2B30}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.IIS", "Thinksea.IIS\Thinksea.IIS.csproj", "{909038F2-AC6F-4355-BF27-3F05E5FBA473}"
 EndProject
@@ -72,6 +72,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2D41EDC6-5
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.VerifyCode", "Thinksea.VerifyCode\Thinksea.VerifyCode.csproj", "{B1F3101D-714E-4F2E-864A-B3EE4D999A3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.VerifyCode_WebFormDemo", "Thinksea.VerifyCode_WebFormDemo\Thinksea.VerifyCode_WebFormDemo.csproj", "{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -203,6 +207,14 @@ Global
 		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F3101D-714E-4F2E-864A-B3EE4D999A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F3101D-714E-4F2E-864A-B3EE4D999A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F3101D-714E-4F2E-864A-B3EE4D999A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F3101D-714E-4F2E-864A-B3EE4D999A3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

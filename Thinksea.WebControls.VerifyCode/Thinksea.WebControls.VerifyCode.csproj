@@ -95,6 +95,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Thinksea.VerifyCode\Thinksea.VerifyCode.csproj">
+      <Project>{b1f3101d-714e-4f2e-864a-b3ee4d999a3d}</Project>
+      <Name>Thinksea.VerifyCode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Thinksea\Thinksea.csproj">
       <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
       <Name>Thinksea</Name>

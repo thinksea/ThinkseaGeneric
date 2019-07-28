@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Thinksea.VerifyCode</name>
+    </assembly>
+    <members>
+        <member name="T:Thinksea.VerifyCode">
+            <summary>
+            封装了验证码功能实现。
+            </summary>
+        </member>
+        <member name="F:Thinksea.VerifyCode.keyValueVerifyCodeEnumerable">
+            <summary>
+            键值对验证码元数据序列。
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.KeyValueVerifyCodeEnumerable">
+            <summary>
+            获取或设置验证码元数据序列。
+            </summary>
+        </member>
+        <member name="F:Thinksea.VerifyCode.verifyCodeEnumerable">
+            <summary>
+            字符型验证码元数据序列。
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.VerifyCodeEnumerable">
+            <summary>
+            获取或设置字符型验证码元数据序列。
+            </summary>
+        </member>
+        <member name="F:Thinksea.VerifyCode._Length">
+            <summary>
+            字符型验证码长度
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.Length">
+            <summary>
+            设置或获取字符型验证码长度
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.BendingAngle">
+            <summary>
+            获取或设置图片扭曲程度，默认值为8
+            </summary>
+        </member>
+        <member name="F:Thinksea.VerifyCode._FontSize">
+            <summary>
+            字号
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.FontSize">
+            <summary>
+            获取或设置验证码字体大小。设置太小的字体可能无法显示扭曲效果。
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.Padding">
+            <summary>
+            获取或设置内容和图片边缘之间保留的空白大小(默认2像素)
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.ForeColors">
+            <summary>
+            获取或设置验证码文本随机颜色数组。
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.BackColor">
+            <summary>
+            设置或获取背景填充颜色
+            </summary>
+        </member>
+        <member name="P:Thinksea.VerifyCode.Fonts">
+            <summary>
+            获取或设置验证码文本随机字体数组。
+            </summary>
+        </member>
+        <member name="M:Thinksea.VerifyCode.TwistImage(System.Drawing.Bitmap,System.Drawing.Color,System.Boolean,System.Double,System.Double)">
+            <summary>
+            正弦曲线Wave扭曲图片
+            </summary>
+            <param name="srcBmp">图片路径</param>
+            <param name="backColor">背景颜色。</param>
+            <param name="bXDir">扭曲方向，水平方向扭曲为 True；垂直方向为 False。</param>
+            <param name="dMultValue">波形的幅度倍数，越大扭曲的程度越高，一般为3</param>
+            <param name="dPhase">波形的起始相位，取值区间[0-2*PI)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Thinksea.VerifyCode.DrawCurve(System.Drawing.Bitmap,System.Drawing.Color)">
+            <summary>
+            画一条由两条连在一起构成的随机正弦函数曲线作干扰线
+            </summary>
+            <param name="image"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:Thinksea.VerifyCode.GenerateVerifyCode(System.Int32,System.String@,System.String@)">
+            <summary>
+            随机生成一个新的验证码。
+            </summary>
+            <param name="codeLen">字符型验证码长度。</param>
+            <param name="question">生成的验证码问题。</param>
+            <param name="answer">生成的验证码答案。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Thinksea.VerifyCode.GenerateVerifyCode(System.String@,System.String@)">
+            <summary>
+            随机生成一个新的验证码。
+            </summary>
+            <param name="question">生成的验证码问题。</param>
+            <param name="answer">生成的验证码答案。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Thinksea.VerifyCode.GenerateVerifyCodeImage(System.String)">
+            <summary>
+            生成校验码图片。
+            </summary>
+            <param name="code">验证码文本。</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

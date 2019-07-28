@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("验证码控件")]
-[assembly: AssemblyDescription("一个网页验证码控件")]
+[assembly: AssemblyDescription("一个网页验证码控件。鉴于.NET发展方向的改变，将放弃维护此服务器控件。请转为参考示例程序“Thinksea.WebControls.VerifyCode_WebFormDemo”描述的调用方式，或自行从基类“Thinksea.VerifyCode”扩展实现。")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Thinksea")]
 [assembly: AssemblyProduct("Thinksea.WebControls.VerifyCode")]
-[assembly: AssemblyCopyright("Copyright © Thinksea 2008-2014")]
+[assembly: AssemblyCopyright("Copyright © Thinksea 2008-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
 //[assembly: AssemblyFileVersion("1.1.0.0")]
