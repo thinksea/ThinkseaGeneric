@@ -1,0 +1,125 @@
+﻿@page
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script type="text/javascript">
+        /**
+         * 更换验证码。
+         * @@param imageID
+         */
+        function changeVerifyCode(imageID) {
+            var Name = "rt";
+            var Value = Math.random()
+            var uri = "/VerifyCode?VerifyCodeID=" + imageID + "&rt=" + Value;
+            document.getElementById(imageID).src = uri;
+        }
+
+        /**
+         * 用户点击验证码控件时引发此事件。
+         * @@param e
+         */
+        function verifyCodeClick(e) {
+            var cId = this.children[0].id;
+            changeVerifyCode(cId);
+        }
+
+        function load() {
+            {
+                var ctlId = "VerifyCode1";
+                changeVerifyCode(ctlId);
+                var ctl = document.getElementById(ctlId);
+                ctl.parentElement.onclick = verifyCodeClick;
+            }
+            {
+                var ctlId = "VerifyCode2";
+                changeVerifyCode(ctlId);
+                var ctl = document.getElementById(ctlId);
+                ctl.parentElement.onclick = verifyCodeClick;
+            }
+            //{
+            //    var ctlId = "VerifyCode3";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode4";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode5";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode6";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode7";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode8";
+            //    changeVerifyCode(ctlId);
+            //}
+            //{
+            //    var ctlId = "VerifyCode9";
+            //    changeVerifyCode(ctlId);
+            //}
+        }
+
+        function btnClick() {
+            document.location.href = ".?VerifyCode1=" + TextBox1.value + "&VerifyCode2=" + TextBox2.value;
+        }
+    </script>
+</head>
+<body onload="load()">
+    @{
+    string VerifyCode1 = this.Request.Query["VerifyCode1"];
+    string VerifyCode2 = this.Request.Query["VerifyCode2"];
+    if (VerifyCode1 != null || VerifyCode2 != null)
+    {
+            @if (Thinksea.VerifyCode_AspNetCoreDemo.Pages.VerifyCodeModel.IsVerify(this.HttpContext, VerifyCode1, "VerifyCode1"))
+{
+                @("【验证码1输入正确】")
+}
+else
+{
+                @("【验证码1输入错误】正确答案是" + Thinksea.VerifyCode_AspNetCoreDemo.Pages.VerifyCodeModel.GetVerifyCode(this.HttpContext, "VerifyCode1"))
+}
+            <br />
+        if (Thinksea.VerifyCode_AspNetCoreDemo.Pages.VerifyCodeModel.IsVerify(this.HttpContext, VerifyCode2, "VerifyCode2"))
+        {
+                @("【验证码2输入正确】")
+        }
+        else
+        {
+                @("【验证码2输入错误】正确答案是" + Thinksea.VerifyCode_AspNetCoreDemo.Pages.VerifyCodeModel.GetVerifyCode(this.HttpContext, "VerifyCode2"))
+            }
+        }
+    }
+    <br />
+    <a href="javascript:;"><img id="VerifyCode1" /></a>
+    <input id="TextBox1" type="text" />
+    <p>
+        <a href="javascript:;"><img id="VerifyCode2" /></a>
+        <input id="TextBox2" type="text" />
+        <button type="button" onclick="btnClick()">验证</button>
+    </p>
+    <p>
+        @*<img id="VerifyCode3" />
+            <img id="VerifyCode4" />
+            <img id="VerifyCode5" />
+            <img id="VerifyCode6" />
+            <img id="VerifyCode7" />
+            <img id="VerifyCode8" />
+            <img id="VerifyCode9" />*@
+    </p>
+</body>
+</html>
