@@ -18,11 +18,11 @@
         /// <summary>
         /// 获取指定验证码控件持有的验证码。
         /// </summary>
-        /// <param name="context">上下文对象。</param>
         /// <param name="verifyCodeId">验证码控件 ID。</param>
         /// <returns>验证码的密文形式，找不到则返回空字符串“”。</returns>
-        public static string GetVerifyCode(System.Web.HttpContext context, string verifyCodeId)
+        public static string GetVerifyCode(string verifyCodeId)
         {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
             object savedVerifyCode = context.Session["VerifyCode" + verifyCodeId];
             if (savedVerifyCode != null)
             {
@@ -35,21 +35,21 @@
         /// <summary>
         /// 存储验证码。
         /// </summary>
-        /// <param name="context">上下文对象。</param>
         /// <param name="verifyCodeId">验证码 ID。</param>
         /// <param name="verifyCode">验证码内容。</param>
-        private static void SaveVerifyCode(System.Web.HttpContext context, string verifyCodeId, string verifyCode)
+        private static void SaveVerifyCode(string verifyCodeId, string verifyCode)
         {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
             context.Session["VerifyCode" + verifyCodeId] = verifyCode;
         }
 
         /// <summary>
         /// 销毁验证码。
         /// </summary>
-        /// <param name="context">上下文对象。</param>
         /// <param name="verifyCodeId">验证码 ID。</param>
-        private static void DestructionVerifyCode(System.Web.HttpContext context, string verifyCodeId)
+        private static void DestructionVerifyCode(string verifyCodeId)
         {
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
             context.Session.Remove("VerifyCode" + verifyCodeId);
         }
 
@@ -167,7 +167,7 @@
             string _VerifyCode = generateVerifyCodeAnswer.ToLower(); //用于存储验证码的密码字符串。
             //if (this.IsTrackingViewState)
             {
-                SaveVerifyCode(context, VerifyCodeID, _VerifyCode);
+                SaveVerifyCode(VerifyCodeID, _VerifyCode);
             }
 
             //context.Response.ContentType = "text/plain";
@@ -216,12 +216,13 @@
         /// <param name="verifyCode">用户输入的验证码。</param>
         /// <param name="verifyCodeId">验证码控件 ID。</param>
         /// <returns>如果输入正确返回 true，否则返回 false。</returns>
-        public static bool IsVerify(System.Web.HttpContext context, string verifyCode, string verifyCodeId)
+        public static bool IsVerify(string verifyCode, string verifyCodeId)
         {
-            string savedVerifyCode = GetVerifyCode(context, verifyCodeId);
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            string savedVerifyCode = GetVerifyCode(verifyCodeId);
             if (savedVerifyCode != null)
             {
-                DestructionVerifyCode(context, verifyCodeId);
+                DestructionVerifyCode(verifyCodeId);
                 if ((string)savedVerifyCode == verifyCode.ToLower())
                 {
                     return true;
