@@ -1,21 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Thinksea.VerifyCode_WebFormDemo
+﻿namespace Thinksea.VerifyCode_WebFormDemo
 {
     /// <summary>
     /// 生成一个验证码图片。
     /// </summary>
     public class VerifyCode : Thinksea.VerifyCode, System.Web.IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
-        private static System.Web.HttpContext HttpContext
+        /// <summary>
+        /// 获取验证码配置信息从配置文件。
+        /// </summary>
+        /// <param name="key">配置节名称。</param>
+        /// <returns>配置节信息集合。</returns>
+        private static System.Collections.Specialized.NameValueCollection GetSection(string key)
         {
-            get
+            return (System.Collections.Specialized.NameValueCollection)System.Web.Configuration.WebConfigurationManager.GetSection(key);
+        }
+
+        /// <summary>
+        /// 获取指定验证码控件持有的验证码。
+        /// </summary>
+        /// <param name="context">上下文对象。</param>
+        /// <param name="verifyCodeId">验证码控件 ID。</param>
+        /// <returns>验证码的密文形式，找不到则返回空字符串“”。</returns>
+        public static string GetVerifyCode(System.Web.HttpContext context, string verifyCodeId)
+        {
+            object savedVerifyCode = context.Session["VerifyCode" + verifyCodeId];
+            if (savedVerifyCode != null)
             {
-                return System.Web.HttpContext.Current;
+                return System.Convert.ToString(savedVerifyCode);
             }
+            return "";
+
+        }
+
+        /// <summary>
+        /// 存储验证码。
+        /// </summary>
+        /// <param name="context">上下文对象。</param>
+        /// <param name="verifyCodeId">验证码 ID。</param>
+        /// <param name="verifyCode">验证码内容。</param>
+        private static void SaveVerifyCode(System.Web.HttpContext context, string verifyCodeId, string verifyCode)
+        {
+            context.Session["VerifyCode" + verifyCodeId] = verifyCode;
+        }
+
+        /// <summary>
+        /// 销毁验证码。
+        /// </summary>
+        /// <param name="context">上下文对象。</param>
+        /// <param name="verifyCodeId">验证码 ID。</param>
+        private static void DestructionVerifyCode(System.Web.HttpContext context, string verifyCodeId)
+        {
+            context.Session.Remove("VerifyCode" + verifyCodeId);
         }
 
         /// <summary>
@@ -23,7 +58,7 @@ namespace Thinksea.VerifyCode_WebFormDemo
         /// </summary>
         static VerifyCode()
         {
-            System.Collections.Specialized.NameValueCollection configSection = (System.Collections.Specialized.NameValueCollection)System.Web.Configuration.WebConfigurationManager.GetSection("VerifyCode");
+            var configSection = GetSection("VerifyCode");
             if (configSection != null)
             {
                 if (!string.IsNullOrEmpty(configSection["VerifyCodeEnumerable"]))
@@ -129,41 +164,23 @@ namespace Thinksea.VerifyCode_WebFormDemo
             //string generateVerifyCode = VerifyCode.GenerateVerifyCodeString();
             string generateVerifyCodeQuestion, generateVerifyCodeAnswer;
             VerifyCode.GenerateVerifyCode(out generateVerifyCodeQuestion, out generateVerifyCodeAnswer);
-            string _VerifyCode = ""; //用于存储验证码的密码字符串。
-            _VerifyCode = generateVerifyCodeAnswer.ToLower();
+            string _VerifyCode = generateVerifyCodeAnswer.ToLower(); //用于存储验证码的密码字符串。
             //if (this.IsTrackingViewState)
             {
-                context.Session["VerifyCode" + VerifyCodeID] = _VerifyCode;
+                SaveVerifyCode(context, VerifyCodeID, _VerifyCode);
             }
 
             //context.Response.ContentType = "text/plain";
-            //context.Response.ContentType = "image/Jpeg";
-            context.Response.ContentType = "application/octet-stream";
+            context.Response.ContentType = "image/png";
+            //context.Response.ContentType = "application/octet-stream";
 
             //context.Response.Write("Hello World");
-            System.Drawing.Bitmap image = GenerateVerifyCodeImage(generateVerifyCodeQuestion);
-            image.Save(context.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+            System.Drawing.Bitmap image = Thinksea.VerifyCode.GenerateVerifyCodeImage(generateVerifyCodeQuestion);
+            image.Save(context.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Png);
             image.Dispose();
         }
 
         #endregion
-
-        /// <summary>
-        /// 获取指定验证码控件持有的验证码。
-        /// </summary>
-        /// <param name="VerifyCodeControlID">验证码控件 ID。</param>
-        /// <returns>验证码的密文形式，找不到则返回空字符串“”。</returns>
-        public static string GetVerifyCode(string VerifyCodeControlID)
-        {
-            string sName = "VerifyCode" + VerifyCodeControlID;
-            object savedVerifyCode = HttpContext.Session[sName];
-            if (savedVerifyCode != null)
-            {
-                return System.Convert.ToString(savedVerifyCode);
-            }
-            return "";
-
-        }
 
         private static bool? _DebugMode = null;
         /// <summary>
@@ -179,7 +196,7 @@ namespace Thinksea.VerifyCode_WebFormDemo
                 if (_DebugMode == null)
                 {
                     _DebugMode = false;
-                    System.Collections.Specialized.NameValueCollection configSection = (System.Collections.Specialized.NameValueCollection)System.Web.Configuration.WebConfigurationManager.GetSection("VerifyCode");
+                    var configSection = GetSection("VerifyCode");
                     if (configSection != null)
                     {
                         string debugMode = configSection["DebugMode"];
@@ -196,17 +213,16 @@ namespace Thinksea.VerifyCode_WebFormDemo
         /// <summary>
         /// 验证指定的验证码是否与指定验证码控件所表示的验证码相同。
         /// </summary>
-        /// <param name="VerifyCode">用户输入的验证码。</param>
-        /// <param name="VerifyCodeControlID">验证码控件 ID。</param>
+        /// <param name="verifyCode">用户输入的验证码。</param>
+        /// <param name="verifyCodeId">验证码控件 ID。</param>
         /// <returns>如果输入正确返回 true，否则返回 false。</returns>
-        public static bool IsVerify(string VerifyCode, string VerifyCodeControlID)
+        public static bool IsVerify(System.Web.HttpContext context, string verifyCode, string verifyCodeId)
         {
-            string sName = "VerifyCode" + VerifyCodeControlID;
-            object savedVerifyCode = HttpContext.Session[sName];
+            string savedVerifyCode = GetVerifyCode(context, verifyCodeId);
             if (savedVerifyCode != null)
             {
-                HttpContext.Session.Remove(sName);
-                if ((string)savedVerifyCode == VerifyCode.ToLower())
+                DestructionVerifyCode(context, verifyCodeId);
+                if ((string)savedVerifyCode == verifyCode.ToLower())
                 {
                     return true;
                 }
@@ -214,7 +230,7 @@ namespace Thinksea.VerifyCode_WebFormDemo
             if (DebugMode)
             {
                 bool r = true;
-                foreach (var ch in VerifyCode)
+                foreach (var ch in verifyCode)
                 {
                     if (ch != '0')
                     {

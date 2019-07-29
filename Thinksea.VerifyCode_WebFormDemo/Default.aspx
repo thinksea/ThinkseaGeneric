@@ -8,9 +8,9 @@
         string VerifyCode2 = this.Request["VerifyCode2"];
         if (!string.IsNullOrWhiteSpace(VerifyCode1) || !string.IsNullOrWhiteSpace(VerifyCode2))
         {
-            this.Response.Write(Thinksea.VerifyCode_WebFormDemo.VerifyCode.GetVerifyCode("VerifyCode1") + "<br/>");
-            this.Response.Write(Thinksea.VerifyCode_WebFormDemo.VerifyCode.GetVerifyCode("VerifyCode2") + "<br/>");
-            if (Thinksea.VerifyCode_WebFormDemo.VerifyCode.IsVerify(VerifyCode1, "VerifyCode1"))
+            this.Response.Write(Thinksea.VerifyCode_WebFormDemo.VerifyCode.GetVerifyCode(this.Context, "VerifyCode1") + "<br/>");
+            this.Response.Write(Thinksea.VerifyCode_WebFormDemo.VerifyCode.GetVerifyCode(this.Context, "VerifyCode2") + "<br/>");
+            if (Thinksea.VerifyCode_WebFormDemo.VerifyCode.IsVerify(this.Context, VerifyCode1, "VerifyCode1"))
             {
                 this.Response.Write("【验证码1输入正确】");
             }
@@ -18,7 +18,7 @@
             {
                 this.Response.Write("【验证码1输入错误】");
             }
-            if (Thinksea.VerifyCode_WebFormDemo.VerifyCode.IsVerify(VerifyCode2, "VerifyCode2"))
+            if (Thinksea.VerifyCode_WebFormDemo.VerifyCode.IsVerify(this.Context, VerifyCode2, "VerifyCode2"))
             {
                 this.Response.Write("【验证码2输入正确】");
             }
@@ -99,7 +99,7 @@
         }
 
         function btnClick() {
-            document.location.href = "WebForm1.aspx?VerifyCode1=" + TextBox1.value + "&VerifyCode2=" + TextBox2.value;
+            document.location.href = "/?VerifyCode1=" + TextBox1.value + "&VerifyCode2=" + TextBox2.value;
         }
     </script>
 </head>
