@@ -17,18 +17,8 @@
     <DocumentationFile>Thinksea.Net.FileUploader.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
-    <PackageReference Include="Microsoft.AspNetCore.Http">
-      <Version>2.2.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions">
-      <Version>2.2.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <Reference Include="System.Web" />
-    <Reference Include="System.Configuration" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +27,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+    <PackageReference Include="Microsoft.AspNetCore.Http">
+      <Version>2.2.2</Version>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
