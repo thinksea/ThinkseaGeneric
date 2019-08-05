@@ -1,64 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BB413D66-495E-41E2-B136-FE769025E893}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinksea.Net.FileUploader</RootNamespace>
-    <AssemblyName>Thinksea.Net.FileUploader</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netcoreapp2.2;net40</TargetFrameworks>
+    <Version>3.0.0.0</Version>
+    <Copyright>Copyright © www.thinksea.com 2019</Copyright>
+    <Product>Thinksea Net FileUploader</Product>
+    <Company>Thinksea</Company>
+    <Description>封装了基于 HTTP 协议的文件上传功能</Description>
+    <PackageId>Thinksea.Net.FileUploader</PackageId>
+    <Authors>Thinksea</Authors>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Thinksea.Net.FileUploader.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>Thinksea.Net.FileUploader.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Thinksea.Net.FileUploader.Result.cs" />
-    <Compile Include="Thinksea.Net.FileUploader.HttpUploadServer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Thinksea.Net.FileUploader.HttpFileUpload.cs" />
-    <Compile Include="Thinksea.Net.FileUploader.IFileUpload.cs" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea\Thinksea.csproj">
-      <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
-      <Name>Thinksea</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+    <PackageReference Include="Microsoft.AspNetCore.Http">
+      <Version>2.2.2</Version>
+    </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

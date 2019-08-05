@@ -43,7 +43,12 @@
             {
                 if (this._FileUploadTempDirectory == null)
                 {
-                    this._FileUploadTempDirectory = System.IO.Path.Combine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath, @"UploadTemp");
+#if NETFRAMEWORK
+                    string baseDirectory = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath;
+#elif NETCOREAPP
+                    string baseDirectory = System.AppContext.BaseDirectory;
+#endif
+                    this._FileUploadTempDirectory = System.IO.Path.Combine(baseDirectory, @"UploadTemp");
                 }
                 return this._FileUploadTempDirectory;
             }
@@ -140,14 +145,43 @@
             //return tf.BytesUploaded;
         }
 
+#if NETFRAMEWORK
+        /// <summary>
+        /// 从 URL 获取参数。
+        /// </summary>
+        /// <param name="request">当前上下文的 <see cref="System.Web.HttpRequest"/> 对象。</param>
+        /// <param name="key">参数名。</param>
+        /// <returns>参数值。</returns>
+        private string GetUrlParameter(System.Web.HttpRequest request, string key)
+        {
+            return request.QueryString[key];
+        }
+#elif NETCOREAPP
+        /// <summary>
+        /// 从 URL 获取参数。
+        /// </summary>
+        /// <param name="request">当前上下文的 <see cref="Microsoft.AspNetCore.Http.HttpRequest"/> 对象。</param>
+        /// <param name="key">参数名。</param>
+        /// <returns>参数值。</returns>
+        private string GetUrlParameter(Microsoft.AspNetCore.Http.HttpRequest request, string key)
+        {
+            return request.Query[key];
+        }
+#endif
+
         /// <summary>
         /// 通过实现 System.Web.IHttpHandler 接口的自定义 HttpHandler 启用 HTTP Web 请求的处理。
         /// </summary>
         /// <param name="context">System.Web.HttpContext 对象，它提供对用于为 HTTP 请求提供服务的内部服务器对象（如 Request、Response、Session 和 Server）的引用。</param>
+#if NETFRAMEWORK
         public void ProcessRequest(System.Web.HttpContext context)
+#elif NETCOREAPP
+        public void ProcessRequest(Microsoft.AspNetCore.Http.HttpContext context)
+#endif
         {
-            context.Response.ContentType = "text/plain";
-            //context.Response.Write("Hello World");
+            var request = context.Request;
+            var response = context.Response;
+
             string result;
             try
             {
@@ -164,21 +198,47 @@
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
 #endif
             }
-            context.Response.Write(result);
+
+#if NETFRAMEWORK
+            response.ContentEncoding = System.Text.Encoding.UTF8;
+            response.ContentType = "application/json";
+            response.AddHeader("Pragma", "no-cache");
+            response.CacheControl = "no-cache";
+            response.Write(result);
+#elif NETCOREAPP
+            {
+                System.Net.Http.Headers.MediaTypeHeaderValue mediaType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                mediaType.CharSet = "utf-8";
+                response.ContentType = mediaType.ToString();
+                response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.Pragma, "no-cache");
+                response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.CacheControl, "no-cache");
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(response.Body, System.Text.Encoding.UTF8))
+                {
+                    sw.Write(result);
+                }
+                return;
+            }
+#endif
 
         }
 
+#if NETFRAMEWORK
         private string DoCommand(System.Web.HttpContext context)
+#elif NETCOREAPP
+        private string DoCommand(Microsoft.AspNetCore.Http.HttpContext context)
+#endif
         {
-            switch (context.Request.QueryString["cmd"])
+            var request = context.Request;
+            var response = context.Response;
+            switch (this.GetUrlParameter(request, "cmd"))
             {
                 case "fastupload": //尝试秒传指定的文件。
                     {
-                        string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
-                        long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
-                        string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
+                        string clientFileName = this.GetUrlParameter(request, "filename"); //客户端文件名。
+                        long fileSize = long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
+                        string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
+                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         FastUploadEventArgs e = new FastUploadEventArgs(clientFileName, clientCheckCode, customParameters);
                         this.FastUpload(e);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
@@ -190,11 +250,11 @@
                     }
                 case "getoffset": //客户端获取断点续传起始位置。
                     {
-                        string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
-                        long fileSize = long.Parse(context.Request.QueryString["filesize"]); //文件大小。
-                        string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
+                        string clientFileName = this.GetUrlParameter(request, "filename"); //客户端文件名。
+                        long fileSize = long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
+                        string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
+                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
@@ -202,7 +262,7 @@
                             ErrorCode = 0,
                             Data = p,
                         });
-                        //context.Response.Write(p);
+                        //response.Write(p);
                         //_httpContext.Response.Clear();
                         //_httpContext.Response.End();
                         return JSON;
@@ -210,24 +270,33 @@
                 default: //上传文件内容。
                     {
                         #region 解析查询参数。
-                        string clientFileName = context.Request.QueryString["filename"]; //客户端文件名。
-                        long fileSize = string.IsNullOrEmpty(context.Request.QueryString["filesize"]) ? 0 : long.Parse(context.Request.QueryString["filesize"]); //文件大小。
-                        string sCheckCode = context.Request.QueryString["checkcode"]; //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
+                        string clientFileName = this.GetUrlParameter(request, "filename"); //客户端文件名。
+                        long fileSize = string.IsNullOrEmpty(this.GetUrlParameter(request, "filesize")) ? 0 : long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
+                        string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = context.Request.QueryString["param"]; //用户自定义参数。
-                        long startByte = string.IsNullOrEmpty(context.Request.QueryString["offset"]) ? 0 : long.Parse(context.Request.QueryString["offset"]); //上传数据起始偏移地址。
+                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
+                        long startByte = string.IsNullOrEmpty(this.GetUrlParameter(request, "offset")) ? 0 : long.Parse(this.GetUrlParameter(request, "offset")); //上传数据起始偏移地址。
                         #endregion
 
-                        if (context.Request.Files.Count > 0) //如果采用标准的网页表单格式上传文件数据。
+#if NETFRAMEWORK
+                        var uploadFiles = request.Files;
+#elif NETCOREAPP
+                        var uploadFiles = request.Form.Files;
+#endif
+                        if (uploadFiles.Count > 0) //如果采用标准的网页表单格式上传文件数据。
                         {
-                            System.Web.HttpPostedFile httpPostedFile = context.Request.Files[0];
+                            var httpPostedFile = uploadFiles[0];
                             if (string.IsNullOrEmpty(clientFileName))
                             {
                                 clientFileName = httpPostedFile.FileName;
                             }
-                            if (string.IsNullOrEmpty(context.Request.QueryString["filesize"]))
+                            if (string.IsNullOrEmpty(this.GetUrlParameter(request, "filesize")))
                             {
+#if NETFRAMEWORK
                                 fileSize = httpPostedFile.ContentLength;
+#elif NETCOREAPP
+                                fileSize = httpPostedFile.Length;
+#endif
                             }
                         }
 
@@ -261,17 +330,38 @@
                         try
                         {
                             outputStream.Position = startByte;
+
+#if NETFRAMEWORK
                             System.IO.Stream inputStream;
-                            if (context.Request.Files.Count > 0) //如果采用标准的网页表单格式上传文件数据。
+                            if (uploadFiles.Count > 0) //如果采用标准的网页表单格式上传文件数据。
                             {
-                                System.Web.HttpPostedFile httpPostedFile = context.Request.Files[0];
+                                var httpPostedFile = uploadFiles[0];
                                 inputStream = httpPostedFile.InputStream;
                             }
                             else //如果非表单（即所有POST发送的内容原文既是文件数据）
                             {
-                                inputStream = context.Request.InputStream;
+                                inputStream = request.InputStream;
                             }
                             writeDataSize = this.SaveFile(inputStream, outputStream);
+#elif NETCOREAPP
+                            System.IO.Stream inputStream;
+                            if (uploadFiles.Count > 0) //如果采用标准的网页表单格式上传文件数据。
+                            {
+                                var httpPostedFile = uploadFiles[0];
+                                using (inputStream = httpPostedFile.OpenReadStream())
+                                {
+                                    writeDataSize = this.SaveFile(inputStream, outputStream);
+                                }
+                            }
+                            else //如果非表单（即所有POST发送的内容原文既是文件数据）
+                            {
+                                using (inputStream = request.Body)
+                                {
+                                    writeDataSize = this.SaveFile(inputStream, outputStream);
+                                }
+                            }
+#endif
+
 #if DEBUG
                             System.Diagnostics.Debug.WriteLine("写数据到磁盘成功。");
 #endif
