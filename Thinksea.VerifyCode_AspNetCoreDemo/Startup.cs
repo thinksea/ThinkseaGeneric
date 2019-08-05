@@ -30,16 +30,15 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false; //发布到 IIS 时此项必须为 false，否则无法使用 Session，而登录功能依赖于 Session，所以也无法实现登录功能。
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //启用 Session
-            services.AddDistributedMemoryCache();//启用session之前必须先添加内存
+            // Session Configuration
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-                options.Cookie.HttpOnly = true;//设置在浏览器不能通过js获得该cookie的值
+                options.IdleTimeout = TimeSpan.FromMinutes(20); //Session 超时时间 20 分钟
+                options.Cookie.HttpOnly = true; //设置在浏览器不能通过js获得该cookie的值
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -59,10 +58,11 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo
                 app.UseHsts();
             }
 
+            app.UseSession(); //启用 Session
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession(); //启用 Session
 
             app.UseMvc();
         }
