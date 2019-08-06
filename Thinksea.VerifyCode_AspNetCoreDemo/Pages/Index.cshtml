@@ -31,47 +31,35 @@
             changeVerifyCode(cId);
         }
 
+        var verifyCodeIdList = ["VerifyCode1", "VerifyCode2"];
+        var verifyCodeLoadIndex = 0;
+
+        /**
+         * 尝试加载下一个验证码。
+         */
+        function loadNextVerifyCode() {
+            if (verifyCodeIdList && verifyCodeLoadIndex < verifyCodeIdList.length) {
+                var ctlId = verifyCodeIdList[verifyCodeLoadIndex++];
+                var ctl = document.getElementById(ctlId);
+                ctl.onload = onVerifyCodeLoad;
+                changeVerifyCode(ctlId);
+                ctl.parentElement.onclick = verifyCodeClick;
+            }
+        }
+
+        /**
+         * 实现逐个加载验证码的效果。*****特别注意：仅当需要同时显示多个验证码时才需要这样做。之所以这样做是因为 asp.net core 2.2 的 session 功能不支持并行赋值（即：不能同时请求多个验证码，否则会导致用户输入的验证码不正确）
+         */
+        function onVerifyCodeLoad() {
+            var theimg = this;
+            if (theimg.complete || theimg.readyState == "complete" || theimg.readyState == "loaded") {
+                theimg.onload = undefined;
+                loadNextVerifyCode(); //尝试加载下一个验证码。
+            }
+        }
+
         function load() {
-            {
-                var ctlId = "VerifyCode1";
-                changeVerifyCode(ctlId);
-                var ctl = document.getElementById(ctlId);
-                ctl.parentElement.onclick = verifyCodeClick;
-            }
-            {
-                var ctlId = "VerifyCode2";
-                changeVerifyCode(ctlId);
-                var ctl = document.getElementById(ctlId);
-                ctl.parentElement.onclick = verifyCodeClick;
-            }
-            //{
-            //    var ctlId = "VerifyCode3";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode4";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode5";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode6";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode7";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode8";
-            //    changeVerifyCode(ctlId);
-            //}
-            //{
-            //    var ctlId = "VerifyCode9";
-            //    changeVerifyCode(ctlId);
-            //}
+            loadNextVerifyCode();
         }
 
         function btnClick() {
@@ -111,15 +99,6 @@ else
         <a href="javascript:;"><img id="VerifyCode2" /></a>
         <input id="TextBox2" type="text" />
         <button type="button" onclick="btnClick()">验证</button>
-    </p>
-    <p>
-        @*<img id="VerifyCode3" />
-            <img id="VerifyCode4" />
-            <img id="VerifyCode5" />
-            <img id="VerifyCode6" />
-            <img id="VerifyCode7" />
-            <img id="VerifyCode8" />
-            <img id="VerifyCode9" />*@
     </p>
 </body>
 </html>
