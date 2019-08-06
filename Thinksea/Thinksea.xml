@@ -3507,16 +3507,6 @@
             </para>
             </example>
         </member>
-        <member name="M:Thinksea.Web.IsMobile">
-            <summary>
-            判断用户端访问设备是否手机。
-            </summary>
-            <returns>如果是手机则返回 true；否则返回 false。</returns>
-            <remarks>
-            <see cref="!:http://detectmobilebrowsers.com/"/>
-            基于此站点提供的内容修改。
-            </remarks>
-        </member>
         <member name="M:Thinksea.Web.IsMobile(System.String)">
             <summary>
             判断用户端访问设备是否手机。
@@ -3526,17 +3516,6 @@
             <remarks>
             <see cref="!:http://detectmobilebrowsers.com/"/>
             基于此站点提供的内容修改。
-            </remarks>
-        </member>
-        <member name="M:Thinksea.Web.IsMobileOrPad">
-            <summary>
-            判断用户端访问设备是否手机或平板。
-            </summary>
-            <returns>如果是则返回 true；否则返回 false。</returns>
-            <remarks>
-            <see cref="!:http://detectmobilebrowsers.com/"/>
-            基于此站点提供的内容修改。
-            注意：存在一个已知的BUG，无法得知如何识别微软的 surface 平板设备。
             </remarks>
         </member>
         <member name="M:Thinksea.Web.IsMobileOrPad(System.String)">
@@ -3549,15 +3528,6 @@
             <see cref="!:http://detectmobilebrowsers.com/"/>
             基于此站点提供的内容修改。
             注意：存在一个已知的BUG，无法得知如何识别微软的 surface 平板设备。
-            </remarks>
-        </member>
-        <member name="M:Thinksea.Web.IsWeixinBrowser">
-            <summary>
-            判断是否在微信浏览器内访问网页。
-            </summary>
-            <returns>返回 true；否则返回 false。</returns>
-            <remarks>
-            支持微信客户端 PC 版。
             </remarks>
         </member>
         <member name="M:Thinksea.Web.IsWeixinBrowser(System.String)">
