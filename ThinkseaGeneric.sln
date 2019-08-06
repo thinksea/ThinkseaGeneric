@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.Requir
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCode", "Thinksea.WebControls.VerifyCode\Thinksea.WebControls.VerifyCode.csproj", "{F41B4069-F78E-406D-94D4-259048DDF78F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCodeSample", "Thinksea.WebControls.VerifyCodeSample\Thinksea.WebControls.VerifyCodeSample.csproj", "{9AD9ADCF-15F0-4293-990D-50948EB139CC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.UserSystemDemo", "Thinksea.Windows.UserSystemDemo\Thinksea.Windows.UserSystemDemo.csproj", "{2CE3A930-913E-4861-9EB1-7BA83BBCF214}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms", "Thinksea.Windows.Forms\Thinksea.Windows.Forms.csproj", "{EF523069-0BFE-4434-8461-69CA1FF2A76D}"
@@ -63,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.LogTest", "Thinkse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Web.UriParameterDemo", "Thinksea.Web.UriParameterDemo\Thinksea.Web.UriParameterDemo.csproj", "{F9899612-0712-429A-9749-5863A6DF7156}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader", "Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj", "{BB413D66-495E-41E2-B136-FE769025E893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Net.FileUploader", "Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj", "{BB413D66-495E-41E2-B136-FE769025E893}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
 EndProject
@@ -77,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.VerifyCode", "Thin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.VerifyCode_WebFormDemo", "Thinksea.VerifyCode_WebFormDemo\Thinksea.VerifyCode_WebFormDemo.csproj", "{19E2D5FF-9DBA-4A9D-A2FB-ADED290BBB17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.VerifyCode_AspNetCoreDemo", "Thinksea.VerifyCode_AspNetCoreDemo\Thinksea.VerifyCode_AspNetCoreDemo.csproj", "{0ECC9034-C549-49B4-B89F-3074F1D45DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.VerifyCode_AspNetCoreDemo", "Thinksea.VerifyCode_AspNetCoreDemo\Thinksea.VerifyCode_AspNetCoreDemo.csproj", "{0ECC9034-C549-49B4-B89F-3074F1D45DA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCodeSample", "Thinksea.WebControls.VerifyCodeSample\Thinksea.WebControls.VerifyCodeSample.csproj", "{9AD9ADCF-15F0-4293-990D-50948EB139CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,10 +145,6 @@ Global
 		{F41B4069-F78E-406D-94D4-259048DDF78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F41B4069-F78E-406D-94D4-259048DDF78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F41B4069-F78E-406D-94D4-259048DDF78F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE3A930-913E-4861-9EB1-7BA83BBCF214}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -221,6 +217,10 @@ Global
 		{0ECC9034-C549-49B4-B89F-3074F1D45DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ECC9034-C549-49B4-B89F-3074F1D45DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ECC9034-C549-49B4-B89F-3074F1D45DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
