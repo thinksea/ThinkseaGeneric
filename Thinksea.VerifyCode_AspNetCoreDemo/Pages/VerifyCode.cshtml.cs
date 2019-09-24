@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
 {
@@ -165,12 +166,20 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
             //context.Response.ContentType = "application/octet-stream";
 
             //context.Response.Write("Hello World");
-            System.Drawing.Bitmap image = Thinksea.VerifyCode.GenerateVerifyCodeImage(generateVerifyCodeQuestion);
-            using (System.IO.Stream sm = context.Response.Body)
+            using (System.IO.MemoryStream os = new System.IO.MemoryStream())
             {
-                image.Save(context.Response.Body, System.Drawing.Imaging.ImageFormat.Png);
+                using (System.Drawing.Bitmap image = Thinksea.VerifyCode.GenerateVerifyCodeImage(generateVerifyCodeQuestion))
+                {
+                    image.Save(os, System.Drawing.Imaging.ImageFormat.Png);
+                    //image.Dispose();
+                }
+                os.Seek(0, System.IO.SeekOrigin.Begin);
+                using (System.IO.Stream sm = context.Response.Body)
+                {
+                    var result = os.CopyToAsync(sm);
+                    result.Wait();
+                }
             }
-            image.Dispose();
         }
 
         private static bool? _DebugMode = null;

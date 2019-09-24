@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Thinksea.VerifyCode_AspNetCoreDemo
 {
@@ -31,7 +30,7 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => false; //发布到 IIS 时此项必须为 false，否则无法使用 Session，而登录功能依赖于 Session，所以也无法实现登录功能。
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
             });
 
             // Session Configuration
@@ -41,11 +40,11 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo
                 options.Cookie.HttpOnly = true; //设置在浏览器不能通过js获得该cookie的值
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -64,7 +63,14 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
