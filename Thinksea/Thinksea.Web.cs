@@ -721,8 +721,7 @@
         /// </summary>
         /// <returns>如果是手机则返回 true；否则返回 false。</returns>
         /// <remarks>
-        /// <see cref="http://detectmobilebrowsers.com/"/>
-        /// 基于此站点提供的内容修改。
+        /// 基于站点（http://detectmobilebrowsers.com/）提供的内容修改。
         /// </remarks>
         [System.Obsolete()]
         public static bool IsMobile()
@@ -739,8 +738,7 @@
         /// <param name="userAgent">用户代理字符串。</param>
         /// <returns>如果是手机则返回 true；否则返回 false。</returns>
         /// <remarks>
-        /// <see cref="http://detectmobilebrowsers.com/"/>
-        /// 基于此站点提供的内容修改。
+        /// 基于站点（http://detectmobilebrowsers.com/）提供的内容修改。
         /// </remarks>
         public static bool IsMobile(string userAgent)
         {
@@ -763,8 +761,7 @@
         /// </summary>
         /// <returns>如果是则返回 true；否则返回 false。</returns>
         /// <remarks>
-        /// <see cref="http://detectmobilebrowsers.com/"/>
-        /// 基于此站点提供的内容修改。
+        /// 基于站点（http://detectmobilebrowsers.com/）提供的内容修改。
         /// 注意：存在一个已知的BUG，无法得知如何识别微软的 surface 平板设备。
         /// </remarks>
         [System.Obsolete()]
@@ -782,8 +779,7 @@
         /// <param name="userAgent">用户代理字符串。</param>
         /// <returns>如果是则返回 true；否则返回 false。</returns>
         /// <remarks>
-        /// <see cref="http://detectmobilebrowsers.com/"/>
-        /// 基于此站点提供的内容修改。
+        /// 基于站点（http://detectmobilebrowsers.com/）提供的内容修改。
         /// 注意：存在一个已知的BUG，无法得知如何识别微软的 surface 平板设备。
         /// </remarks>
         public static bool IsMobileOrPad(string userAgent)

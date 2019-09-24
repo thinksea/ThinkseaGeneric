@@ -234,7 +234,6 @@
         /// <summary>
         /// 获取无关联进程的托盘图标。
         /// </summary>
-        /// <param name="hwnd">进程 Handler</param>
         /// <returns></returns>
         public static TrayItemData[] GetFreeTrayWndDetail()
         {

@@ -54,7 +54,6 @@ namespace Thinksea.VisualStudio
         /// 
         /// </summary>
         /// <param name="strProgID"></param>
-        /// <param name="type">查询数据类型。</param>
         /// <returns></returns>
         /// <example>
         /// string strMoniker = "!VisualStudio.DTE.7.1:" + System.Diagnostics.Process.GetCurrentProcess().Id.ToString();

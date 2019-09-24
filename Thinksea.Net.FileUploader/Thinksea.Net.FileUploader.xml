@@ -404,15 +404,15 @@
             <param name="taskFile">任务文件。</param>
             <returns>返回找到的续传位置，否则返回 0 表示重头开始上传；</returns>
         </member>
-        <member name="M:Thinksea.Net.FileUploader.HttpUploadServer.GetUrlParameter(Microsoft.AspNetCore.Http.HttpRequest,System.String)">
+        <member name="M:Thinksea.Net.FileUploader.HttpUploadServer.GetUrlParameter(System.Web.HttpRequest,System.String)">
             <summary>
             从 URL 获取参数。
             </summary>
-            <param name="request">当前上下文的 <see cref="T:Microsoft.AspNetCore.Http.HttpRequest"/> 对象。</param>
+            <param name="request">当前上下文的 <see cref="T:System.Web.HttpRequest"/> 对象。</param>
             <param name="key">参数名。</param>
             <returns>参数值。</returns>
         </member>
-        <member name="M:Thinksea.Net.FileUploader.HttpUploadServer.ProcessRequest(Microsoft.AspNetCore.Http.HttpContext)">
+        <member name="M:Thinksea.Net.FileUploader.HttpUploadServer.ProcessRequest(System.Web.HttpContext)">
             <summary>
             通过实现 System.Web.IHttpHandler 接口的自定义 HttpHandler 启用 HTTP Web 请求的处理。
             </summary>
