@@ -3545,35 +3545,3 @@
         </member>
     </members>
 </doc>
-�� true；否则返回 false。</returns>
-            <remarks>
-            基于站点（http://detectmobilebrowsers.com/）提供的内容修改。
-            注意：存在一个已知的BUG，无法得知如何识别微软的 surface 平板设备。
-            </remarks>
-        </member>
-        <member name="M:Thinksea.Web.IsWeixinBrowser">
-            <summary>
-            判断是否在微信浏览器内访问网页。
-            </summary>
-            <returns>返回 true；否则返回 false。</returns>
-            <remarks>
-            支持微信客户端 PC 版。
-            </remarks>
-        </member>
-        <member name="M:Thinksea.Web.IsWeixinBrowser(System.String)">
-            <summary>
-            判断是否在微信浏览器内访问网页。
-            </summary>
-            <param name="userAgent">用户代理字符串。</param>
-            <returns>返回 true；否则返回 false。</returns>
-            <remarks>
-            支持微信客户端 PC 版。
-            </remarks>
-        </member>
-        <member name="M:Thinksea.Web.#cctor">
-            <summary>
-            构造方法。
-            </summary>
-        </member>
-    </members>
-</doc>
