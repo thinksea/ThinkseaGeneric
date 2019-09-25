@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
 {
@@ -135,15 +134,18 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
         /// 通过实现 System.Web.IHttpHandler 接口的自定义 HttpHandler 启用 HTTP Web 请求的处理。
         /// </summary>
         /// <param name="context">Microsoft.AspNetCore.Http.HttpContext 对象，它提供对用于为 HTTP 请求提供服务的内部服务器对象（如 Request、Response、Session 和 Server）的引用。</param>
-        public void ProcessRequest(Microsoft.AspNetCore.Http.HttpContext context)
+        public async void ProcessRequest(Microsoft.AspNetCore.Http.HttpContext context)
         {
+            var request = context.Request;
+            var response = context.Response;
+
             //在此写入您的处理程序实现。
-            string VerifyCodeID = context.Request.Query["VerifyCodeID"];
+            string VerifyCodeID = request.Query["VerifyCodeID"];
             //            if (string.IsNullOrEmpty(VerifyCodeID))
             //            {
-            //                //context.Response.ContentType = "text/plain";
-            //                context.Response.ContentType = "text/html";
-            //                context.Response.Write(@"<html><head><meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" /></head><body>
+            //                //response.ContentType = "text/plain";
+            //                response.ContentType = "text/html";
+            //                response.Write(@"<html><head><meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" /></head><body>
             //" + Thinksea.Web.TextToHtml(@"功能：生成一个验证码图片。
             //参数列表：
             //VerifyCodeID：验证码对应的唯一 ID。（*必选参数）
@@ -161,24 +163,20 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
                 SaveVerifyCode(context, VerifyCodeID, _VerifyCode);
             }
 
-            //context.Response.ContentType = "text/plain";
-            context.Response.ContentType = "image/png";
-            //context.Response.ContentType = "application/octet-stream";
+            //response.ContentType = "text/plain";
+            response.ContentType = "image/png";
+            //response.ContentType = "application/octet-stream";
 
-            //context.Response.Write("Hello World");
-            using (System.IO.MemoryStream os = new System.IO.MemoryStream())
+            //response.Write("Hello World");
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
                 using (System.Drawing.Bitmap image = Thinksea.VerifyCode.GenerateVerifyCodeImage(generateVerifyCodeQuestion))
                 {
-                    image.Save(os, System.Drawing.Imaging.ImageFormat.Png);
+                    image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     //image.Dispose();
                 }
-                os.Seek(0, System.IO.SeekOrigin.Begin);
-                using (System.IO.Stream sm = context.Response.Body)
-                {
-                    var result = os.CopyToAsync(sm);
-                    result.Wait();
-                }
+                ms.Seek(0, System.IO.SeekOrigin.Begin);
+                await ms.CopyToAsync(response.Body);
             }
         }
 
