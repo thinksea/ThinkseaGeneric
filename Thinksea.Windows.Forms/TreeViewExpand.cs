@@ -147,7 +147,7 @@ namespace Thinksea.Windows.Forms
         {
             if (node == null)
             {
-                throw new System.ArgumentNullException("node", "参数“node”不能为 null。");
+                throw new System.ArgumentNullException(nameof(node), "参数“node”不能为 null。");
             }
             if (parentNode == null)
             {
@@ -1210,7 +1210,6 @@ namespace Thinksea.Windows.Forms
                             }
                             return true;
                         }
-                        break;
                     case System.Windows.Forms.Keys.Down:
                         {
                             System.Windows.Forms.TreeNode sNode = this.SelectedNode;
@@ -1245,7 +1244,6 @@ namespace Thinksea.Windows.Forms
                             }
                             return true;
                         }
-                        break;
                     case System.Windows.Forms.Keys.Left:
                         {
                             if (this.SelectedNode != null)
@@ -1283,7 +1281,6 @@ namespace Thinksea.Windows.Forms
                             }
                             return true;
                         }
-                        break;
                     case System.Windows.Forms.Keys.Right:
                         {
                             System.Windows.Forms.TreeNode sNode = this.SelectedNode;
@@ -1321,7 +1318,6 @@ namespace Thinksea.Windows.Forms
                             }
                             return true;
                         }
-                        break;
                 }
             }
             #endregion

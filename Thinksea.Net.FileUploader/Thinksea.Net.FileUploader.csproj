@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2.7;netcoreapp3.0;net40</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net48</TargetFrameworks>
     <Version>3.1.0.0</Version>
     <Copyright>Copyright © www.thinksea.com 2019</Copyright>
     <Product>Thinksea Net FileUploader</Product>
@@ -17,12 +17,8 @@
     <DocumentationFile>Thinksea.Net.FileUploader.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <Reference Include="System.Web" />
-  </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +31,14 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2.7'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Http">
       <Version>2.2.2</Version>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="System.Web" />
   </ItemGroup>
 
 </Project>

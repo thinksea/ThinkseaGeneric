@@ -79,7 +79,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值必须大于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值必须大于 0。");
                 }
                 VerifyCode._Length = value;
             }
@@ -134,7 +134,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值必须大于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值必须大于 0。");
                 }
                 VerifyCode._FontSize = value;
             }

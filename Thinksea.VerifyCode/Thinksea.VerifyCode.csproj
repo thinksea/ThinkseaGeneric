@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2.7;netcoreapp3.0;net40</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net48</TargetFrameworks>
     <Description>验证码生成组件</Description>
     <Copyright>Copyright © www.thinksea.com 2008-2019</Copyright>
     <Version>4.0.0</Version>
@@ -16,19 +16,15 @@
     <DocumentationFile>Thinksea.VerifyCode.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <Reference Include="System.Web" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2.7'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>4.6.0</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>4.6.0</Version>
+      <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
 
