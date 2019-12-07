@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net48</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
     <Description>验证码生成组件</Description>
     <Copyright>Copyright © www.thinksea.com 2008-2019</Copyright>
     <Version>4.0.0</Version>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>Thinksea.VerifyCode.xml</DocumentationFile>
+    <DocumentationFile>bin\Thinksea.VerifyCode.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">

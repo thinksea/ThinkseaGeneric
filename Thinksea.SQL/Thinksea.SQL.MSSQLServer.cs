@@ -192,14 +192,13 @@
         {
             System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + UserID + "; Password=" + Password + ";");
             System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataReader sdr = null;
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.sysdatabases where [Name]=N'" + DataBase + "'";
 
             Connection.Open();
             try
             {
-                sdr = sqlCommand.ExecuteReader();
+                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     if (sdr.Read())
@@ -228,14 +227,13 @@
             System.Collections.Generic.List<string> l = new System.Collections.Generic.List<string>();
             System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
             System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataReader sdr = null;
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.sysdatabases where [dbid]>6";
 
             Connection.Open();
             try
             {
-                sdr = sqlCommand.ExecuteReader();
+                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     while (sdr.Read())
@@ -265,14 +263,13 @@
         {
             System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
             System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataReader sdr = null;
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = @"select [Name] from master.dbo.syslogins where [Name]=N'" + Thinksea.General.FixSQLCommandText(UserID) + @"'";
 
             Connection.Open();
             try
             {
-                sdr = sqlCommand.ExecuteReader();
+                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     if (sdr.Read())
@@ -301,14 +298,13 @@
             System.Collections.Generic.List<string> l = new System.Collections.Generic.List<string>();
             System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
             System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
-            System.Data.SqlClient.SqlDataReader sdr = null;
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.syslogins";
 
             Connection.Open();
             try
             {
-                sdr = sqlCommand.ExecuteReader();
+                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     while (sdr.Read())

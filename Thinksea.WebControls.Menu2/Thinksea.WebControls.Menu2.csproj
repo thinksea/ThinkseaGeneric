@@ -1,116 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3B5276BB-E423-4566-9BFE-916426236EE3}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinksea.WebControls.Menu2</RootNamespace>
-    <AssemblyName>Thinksea.WebControls.Menu2</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Nonshipping>true</Nonshipping>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net40;net48</TargetFrameworks>
+    <Version>1.1.0.0</Version>
+    <Copyright>Copyright ©  2008 Thinksea</Copyright>
+    <Product>Thinksea.WebControls.Menu2</Product>
+    <Description>一个两级菜单</Description>
+    <PackageId>Thinksea.WebControls.Menu2</PackageId>
+    <Authors>Thinksea</Authors>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Thinksea.WebControls.Menu2.XML</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>bin\Thinksea.WebControls.Menu2.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.XML" />
+    <None Remove="Thinksea.WebControls.Menu2.JPG" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Thinksea.WebControls.Menu2.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Thinksea.WebControls.Menu2.Menu.cs" />
-    <Compile Include="Thinksea.WebControls.Menu2.Menu2.cs" />
-    <Compile Include="Thinksea.WebControls.Menu2.Menu2Designer.cs" />
-    <Compile Include="Thinksea.WebControls.Menu2.Menu2EventArgs.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Thinksea.WebControls.Menu2.JPG" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea.VisualStudio\Thinksea.VisualStudio.csproj">
-      <Project>{3293fea7-30f1-447b-9833-37c70d1f7a17}</Project>
-      <Name>Thinksea.VisualStudio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thinksea\Thinksea.csproj">
-      <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
-      <Name>Thinksea</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Thinksea.VisualStudio\Thinksea.VisualStudio.csproj" />
+    <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

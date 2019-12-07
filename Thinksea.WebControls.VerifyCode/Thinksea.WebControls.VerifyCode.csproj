@@ -1,117 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F41B4069-F78E-406D-94D4-259048DDF78F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinksea.WebControls.VerifyCode</RootNamespace>
-    <AssemblyName>Thinksea.WebControls.VerifyCode</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Nonshipping>true</Nonshipping>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net40;net48</TargetFrameworks>
+    <Version>2.0.0.0</Version>
+    <Copyright>Copyright © Thinksea 2008-2019</Copyright>
+    <Product>Thinksea.WebControls.VerifyCode</Product>
+    <Description>一个网页验证码控件。鉴于.NET发展方向的改变，将放弃维护此服务器控件。请转为参考示例程序“Thinksea.WebControls.VerifyCode_WebFormDemo”描述的调用方式，或自行从基类“Thinksea.VerifyCode”扩展实现。</Description>
+    <PackageId>Thinksea.WebControls.VerifyCode</PackageId>
+    <Authors>Thinksea</Authors>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Thinksea.WebControls.VerifyCode.XML</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Thinksea.WebControls.VerifyCode.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>bin\Thinksea.WebControls.VerifyCode.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <None Remove="Thinksea.WebControls.VerifyCode.JPG" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Thinksea.WebControls.VerifyCode.VerifyCodeHandler.cs" />
-    <Compile Include="Thinksea.WebControls.VerifyCode.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Thinksea.WebControls.VerifyCode.VerifyCode.cs" />
-    <Compile Include="Thinksea.WebControls.VerifyCode.VerifyCodeDesigner.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Thinksea.WebControls.VerifyCode.JPG" />
-    <Content Include="控件使用帮助手册.txt" />
   </ItemGroup>
+
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <ProjectReference Include="..\Thinksea.VerifyCode\Thinksea.VerifyCode.csproj" />
+    <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea.VerifyCode\Thinksea.VerifyCode.csproj">
-      <Project>{b1f3101d-714e-4f2e-864a-b3ee4d999a3d}</Project>
-      <Name>Thinksea.VerifyCode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Thinksea\Thinksea.csproj">
-      <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
-      <Name>Thinksea</Name>
-    </ProjectReference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

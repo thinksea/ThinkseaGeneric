@@ -1,116 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1EA684B5-5343-4B23-AA95-C60C2812237A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinksea.WebControls.DateTimePicker</RootNamespace>
-    <AssemblyName>Thinksea.WebControls.DateTimePicker</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Nonshipping>true</Nonshipping>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net40;net48</TargetFrameworks>
+    <Version>2.0.0.0</Version>
+    <Copyright>Copyright ©  2008 Thinksea</Copyright>
+    <Product>Thinksea WebControls Calendar</Product>
+    <Description>一个日期选择控件</Description>
+    <PackageId>Thinksea.WebControls.DateTimePicker</PackageId>
+    <Authors>Thinksea</Authors>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Thinksea.WebControls.DateTimePicker.XML</DocumentationFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>bin\Thinksea.WebControls.DateTimePicker.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
+    <None Remove="DateTimePicker.bmp" />
+    <None Remove="DateTimePicker.js" />
+    <None Remove="images\DateTimePicker.bmp" />
+    <None Remove="images\DateTimePickerDown.gif" />
+    <None Remove="images\DateTimePickerUp.gif" />
+    <None Remove="images\disDateTimePicker.bmp" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="DateTimeChangingEventArgs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Thinksea.WebControls.DateTimePicker.CheckErrorEventArgs.cs" />
-    <Compile Include="Thinksea.WebControls.DateTimePicker.DateTimePicker.cs" />
-    <Compile Include="Thinksea.WebControls.DateTimePicker.DateTimePickerDesigner.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="aspnet_client\DateTimePicker\DateTimePicker.bmp" />
-    <Content Include="aspnet_client\DateTimePicker\DateTimePicker.js" />
-    <Content Include="aspnet_client\DateTimePicker\DateTimePickerDown.gif" />
-    <Content Include="aspnet_client\DateTimePicker\DateTimePickerUp.gif" />
-    <Content Include="aspnet_client\DateTimePicker\disDateTimePicker.bmp" />
     <Content Include="DateTimePicker.bmp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DateTimePicker.js" />
     <EmbeddedResource Include="images\DateTimePicker.bmp" />
     <EmbeddedResource Include="images\DateTimePickerDown.gif" />
     <EmbeddedResource Include="images\DateTimePickerUp.gif" />
     <EmbeddedResource Include="images\disDateTimePicker.bmp" />
-    <EmbeddedResource Include="DateTimePicker.js" />
-    <Content Include="readme.txt" />
-    <Content Include="Thinksea.DateTimePicker.ico" />
   </ItemGroup>
+
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
