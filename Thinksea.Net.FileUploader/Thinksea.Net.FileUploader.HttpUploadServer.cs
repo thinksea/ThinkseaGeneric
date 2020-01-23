@@ -176,7 +176,7 @@
 #if NETFRAMEWORK
         public void ProcessRequest(System.Web.HttpContext context)
 #elif NETCOREAPP
-        public void ProcessRequest(Microsoft.AspNetCore.Http.HttpContext context)
+        public async void ProcessRequest(Microsoft.AspNetCore.Http.HttpContext context)
 #endif
         {
             var request = context.Request;
@@ -207,14 +207,28 @@
             response.Write(result);
 #elif NETCOREAPP
             {
+                if (!response.Headers.ContainsKey(Microsoft.Net.Http.Headers.HeaderNames.Pragma))
+                {
+                    response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.Pragma, "no-cache");
+                }
+                //response.CacheControl = "no-store";
+                if (!response.Headers.ContainsKey(Microsoft.Net.Http.Headers.HeaderNames.CacheControl))
+                {
+                    response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.CacheControl, "no-cache");
+                }
+
                 System.Net.Http.Headers.MediaTypeHeaderValue mediaType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 mediaType.CharSet = "utf-8";
                 response.ContentType = mediaType.ToString();
-                response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.Pragma, "no-cache");
-                response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.CacheControl, "no-cache");
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(response.Body, System.Text.Encoding.UTF8))
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
                 {
-                    sw.Write(result);
+                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(ms, System.Text.Encoding.UTF8))
+                    {
+                        sw.Write(result);
+                        sw.Flush();
+                        ms.Seek(0, System.IO.SeekOrigin.Begin);
+                        await ms.CopyToAsync(response.Body);
+                    }
                 }
                 return;
             }
@@ -238,8 +252,8 @@
                         long fileSize = long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
                         string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
-                        FastUploadEventArgs e = new FastUploadEventArgs(clientFileName, clientCheckCode, customParameters);
+                        string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
+                        FastUploadEventArgs e = new FastUploadEventArgs(clientFileName, clientCheckCode, customParameter);
                         this.FastUpload(e);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
                         {
@@ -254,7 +268,7 @@
                         long fileSize = long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
                         string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
+                        string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
                         string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
@@ -274,7 +288,7 @@
                         long fileSize = string.IsNullOrEmpty(this.GetUrlParameter(request, "filesize")) ? 0 : long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
                         string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
-                        string customParameters = this.GetUrlParameter(request, "param"); //用户自定义参数。
+                        string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         long startByte = string.IsNullOrEmpty(this.GetUrlParameter(request, "offset")) ? 0 : long.Parse(this.GetUrlParameter(request, "offset")); //上传数据起始偏移地址。
                         #endregion
 
@@ -302,7 +316,7 @@
 
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
 
-                        this.BeginUpload(new FileUploadEventArgs(tempFile, clientFileName, customParameters, startByte));
+                        this.BeginUpload(new FileUploadEventArgs(tempFile, clientFileName, customParameter, startByte));
 
                         //如果是第一次上传数据则删除同名文件。
                         if (startByte == 0)
@@ -415,7 +429,7 @@
                         string JSON;
                         if (updateFinish)
                         {
-                            UploadFinishedEventArgs finishedFileUploadEventArgs = new UploadFinishedEventArgs(tempFile, clientFileName, serverCheckCode, customParameters);
+                            UploadFinishedEventArgs finishedFileUploadEventArgs = new UploadFinishedEventArgs(tempFile, clientFileName, serverCheckCode, customParameter);
                             this.UploadFinished(finishedFileUploadEventArgs);
                             //string targetFile = this.GetTargetFile(finishedFileUploadEventArgs.ClientFileName);
                             //if (finishedFileUploadEventArgs.ServerFile != targetFile)

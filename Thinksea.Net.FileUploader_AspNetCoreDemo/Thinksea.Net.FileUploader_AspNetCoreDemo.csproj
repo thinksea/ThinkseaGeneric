@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="wwwroot\JavascriptUploadFileDemo.ts" />
+    <Content Remove="wwwroot\upload.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\dts\Thinksea.Net.FileUploader\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="..\Thinksea.Net.FileUploader.HttpFileUpload%28Javascript%29\Thinksea.Net.FileUploader.d.ts">
+      <Link>wwwroot\lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts</Link>
+    </TypeScriptCompile>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.min.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.min.js&#xD;&#xA;copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.js&#xD;&#xA;" />
+  </Target>
+
+
+</Project>

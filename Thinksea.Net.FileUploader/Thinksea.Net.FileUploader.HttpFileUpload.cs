@@ -95,19 +95,20 @@
         #endregion
 
         #region 事件。
-        private event BeforeUploadEventHandler _BeforeUpload;
+        private event BeginUploadEventHandler _BeginUpload;
         /// <summary>
-        /// 当计算文件校验码完成之后开始上传文件之前引发此事件。
+        /// 当开始上传文件时引发此事件。
         /// </summary>
-        public event BeforeUploadEventHandler BeforeUpload
+        [System.Obsolete]
+        public event BeginUploadEventHandler BeginUpload
         {
             add
             {
-                this._BeforeUpload += value;
+                this._BeginUpload += value;
             }
             remove
             {
-                this._BeforeUpload -= value;
+                this._BeginUpload -= value;
             }
         }
 
@@ -159,6 +160,22 @@
             }
         }
 
+        private event AbortEventHandler _OnAbort;
+        /// <summary>
+        /// 当上传中止时引发此事件。
+        /// </summary>
+        public event AbortEventHandler OnAbort
+        {
+            add
+            {
+                this._OnAbort += value;
+            }
+            remove
+            {
+                this._OnAbort -= value;
+            }
+        }
+
         #endregion
 
         #region 方法。
@@ -174,25 +191,25 @@
         /// <summary>
         /// 开始上传指定文件。（线程同步）
         /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        public void StartUploadSync(System.IO.Stream FileStream, string FileName, string CustomParameter)
+        /// <param name="fileStream">文件数据流。</param>
+        /// <param name="fileName">文件名。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        public void StartUploadSync(System.IO.Stream fileStream, string fileName, string customParameter)
         {
-            this.StartUploadSync(FileStream, FileName, CustomParameter, this.BufferSize, this.ChunkSize);
+            this.StartUploadSync(fileStream, fileName, customParameter, this.BufferSize, this.ChunkSize);
         }
 
         /// <summary>
         /// 开始上传指定文件。（线程同步）
         /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        /// <param name="BufferSize">缓冲区大小。</param>
-        /// <param name="ChunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
-        public void StartUploadSync(System.IO.Stream FileStream, string FileName, string CustomParameter, int BufferSize, int ChunkSize)
+        /// <param name="fileStream">文件数据流。</param>
+        /// <param name="fileName">文件名。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        /// <param name="bufferSize">缓冲区大小。</param>
+        /// <param name="chunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
+        public void StartUploadSync(System.IO.Stream fileStream, string fileName, string customParameter, int bufferSize, int chunkSize)
         {
-            if (FileStream == null)
+            if (fileStream == null)
             {
                 throw new System.ArgumentNullException("FileStream", "参数“FileStream”不能为 null。");
                 //return;
@@ -201,12 +218,12 @@
             {
                 return;
             }
-            this.FileStream = FileStream;
-            this.FileName = FileName;
-            this.FileSize = FileStream.Length;
-            this.CustomParameter = CustomParameter;
-            this.BufferSize = BufferSize;
-            this.ChunkSize = ChunkSize;
+            this.FileStream = fileStream;
+            this.FileName = fileName;
+            this.FileSize = fileStream.Length;
+            this.CustomParameter = customParameter;
+            this.BufferSize = bufferSize;
+            this.ChunkSize = chunkSize;
             this.Cancelling = false;
 
             //System.Threading.Thread thread = null;
@@ -216,18 +233,22 @@
             //    thread.Start();
             //}
             #region 获取文件完整性校验码，例如 SHA1 或 MD5 等。
-            if (this._FileStream == null || this.Cancelling)
+            if (this._FileStream == null)
             {
                 this.Cancelling = false;
                 return;
             }
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
+                return;
+            }
             if (this.CheckCode == null) //解决避免重复计算文件校验码，当重复调用方法“StartUpload”（例如重新启动这个文件上传任务）时。
             {
-                if (this.Cancelling)
-                {
-                    this.Cancelling = false;
-                    return;
-                }
                 long p = this._FileStream.Position;
                 try
                 {
@@ -241,6 +262,10 @@
                         if (this.Cancelling)
                         {
                             this.Cancelling = false;
+                            if (this._OnAbort != null)
+                            {
+                                this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                            }
                             return;
                         }
                         throw;
@@ -253,35 +278,35 @@
             }
             #endregion
 
-            if (this._BeforeUpload != null)
-            {
-                this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
-            }
+            //if (this._BeforeUpload != null)
+            //{
+            //    this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
+            //}
             this.StartFastUploadSync();
         }
 
         /// <summary>
         /// 开始上传指定文件。
         /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        public void StartUpload(System.IO.Stream FileStream, string FileName, string CustomParameter)
+        /// <param name="fileStream">文件数据流。</param>
+        /// <param name="fileName">文件名。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        public void StartUpload(System.IO.Stream fileStream, string fileName, string customParameter)
         {
-            this.StartUpload(FileStream, FileName, CustomParameter, this.BufferSize, this.ChunkSize);
+            this.StartUpload(fileStream, fileName, customParameter, this.BufferSize, this.ChunkSize);
         }
 
         /// <summary>
         /// 开始上传指定文件。
         /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        /// <param name="BufferSize">缓冲区大小。</param>
-        /// <param name="ChunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
-        public void StartUpload(System.IO.Stream FileStream, string FileName, string CustomParameter, int BufferSize, int ChunkSize)
+        /// <param name="fileStream">文件数据流。</param>
+        /// <param name="fileName">文件名。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        /// <param name="bufferSize">缓冲区大小。</param>
+        /// <param name="chunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
+        public void StartUpload(System.IO.Stream fileStream, string fileName, string customParameter, int bufferSize, int chunkSize)
         {
-            if (FileStream == null)
+            if (fileStream == null)
             {
                 throw new System.ArgumentNullException("FileStream", "参数“FileStream”不能为 null。");
                 //return;
@@ -290,12 +315,12 @@
             {
                 return;
             }
-            this.FileStream = FileStream;
-            this.FileName = FileName;
-            this.FileSize = FileStream.Length;
-            this.CustomParameter = CustomParameter;
-            this.BufferSize = BufferSize;
-            this.ChunkSize = ChunkSize;
+            this.FileStream = fileStream;
+            this.FileName = fileName;
+            this.FileSize = fileStream.Length;
+            this.CustomParameter = customParameter;
+            this.BufferSize = bufferSize;
+            this.ChunkSize = chunkSize;
             this.Cancelling = false;
 
             //System.Threading.Thread thread = null;
@@ -305,18 +330,22 @@
             //    thread.Start();
             //}
             #region 获取文件完整性校验码，例如 SHA1 或 MD5 等。
-            if (this._FileStream == null || this.Cancelling)
+            if (this._FileStream == null)
             {
                 this.Cancelling = false;
                 return;
             }
+            if (this.Cancelling)
+            {
+                this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
+                return;
+            }
             if (this.CheckCode == null) //解决避免重复计算文件校验码，当重复调用方法“StartUpload”（例如重新启动这个文件上传任务）时。
             {
-                if (this.Cancelling)
-                {
-                    this.Cancelling = false;
-                    return;
-                }
                 long p = this._FileStream.Position;
                 try
                 {
@@ -330,6 +359,10 @@
                         if (this.Cancelling)
                         {
                             this.Cancelling = false;
+                            if (this._OnAbort != null)
+                            {
+                                this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                            }
                             return;
                         }
                         throw;
@@ -342,10 +375,10 @@
             }
             #endregion
 
-            if (this._BeforeUpload != null)
-            {
-                this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
-            }
+            //if (this._BeforeUpload != null)
+            //{
+            //    this._BeforeUpload(this, new BeforeUploadEventArgs(this.CheckCode));
+            //}
             this.StartFastUpload();
         }
 
@@ -368,6 +401,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             {
@@ -398,6 +435,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             {
@@ -549,6 +590,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             {
@@ -579,6 +624,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             {
@@ -620,7 +669,7 @@
                         //long breakpoint = System.Convert.ToInt64(responsestring);
                         if (this._FindBreakpoint != null && breakpoint != 0)
                         {
-                            BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint);
+                            BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint, this.CustomParameter);
                             this._FindBreakpoint(this, p);
                             this.BytesUploaded = p.Breakpoint;
                         }
@@ -644,6 +693,8 @@
                     //webRequest.Abort();
                     //webRequest = null;
                 }
+
+                this.OnBeginUpload();
 
                 this.StartUploadContentSync();//开始上传数据。
 
@@ -677,7 +728,7 @@
                         //long breakpoint = System.Convert.ToInt64(responsestring);
                         if (this._FindBreakpoint != null && breakpoint != 0)
                         {
-                            BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint);
+                            BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint, this.CustomParameter);
                             this._FindBreakpoint(this, p);
                             this.BytesUploaded = p.Breakpoint;
                         }
@@ -702,6 +753,8 @@
                     webRequest = null;
                 }
 
+                this.OnBeginUpload();
+
                 this.StartUploadContent();//开始上传数据。
 
             }
@@ -723,6 +776,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
@@ -748,6 +805,10 @@
             if (this.Cancelling)
             {
                 this.Cancelling = false;
+                if (this._OnAbort != null)
+                {
+                    this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                }
                 return;
             }
             System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
@@ -819,6 +880,10 @@
                     //webRequest.Abort();
                     //webRequest = null;
                     this.Cancelling = false;
+                    if (this._OnAbort != null)
+                    {
+                        this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                    }
                     return;
                 }
                 //获取服务器端返回的信息。
@@ -878,6 +943,10 @@
                     webRequest.Abort();
                     webRequest = null;
                     this.Cancelling = false;
+                    if (this._OnAbort != null)
+                    {
+                        this._OnAbort(this, new AbortEventArgs(this.CustomParameter));
+                    }
                     return;
                 }
                 //获取服务器端返回的信息。
@@ -1028,6 +1097,18 @@
         }
 
         /// <summary>
+        /// 通知准备上传文件。
+        /// </summary>
+        private void OnBeginUpload()
+        {
+            if (this._BeginUpload != null)
+            {
+                this._BeginUpload(this, new Thinksea.Net.FileUploader.BeginUploadEventArgs(this.FileSize, this.BytesUploaded, this.CustomParameter));
+            }
+
+        }
+
+        /// <summary>
         /// 通知上传进度已经更改。
         /// </summary>
         /// <param name="resultData">需要返回到客户端的数据。</param>
@@ -1035,7 +1116,7 @@
         {
             if (this._UploadProgressChanged != null)
             {
-                this._UploadProgressChanged(this, new UploadProgressChangedEventArgs(this.FileSize, this.BytesUploaded, resultData));
+                this._UploadProgressChanged(this, new UploadProgressChangedEventArgs(this.FileSize, this.BytesUploaded, resultData, this.CustomParameter));
             }
         }
 
@@ -1048,34 +1129,85 @@
         {
             if (this._ErrorOccurred != null)
             {
-                this._ErrorOccurred(this, new UploadErrorEventArgs(errorMessage + (exception == null ? "" : exception.ToString()), exception));
+                this._ErrorOccurred(this, new UploadErrorEventArgs(errorMessage + (exception == null ? "" : exception.ToString()), exception, this.CustomParameter));
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Track whether Dispose has been called.
+        /// </summary>
+        private bool disposed = false;
+
+        /// <summary>
+        /// 释放占用的资源。
+        /// </summary>
+        /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
+            {
+                // If disposing equals true, dispose all managed
+                // and unmanaged resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    this._FileStream = null;
+                    this.CheckCode = null;
+                    this._UploadProgressChanged = null;
+                    this._ErrorOccurred = null;
+                }
+
+                // Note disposing has been done.
+                disposed = true;
             }
         }
 
         /// <summary>
-        /// 释放此对象占用的资源。
+        /// 释放占用的资源。
         /// </summary>
         public void Dispose()
         {
-            this._FileStream = null;
-            this.CheckCode = null;
-            this._UploadProgressChanged = null;
-            this._ErrorOccurred = null;
+            Dispose(true);
+            // This object will be cleaned up by the Dispose method.
+            // Therefore, you should call GC.SupressFinalize to
+            // take this object off the finalization queue
+            // and prevent finalization code for this object
+            // from executing a second time.
+            System.GC.SuppressFinalize(this);
         }
-        #endregion
 
     }
 
     #region 定义代理和事件参数。
     /// <summary>
-    /// 上传前事件参数。
+    /// 定义开始上传文件事件参数。
     /// </summary>
-    public class BeforeUploadEventArgs : System.EventArgs
+    public class BeginUploadEventArgs : System.EventArgs
     {
         /// <summary>
-        /// 获取文件完整性校验码。
+        /// 文件大小（单位：字节）
         /// </summary>
-        public byte[] CheckCode
+        public long FileLength
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 上传起始位置。
+        /// </summary>
+        public long StartPosition
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 自定义参数。
+        /// </summary>
+        public string CustomParameter
         {
             get;
             private set;
@@ -1084,60 +1216,24 @@
         /// <summary>
         /// 用指定的数据初始化此实例。
         /// </summary>
-        /// <param name="CheckCode">文件完整性校验码。</param>
-        public BeforeUploadEventArgs(byte[] CheckCode)
+        /// <param name="fileLength">文件大小（单位：字节）</param>
+        /// <param name="startPosition">上传起始位置。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        public BeginUploadEventArgs(long fileLength, long startPosition, string customParameter)
         {
-            this.CheckCode = CheckCode;
+            this.FileLength = fileLength;
+            this.StartPosition = startPosition;
+            this.CustomParameter = customParameter;
         }
-    }
+
+    };
 
     /// <summary>
     /// 上传前事件代理。
     /// </summary>
     /// <param name="sender">事件引发对象。</param>
     /// <param name="e">事件参数。</param>
-    public delegate void BeforeUploadEventHandler(object sender, BeforeUploadEventArgs e);
-
-    /// <summary>
-    /// 上传出错事件参数。
-    /// </summary>
-    public class UploadErrorEventArgs : System.EventArgs
-    {
-        /// <summary>
-        /// 获取错误信息。
-        /// </summary>
-        public string Message
-        {
-            get;
-            private set;
-        }
-        /// <summary>
-        /// 引发此错误的异常信息如果有，否则返回 null。
-        /// </summary>
-        public System.Exception Exception
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 用指定的数据初始化此实例。
-        /// </summary>
-        /// <param name="errorMessage">错误信息。</param>
-        /// <param name="exception">引发此错误的异常信息，或者null。</param>
-        public UploadErrorEventArgs(string errorMessage, System.Exception exception)
-        {
-            this.Message = ((string.IsNullOrEmpty(errorMessage) && exception != null) ? exception.Message : errorMessage);
-            this.Exception = exception;
-        }
-    }
-
-    /// <summary>
-    /// 上传出错事件代理。
-    /// </summary>
-    /// <param name="sender">事件引发对象。</param>
-    /// <param name="e">事件参数。</param>
-    public delegate void UploadErrorEventHandler(object sender, UploadErrorEventArgs e);
+    public delegate void BeginUploadEventHandler(object sender, BeginUploadEventArgs e);
 
     /// <summary>
     /// 上传进度更改事件参数。
@@ -1145,9 +1241,9 @@
     public class UploadProgressChangedEventArgs : System.EventArgs
     {
         /// <summary>
-        /// 获取数据总大小。
+        /// 获取文件大小（单位：字节）
         /// </summary>
-        public long DataSize
+        public long FileLength
         {
             get;
             private set;
@@ -1163,25 +1259,36 @@
         }
 
         /// <summary>
+        /// 自定义参数。
+        /// </summary>
+        public string CustomParameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取需要返回到客户端的数据。
         /// </summary>
         public object ResultData
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
         /// 用指定的数据初始化此实例。
         /// </summary>
-        /// <param name="DataSize">数据总大小。</param>
-        /// <param name="FinishedSize">已成功上传的数据大小。</param>
+        /// <param name="fileLength">数据总大小。</param>
+        /// <param name="finishedSize">已成功上传的数据大小。</param>
         /// <param name="resultData">需要返回到客户端的数据。</param>
-        public UploadProgressChangedEventArgs(long DataSize, long FinishedSize, object resultData)
+        /// <param name="customParameter">自定义参数。</param>
+        public UploadProgressChangedEventArgs(long fileLength, long finishedSize, object resultData, string customParameter)
         {
-            this.DataSize = DataSize;
-            this.FinishedSize = FinishedSize;
+            this.FileLength = fileLength;
+            this.FinishedSize = finishedSize;
             this.ResultData = resultData;
+            this.CustomParameter = customParameter;
         }
     }
 
@@ -1207,12 +1314,23 @@
         }
 
         /// <summary>
+        /// 自定义参数。
+        /// </summary>
+        public string CustomParameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 一个构造方法。
         /// </summary>
         /// <param name="breakpoint">断点上传起始位置。</param>
-        public BreakpointUploadEventArgs(long breakpoint)
+        /// <param name="customParameter">自定义参数。</param>
+        public BreakpointUploadEventArgs(long breakpoint, string customParameter)
         {
             this.Breakpoint = breakpoint;
+            this.CustomParameter = customParameter;
         }
     }
 
@@ -1222,6 +1340,89 @@
     /// <param name="sender">事件引发对象。</param>
     /// <param name="e">事件参数。</param>
     public delegate void BreakpointUploadEventHandler(object sender, BreakpointUploadEventArgs e);
+
+    /// <summary>
+    /// 上传出错事件参数。
+    /// </summary>
+    public class UploadErrorEventArgs : System.EventArgs
+    {
+        /// <summary>
+        /// 获取错误信息。
+        /// </summary>
+        public string Message
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// 引发此错误的异常信息如果有，否则返回 null。
+        /// </summary>
+        public System.Exception Exception
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 自定义参数。
+        /// </summary>
+        public string CustomParameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 用指定的数据初始化此实例。
+        /// </summary>
+        /// <param name="errorMessage">错误信息。</param>
+        /// <param name="exception">引发此错误的异常信息，或者null。</param>
+        /// <param name="customParameter">自定义参数。</param>
+        public UploadErrorEventArgs(string errorMessage, System.Exception exception, string customParameter)
+        {
+            this.Message = ((string.IsNullOrEmpty(errorMessage) && exception != null) ? exception.Message : errorMessage);
+            this.Exception = exception;
+            this.CustomParameter = customParameter;
+        }
+    }
+
+    /// <summary>
+    /// 上传出错事件代理。
+    /// </summary>
+    /// <param name="sender">事件引发对象。</param>
+    /// <param name="e">事件参数。</param>
+    public delegate void UploadErrorEventHandler(object sender, UploadErrorEventArgs e);
+
+    /// <summary>
+    /// 定义上传中止事件参数。
+    /// </summary>
+    public class AbortEventArgs : System.EventArgs
+    {
+        /// <summary>
+        /// 自定义参数。
+        /// </summary>
+        public string CustomParameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 用指定的数据初始化此实例。
+        /// </summary>
+        /// <param name="customParameter">自定义参数。</param>
+        public AbortEventArgs(string customParameter)
+        {
+            this.CustomParameter = customParameter;
+        }
+    }
+
+    /// <summary>
+    /// 上传出错事件代理。
+    /// </summary>
+    /// <param name="sender">事件引发对象。</param>
+    /// <param name="e">事件参数。</param>
+    public delegate void AbortEventHandler(object sender, AbortEventArgs e);
 
     #endregion
 

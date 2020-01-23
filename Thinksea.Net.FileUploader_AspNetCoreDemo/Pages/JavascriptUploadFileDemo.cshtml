@@ -1,0 +1,20 @@
+﻿@page
+@model JavascriptUploadFileDemoModel
+@{
+    ViewData["Title"] = "JavaScript 上传大文件示例";
+}
+
+@section head{
+    <script type="text/javascript" charset="utf-8" src="JavascriptUploadFileDemo.js" asp-append-version="true"></script>
+}
+
+<div id="ctl5" class="form-group">
+    <label>批量上传文件</label>
+    <button type="button" class="btn btn-default" data-clickupload="true" data-dragoverupload="true">拖入可上传</button>
+    <div data-dragoverupload="true">
+        <div class="clearfix fileinsertmark"></div>
+    </div>
+    <input type="file" multiple="multiple" class="fileUpload" style="visibility:hidden; width:0px; height: 0px;" />
+    <input type="hidden" name="fileUrls" />
+</div>
+

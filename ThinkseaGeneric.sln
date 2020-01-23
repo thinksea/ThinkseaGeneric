@@ -5,65 +5,65 @@ VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea", "Thinksea\Thinksea.csproj", "{2A81EE0A-8289-42E7-927D-3B07A44A2B30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.IIS", "Thinksea.IIS\Thinksea.IIS.csproj", "{909038F2-AC6F-4355-BF27-3F05E5FBA473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.IIS", "Thinksea.IIS\Thinksea.IIS.csproj", "{909038F2-AC6F-4355-BF27-3F05E5FBA473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.SQL", "Thinksea.SQL\Thinksea.SQL.csproj", "{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.SQL", "Thinksea.SQL\Thinksea.SQL.csproj", "{0FE6E8C3-5CBF-4707-8341-E8C6A0AB23DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.VisualStudio", "Thinksea.VisualStudio\Thinksea.VisualStudio.csproj", "{3293FEA7-30F1-447B-9833-37C70D1F7A17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.VisualStudio", "Thinksea.VisualStudio\Thinksea.VisualStudio.csproj", "{3293FEA7-30F1-447B-9833-37C70D1F7A17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.DateTimePicker", "Thinksea.WebControls.DateTimePicker\Thinksea.WebControls.DateTimePicker.csproj", "{1EA684B5-5343-4B23-AA95-C60C2812237A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.DateTimePicker", "Thinksea.WebControls.DateTimePicker\Thinksea.WebControls.DateTimePicker.csproj", "{1EA684B5-5343-4B23-AA95-C60C2812237A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.DateTimePickerSample", "Thinksea.WebControls.DateTimePickerSample\Thinksea.WebControls.DateTimePickerSample.csproj", "{132C9D3E-C6AC-4B8A-8183-A3F534B7AAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.HtmlRotator", "Thinksea.WebControls.HtmlRotator\Thinksea.WebControls.HtmlRotator.csproj", "{F8FDD5B1-31DC-45D8-A961-E636A5C71841}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.HtmlRotator", "Thinksea.WebControls.HtmlRotator\Thinksea.WebControls.HtmlRotator.csproj", "{F8FDD5B1-31DC-45D8-A961-E636A5C71841}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.HtmlRotatorSample", "Thinksea.WebControls.HtmlRotatorSample\Thinksea.WebControls.HtmlRotatorSample.csproj", "{E417AA79-BFB4-4C07-B526-D87D513CCD57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.Menu2", "Thinksea.WebControls.Menu2\Thinksea.WebControls.Menu2.csproj", "{3B5276BB-E423-4566-9BFE-916426236EE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.Menu2", "Thinksea.WebControls.Menu2\Thinksea.WebControls.Menu2.csproj", "{3B5276BB-E423-4566-9BFE-916426236EE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.Menu2Sample", "Thinksea.WebControls.Menu2Sample\Thinksea.WebControls.Menu2Sample.csproj", "{076D228B-17A0-42DB-8BFE-F9044796E3E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.PageNavigate", "Thinksea.WebControls.PageNavigate\Thinksea.WebControls.PageNavigate.csproj", "{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.PageNavigate", "Thinksea.WebControls.PageNavigate\Thinksea.WebControls.PageNavigate.csproj", "{58BF9F6A-D85E-4A67-862E-8AB4F0C73E01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.PageNavigateSample", "Thinksea.WebControls.PageNavigateSample\Thinksea.WebControls.PageNavigateSample.csproj", "{6D3D5C97-E126-4876-8CFB-9BDDE6711462}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList", "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList.csproj", "{435A5926-9B26-4EF0-8E79-3433A97E2099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList", "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxList.csproj", "{435A5926-9B26-4EF0-8E79-3433A97E2099}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo", "Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo\Thinksea.WebControls.RequiredFieldValidatorForCheckBoxListDemo.csproj", "{1FC9AEFD-6A7C-4226-8AE7-E667580609AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCode", "Thinksea.WebControls.VerifyCode\Thinksea.WebControls.VerifyCode.csproj", "{F41B4069-F78E-406D-94D4-259048DDF78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.WebControls.VerifyCode", "Thinksea.WebControls.VerifyCode\Thinksea.WebControls.VerifyCode.csproj", "{F41B4069-F78E-406D-94D4-259048DDF78F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.UserSystemDemo", "Thinksea.Windows.UserSystemDemo\Thinksea.Windows.UserSystemDemo.csproj", "{2CE3A930-913E-4861-9EB1-7BA83BBCF214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows.UserSystemDemo", "Thinksea.Windows.UserSystemDemo\Thinksea.Windows.UserSystemDemo.csproj", "{2CE3A930-913E-4861-9EB1-7BA83BBCF214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms", "Thinksea.Windows.Forms\Thinksea.Windows.Forms.csproj", "{EF523069-0BFE-4434-8461-69CA1FF2A76D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows.Forms", "Thinksea.Windows.Forms\Thinksea.Windows.Forms.csproj", "{EF523069-0BFE-4434-8461-69CA1FF2A76D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.IPAddress", "Thinksea.Windows.Forms.IPAddress\Thinksea.Windows.Forms.IPAddress.csproj", "{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows.Forms.IPAddress", "Thinksea.Windows.Forms.IPAddress\Thinksea.Windows.Forms.IPAddress.csproj", "{9C9EB74C-B1F8-4962-9013-2E8601CB6FA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.MdiTabControl", "Thinksea.Windows.Forms.MdiTabControl\Thinksea.Windows.Forms.MdiTabControl.csproj", "{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows.Forms.MdiTabControl", "Thinksea.Windows.Forms.MdiTabControl\Thinksea.Windows.Forms.MdiTabControl.csproj", "{CFABF97E-BCDC-4B53-96FF-C27ECE4C71C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thinksea.Windows.Forms.Demos", "Thinksea.Windows.Forms.Demos", "{A2FEECBB-91BC-4E71-8FDD-8544B154FA60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows.Forms.MdiTabControlTest", "Thinksea.Windows.Forms.MdiTabControlTest\Thinksea.Windows.Forms.MdiTabControlTest.csproj", "{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows.Forms.MdiTabControlTest", "Thinksea.Windows.Forms.MdiTabControlTest\Thinksea.Windows.Forms.MdiTabControlTest.csproj", "{F1F7FDF0-54D9-42F3-A0C0-5548E054C91C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonDemo", "Thinksea.Windows.Forms.Demos\ButtonDemo\ButtonDemo.csproj", "{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ButtonDemo", "Thinksea.Windows.Forms.Demos\ButtonDemo\ButtonDemo.csproj", "{22515738-2B4B-46A4-B91C-4A9FDBB99F1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGridViewPageDemo", "Thinksea.Windows.Forms.Demos\DataGridViewPageDemo\DataGridViewPageDemo.csproj", "{1EBA560B-760B-4370-807E-96D8452D60ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataGridViewPageDemo", "Thinksea.Windows.Forms.Demos\DataGridViewPageDemo\DataGridViewPageDemo.csproj", "{1EBA560B-760B-4370-807E-96D8452D60ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllipsisControlDemo", "Thinksea.Windows.Forms.Demos\EllipsisControlDemo\EllipsisControlDemo.csproj", "{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EllipsisControlDemo", "Thinksea.Windows.Forms.Demos\EllipsisControlDemo\EllipsisControlDemo.csproj", "{DBCB680B-BA33-4C0B-BC2B-D952C3409FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectedDynamicTreeNodeDemo", "Thinksea.Windows.Forms.Demos\SelectedDynamicTreeNodeDemo\SelectedDynamicTreeNodeDemo.csproj", "{51650598-E5E9-4A26-AA01-5EB17EA288C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelectedDynamicTreeNodeDemo", "Thinksea.Windows.Forms.Demos\SelectedDynamicTreeNodeDemo\SelectedDynamicTreeNodeDemo.csproj", "{51650598-E5E9-4A26-AA01-5EB17EA288C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.TcpPoolTest", "Thinksea.TcpPoolTest\Thinksea.TcpPoolTest.csproj", "{252BBD7D-3E02-480B-A545-94E111D1C15A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.TcpPoolTest", "Thinksea.TcpPoolTest\Thinksea.TcpPoolTest.csproj", "{252BBD7D-3E02-480B-A545-94E111D1C15A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Windows", "Thinksea.Windows\Thinksea.Windows.csproj", "{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Windows", "Thinksea.Windows\Thinksea.Windows.csproj", "{521FBBB1-C3D2-4BB1-8316-FA5E898189BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.LogTest", "Thinksea.LogTest\Thinksea.LogTest.csproj", "{8AC52DB8-4AB8-4DB0-8759-328D9708719E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.LogTest", "Thinksea.LogTest\Thinksea.LogTest.csproj", "{8AC52DB8-4AB8-4DB0-8759-328D9708719E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Web.UriParameterDemo", "Thinksea.Web.UriParameterDemo\Thinksea.Web.UriParameterDemo.csproj", "{F9899612-0712-429A-9749-5863A6DF7156}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Net.FileUploader", "Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj", "{BB413D66-495E-41E2-B136-FE769025E893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Text.Chinese2SpellDemo", "Thinksea.Text.Chinese2SpellDemo\Thinksea.Text.Chinese2SpellDemo.csproj", "{B7828C7E-C3E1-4DC4-AD26-39F4B311FE5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2D41EDC6-5FED-4A6F-B1DF-47D0E9F39F21}"
 	ProjectSection(SolutionItems) = preProject
@@ -78,6 +78,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.VerifyCode_AspNetCoreDemo", "Thinksea.VerifyCode_AspNetCoreDemo\Thinksea.VerifyCode_AspNetCoreDemo.csproj", "{0ECC9034-C549-49B4-B89F-3074F1D45DA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCodeSample", "Thinksea.WebControls.VerifyCodeSample\Thinksea.WebControls.VerifyCodeSample.csproj", "{9AD9ADCF-15F0-4293-990D-50948EB139CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Net.FileUploader_AspNetCoreDemo", "Thinksea.Net.FileUploader_AspNetCoreDemo\Thinksea.Net.FileUploader_AspNetCoreDemo.csproj", "{95427617-759D-4E11-9438-835B7321CDED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader.HttpFileUpload(Javascript)", "Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.HttpFileUpload(Javascript).csproj", "{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader_WebFormDemo", "Thinksea.Net.FileUploader_WebFormDemo\Thinksea.Net.FileUploader_WebFormDemo.csproj", "{3FDD34B2-2331-4540-A717-2243971D54A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -221,6 +227,18 @@ Global
 		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AD9ADCF-15F0-4293-990D-50948EB139CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95427617-759D-4E11-9438-835B7321CDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95427617-759D-4E11-9438-835B7321CDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95427617-759D-4E11-9438-835B7321CDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95427617-759D-4E11-9438-835B7321CDED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FDD34B2-2331-4540-A717-2243971D54A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDD34B2-2331-4540-A717-2243971D54A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDD34B2-2331-4540-A717-2243971D54A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDD34B2-2331-4540-A717-2243971D54A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
