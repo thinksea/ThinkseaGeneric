@@ -80,10 +80,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.WebControls.VerifyCodeSample", "Thinksea.WebControls.VerifyCodeSample\Thinksea.WebControls.VerifyCodeSample.csproj", "{9AD9ADCF-15F0-4293-990D-50948EB139CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thinksea.Net.FileUploader_AspNetCoreDemo", "Thinksea.Net.FileUploader_AspNetCoreDemo\Thinksea.Net.FileUploader_AspNetCoreDemo.csproj", "{95427617-759D-4E11-9438-835B7321CDED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29} = {DA53C7FF-CD02-41AD-988C-3F0F14B18A29}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader.HttpFileUpload(Javascript)", "Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.HttpFileUpload(Javascript).csproj", "{DA53C7FF-CD02-41AD-988C-3F0F14B18A29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader_WebFormDemo", "Thinksea.Net.FileUploader_WebFormDemo\Thinksea.Net.FileUploader_WebFormDemo.csproj", "{3FDD34B2-2331-4540-A717-2243971D54A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29} = {DA53C7FF-CD02-41AD-988C-3F0F14B18A29}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
