@@ -6,10 +6,10 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JavaScript 上传大文件示例</title>
-    <script type="text/javascript" charset="utf-8" src="https://lib.68suo.com/js/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="https://lib.68suo.com/js/jsext/1.0.9/jsext.min.js"></script>
-    <script type="text/javascript" src="https://lib.68suo.com/js/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <title>JavaScript 上传大文件示例 - Thinksea.Net.FileUploader_WebFormDemo</title>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/jsext-1.2.0/jsext.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="Thinksea.Net.FileUploader.js"></script>
     <script type="text/javascript" charset="utf-8" src="JavascriptUploadFileDemo.js"></script>
 </head>

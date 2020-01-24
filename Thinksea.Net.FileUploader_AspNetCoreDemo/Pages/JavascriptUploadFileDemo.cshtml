@@ -1,20 +1,26 @@
 ﻿@page
-@model JavascriptUploadFileDemoModel
-@{
-    ViewData["Title"] = "JavaScript 上传大文件示例";
-}
-
-@section head{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript 上传大文件示例 - Thinksea.Net.FileUploader_AspNetCoreDemo</title>
+    <script type="text/javascript" charset="utf-8" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/jsext-1.2.0/jsext.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="Thinksea.Net.FileUploader.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf-8" src="JavascriptUploadFileDemo.js" asp-append-version="true"></script>
-}
-
-<div id="ctl5" class="form-group">
-    <label>批量上传文件</label>
-    <button type="button" class="btn btn-default" data-clickupload="true" data-dragoverupload="true">拖入可上传</button>
-    <div data-dragoverupload="true">
-        <div class="clearfix fileinsertmark"></div>
+</head>
+<body>
+    <div id="ctl5" class="form-group">
+        <label>批量上传文件</label>
+        <button type="button" class="btn btn-default" data-clickupload="true" data-dragoverupload="true">拖入可上传</button>
+        <div data-dragoverupload="true">
+            <div class="clearfix fileinsertmark"></div>
+        </div>
+        <input type="file" multiple="multiple" class="fileUpload" style="visibility:hidden; width:0px; height: 0px;" />
+        <input type="hidden" name="fileUrls" />
     </div>
-    <input type="file" multiple="multiple" class="fileUpload" style="visibility:hidden; width:0px; height: 0px;" />
-    <input type="hidden" name="fileUrls" />
-</div>
 
+</body>
+</html>
