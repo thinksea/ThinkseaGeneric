@@ -211,7 +211,7 @@
         {
             if (fileStream == null)
             {
-                throw new System.ArgumentNullException("FileStream", "参数“FileStream”不能为 null。");
+                throw new System.ArgumentNullException(nameof(fileStream), "参数“" + nameof(fileStream) + "”不能为 null。");
                 //return;
             }
             if (this.Finished || this.Cancelling) //如果已经完成上传，或者取消上传过程还未结束，则无法继续上传，直接结束流程。
@@ -308,7 +308,7 @@
         {
             if (fileStream == null)
             {
-                throw new System.ArgumentNullException("FileStream", "参数“FileStream”不能为 null。");
+                throw new System.ArgumentNullException(nameof(fileStream), "参数“" + nameof(fileStream) + "”不能为 null。");
                 //return;
             }
             if (this.Finished || this.Cancelling) //如果已经完成上传，或者取消上传过程还未结束，则无法继续上传，直接结束流程。
@@ -1134,6 +1134,7 @@
         }
         #endregion
 
+        #region 实现 IDisposable 接口。
         /// <summary>
         /// Track whether Dispose has been called.
         /// </summary>
@@ -1177,6 +1178,7 @@
             // from executing a second time.
             System.GC.SuppressFinalize(this);
         }
+        #endregion
 
     }
 

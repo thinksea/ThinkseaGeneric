@@ -82,10 +82,48 @@
                 this.IsFree = true;
             }
 
+            #region 实现 IDisposable 接口。
+            /// <summary>
+            /// Track whether Dispose has been called.
+            /// </summary>
+            private bool disposed = false;
+
+            /// <summary>
+            /// 释放占用的资源。
+            /// </summary>
+            /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+            protected virtual void Dispose(bool disposing)
+            {
+                // Check to see if Dispose has already been called.
+                if (!this.disposed)
+                {
+                    // If disposing equals true, dispose all managed
+                    // and unmanaged resources.
+                    if (disposing)
+                    {
+                        // Dispose managed resources.
+                        this.Close();
+                    }
+
+                    // Note disposing has been done.
+                    disposed = true;
+                }
+            }
+
+            /// <summary>
+            /// 释放占用的资源。
+            /// </summary>
             public void Dispose()
             {
-                this.Close();
+                Dispose(true);
+                // This object will be cleaned up by the Dispose method.
+                // Therefore, you should call GC.SupressFinalize to
+                // take this object off the finalization queue
+                // and prevent finalization code for this object
+                // from executing a second time.
+                System.GC.SuppressFinalize(this);
             }
+            #endregion
 
         }
 
@@ -277,17 +315,49 @@
             }
         }
 
-        #region IDisposable 成员
+        #region 实现 IDisposable 接口。
+        /// <summary>
+        /// Track whether Dispose has been called.
+        /// </summary>
+        private bool disposed = false;
 
         /// <summary>
-        /// 释放此对象占用的全部资源。
+        /// 释放占用的资源。
+        /// </summary>
+        /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
+            {
+                // If disposing equals true, dispose all managed
+                // and unmanaged resources.
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    this.CloseAll();
+                }
+
+                // Note disposing has been done.
+                disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// 释放占用的资源。
         /// </summary>
         public void Dispose()
         {
-            this.CloseAll();
+            Dispose(true);
+            // This object will be cleaned up by the Dispose method.
+            // Therefore, you should call GC.SupressFinalize to
+            // take this object off the finalization queue
+            // and prevent finalization code for this object
+            // from executing a second time.
+            System.GC.SuppressFinalize(this);
         }
-
         #endregion
+
     }
 
 }
