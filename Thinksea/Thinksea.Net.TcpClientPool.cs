@@ -84,29 +84,28 @@
 
             #region 实现 IDisposable 接口。
             /// <summary>
-            /// Track whether Dispose has been called.
+            /// 要检测冗余调用
             /// </summary>
-            private bool disposed = false;
+            private bool disposedValue = false;
 
             /// <summary>
             /// 释放占用的资源。
             /// </summary>
-            /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+            /// <param name="disposing">是否需要释放那些实现 IDisposable 接口的托管对象</param>
             protected virtual void Dispose(bool disposing)
             {
-                // Check to see if Dispose has already been called.
-                if (!this.disposed)
+                if (!disposedValue)
                 {
-                    // If disposing equals true, dispose all managed
-                    // and unmanaged resources.
                     if (disposing)
                     {
-                        // Dispose managed resources.
+                        // TODO: 释放托管状态(托管对象)。
                         this.Close();
                     }
 
-                    // Note disposing has been done.
-                    disposed = true;
+                    // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
+                    // TODO: 将大型字段设置为 null。
+
+                    disposedValue = true;
                 }
             }
 
@@ -115,13 +114,10 @@
             /// </summary>
             public void Dispose()
             {
+                // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
                 Dispose(true);
-                // This object will be cleaned up by the Dispose method.
-                // Therefore, you should call GC.SupressFinalize to
-                // take this object off the finalization queue
-                // and prevent finalization code for this object
-                // from executing a second time.
-                System.GC.SuppressFinalize(this);
+                // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
+                // GC.SuppressFinalize(this);
             }
             #endregion
 
@@ -317,29 +313,28 @@
 
         #region 实现 IDisposable 接口。
         /// <summary>
-        /// Track whether Dispose has been called.
+        /// 要检测冗余调用
         /// </summary>
-        private bool disposed = false;
+        private bool disposedValue = false;
 
         /// <summary>
         /// 释放占用的资源。
         /// </summary>
-        /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+        /// <param name="disposing">是否需要释放那些实现 IDisposable 接口的托管对象</param>
         protected virtual void Dispose(bool disposing)
         {
-            // Check to see if Dispose has already been called.
-            if (!this.disposed)
+            if (!disposedValue)
             {
-                // If disposing equals true, dispose all managed
-                // and unmanaged resources.
                 if (disposing)
                 {
-                    // Dispose managed resources.
+                    // TODO: 释放托管状态(托管对象)。
                     this.CloseAll();
                 }
 
-                // Note disposing has been done.
-                disposed = true;
+                // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
+                // TODO: 将大型字段设置为 null。
+
+                disposedValue = true;
             }
         }
 
@@ -348,13 +343,10 @@
         /// </summary>
         public void Dispose()
         {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
             Dispose(true);
-            // This object will be cleaned up by the Dispose method.
-            // Therefore, you should call GC.SupressFinalize to
-            // take this object off the finalization queue
-            // and prevent finalization code for this object
-            // from executing a second time.
-            System.GC.SuppressFinalize(this);
+            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
+            // GC.SuppressFinalize(this);
         }
         #endregion
 

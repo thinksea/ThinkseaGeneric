@@ -6,6 +6,10 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2020-01-26
+
++ 修复组件“Thinksea.Net.FileUploader”的BUG，增加和完善 Demo。
+
 ###### version：2020-01-24
 
 + 修复组件“Thinksea.Net.FileUploader”的BUG，增加和完善 Demo。（注意：此组件版本已升级到 4.0.0.0，部分接口有变化）

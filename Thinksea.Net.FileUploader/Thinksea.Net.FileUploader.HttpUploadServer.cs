@@ -295,6 +295,14 @@
 #if NETFRAMEWORK
                         var uploadFiles = request.Files;
 #elif NETCOREAPP
+                        if (!request.HasFormContentType)
+                        {
+                            return Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            {
+                                ErrorCode = 1,
+                                Message = "未上传文件内容。"
+                            });
+                        }
                         var uploadFiles = request.Form.Files;
 #endif
                         if (uploadFiles.Count > 0) //如果采用标准的网页表单格式上传文件数据。
@@ -312,6 +320,14 @@
                                 fileSize = httpPostedFile.Length;
 #endif
                             }
+                        }
+                        else
+                        {
+                            return Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            {
+                                ErrorCode = 1,
+                                Message = "未上传文件内容。"
+                            });
                         }
 
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。

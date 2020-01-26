@@ -91,6 +91,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader_W
 		{DA53C7FF-CD02-41AD-988C-3F0F14B18A29} = {DA53C7FF-CD02-41AD-988C-3F0F14B18A29}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thinksea.Net.FileUploader_WinFormDemo", "Thinksea.Net.FileUploader_WinFormDemo\Thinksea.Net.FileUploader_WinFormDemo.csproj", "{4E4C9B60-DAFC-43F3-B34C-4B3E5D006E24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -245,6 +247,10 @@ Global
 		{3FDD34B2-2331-4540-A717-2243971D54A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FDD34B2-2331-4540-A717-2243971D54A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FDD34B2-2331-4540-A717-2243971D54A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4C9B60-DAFC-43F3-B34C-4B3E5D006E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4C9B60-DAFC-43F3-B34C-4B3E5D006E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4C9B60-DAFC-43F3-B34C-4B3E5D006E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4C9B60-DAFC-43F3-B34C-4B3E5D006E24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

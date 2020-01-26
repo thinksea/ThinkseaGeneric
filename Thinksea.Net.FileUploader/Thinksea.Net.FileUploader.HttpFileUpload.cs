@@ -185,7 +185,7 @@
         public HttpFileUpload()
         {
             this.BufferSize = 8192;
-            this.ChunkSize = 512 * this.BufferSize;
+            this.ChunkSize = 256 * this.BufferSize;
         }
 
         /// <summary>
@@ -411,10 +411,10 @@
                 System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
                 httpHandlerUrlBuilder.Query = string.Format("{0}cmd=fastupload&filename={1}&filesize={2}&checkcode={3}&param={4}"
                     , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , System.Uri.EscapeDataString(this.FileName)
                     , this.FileSize
-                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                    , this.CustomParameter
+                    , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , System.Uri.EscapeDataString(this.CustomParameter)
                     );
 
                 System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -445,10 +445,10 @@
                 System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
                 httpHandlerUrlBuilder.Query = string.Format("{0}cmd=fastupload&filename={1}&filesize={2}&checkcode={3}&param={4}"
                     , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , System.Uri.EscapeDataString(this.FileName)
                     , this.FileSize
-                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                    , this.CustomParameter
+                    , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , System.Uri.EscapeDataString(this.CustomParameter)
                     );
 
                 System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -600,10 +600,10 @@
                 System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
                 httpHandlerUrlBuilder.Query = string.Format("{0}cmd=getoffset&filename={1}&filesize={2}&checkcode={3}&param={4}"
                     , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , System.Uri.EscapeDataString(this.FileName)
                     , this.FileSize
-                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                    , this.CustomParameter
+                    , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , System.Uri.EscapeDataString(this.CustomParameter)
                     );
 
                 System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -634,10 +634,10 @@
                 System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
                 httpHandlerUrlBuilder.Query = string.Format("{0}cmd=getoffset&filename={1}&filesize={2}&checkcode={3}&param={4}"
                     , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                    , System.Web.HttpUtility.UrlEncode(this.FileName)
+                    , System.Uri.EscapeDataString(this.FileName)
                     , this.FileSize
-                    , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                    , this.CustomParameter
+                    , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                    , System.Uri.EscapeDataString(this.CustomParameter)
                     );
 
                 System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -783,13 +783,13 @@
                 return;
             }
             System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
-            httpHandlerUrlBuilder.Query = string.Format("{0}filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
+            httpHandlerUrlBuilder.Query = string.Format("{0}cmd=upload&filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
                 , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                , System.Web.HttpUtility.UrlEncode(this.FileName)
+                , System.Uri.EscapeDataString(this.FileName)
                 , this.FileSize
                 , this.BytesUploaded
-                , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                , this.CustomParameter
+                , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                , System.Uri.EscapeDataString(this.CustomParameter)
                 );
 
             System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -811,14 +811,15 @@
                 }
                 return;
             }
+
             System.UriBuilder httpHandlerUrlBuilder = new System.UriBuilder(UploadServiceUrl);
-            httpHandlerUrlBuilder.Query = string.Format("{0}filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
+            httpHandlerUrlBuilder.Query = string.Format("{0}cmd=upload&filename={1}&filesize={2}&offset={3}&checkcode={4}&param={5}"
                 , string.IsNullOrEmpty(httpHandlerUrlBuilder.Query) ? "" : httpHandlerUrlBuilder.Query.Remove(0, 1) + "&"
-                , System.Web.HttpUtility.UrlEncode(this.FileName)
+                , System.Uri.EscapeDataString(this.FileName)
                 , this.FileSize
                 , this.BytesUploaded
-                , System.Web.HttpUtility.UrlEncode(Thinksea.General.Bytes2HexString(this.CheckCode))
-                , this.CustomParameter
+                , System.Uri.EscapeDataString(Thinksea.General.Bytes2HexString(this.CheckCode))
+                , System.Uri.EscapeDataString(this.CustomParameter)
                 );
 
             System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(httpHandlerUrlBuilder.Uri);
@@ -847,9 +848,30 @@
                 //    this.Cancelling = false;
                 //    return;
                 //}
+
+                #region 组织文件表单。
+                //webRequest.ContentType = "multipart/form-data;charset=utf-8;boundary=----WebKitFormBoundary" + System.Guid.NewGuid().ToString("N");
+                //System.Net.Http.MultipartFormDataContent mulContent = new System.Net.Http.MultipartFormDataContent();
+                //mulContent.Add(null, null, null);
+                string boundary = "--WebKitFormBoundary" + System.DateTime.Now.Ticks.ToString("X"); // 随机分隔线
+                webRequest.ContentType = "multipart/form-data;charset=utf-8;boundary=" + boundary;
+                byte[] itemBoundaryBytes = System.Text.Encoding.UTF8.GetBytes("\r\n--" + boundary + "\r\n");
+                byte[] endBoundaryBytes = System.Text.Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
+
+                string fileName = this.FileName;
+
+                //请求头部信息 
+                System.Text.StringBuilder sbHeader = new System.Text.StringBuilder(string.Format("Content-Disposition:form-data;name=\"file\";filename=\"{0}\"\r\nContent-Type:application/octet-stream\r\n\r\n", Thinksea.Web.ConvertToJavaScriptString(fileName)));
+                byte[] postHeaderBytes = System.Text.Encoding.UTF8.GetBytes(sbHeader.ToString());
+                #endregion
+
                 System.IO.Stream requestStream = webRequest.GetRequestStream();
                 try
                 {
+                    requestStream.Write(itemBoundaryBytes, 0, itemBoundaryBytes.Length);
+                    requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
+
+                    #region 写入文件内容。
                     byte[] buffer = new byte[this.BufferSize];
                     int bytesRead = 0;
                     this.TempUploadDataSize = 0;
@@ -867,7 +889,9 @@
 
                         this.TempUploadDataSize += bytesRead;
                     }
+                    #endregion
 
+                    requestStream.Write(endBoundaryBytes, 0, endBoundaryBytes.Length);
                 }
                 finally
                 {
@@ -909,10 +933,32 @@
                 //    this.Cancelling = false;
                 //    return;
                 //}
+
                 System.Net.HttpWebRequest webRequest = (System.Net.HttpWebRequest)asynchronousResult.AsyncState;
+
+                #region 组织文件表单。
+                //webRequest.ContentType = "multipart/form-data;charset=utf-8;boundary=----WebKitFormBoundary" + System.Guid.NewGuid().ToString("N");
+                //System.Net.Http.MultipartFormDataContent mulContent = new System.Net.Http.MultipartFormDataContent();
+                //mulContent.Add(null, null, null);
+                string boundary = "--WebKitFormBoundary" + System.DateTime.Now.Ticks.ToString("X"); // 随机分隔线
+                webRequest.ContentType = "multipart/form-data;charset=utf-8;boundary=" + boundary;
+                byte[] itemBoundaryBytes = System.Text.Encoding.UTF8.GetBytes("\r\n--" + boundary + "\r\n");
+                byte[] endBoundaryBytes = System.Text.Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
+
+                string fileName = this.FileName;
+
+                //请求头部信息 
+                System.Text.StringBuilder sbHeader = new System.Text.StringBuilder(string.Format("Content-Disposition:form-data;name=\"file\";filename=\"{0}\"\r\nContent-Type:application/octet-stream\r\n\r\n", Thinksea.Web.ConvertToJavaScriptString(fileName)));
+                byte[] postHeaderBytes = System.Text.Encoding.UTF8.GetBytes(sbHeader.ToString());
+                #endregion
+
                 System.IO.Stream requestStream = webRequest.EndGetRequestStream(asynchronousResult);
                 try
                 {
+                    requestStream.Write(itemBoundaryBytes, 0, itemBoundaryBytes.Length);
+                    requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
+
+                    #region 写入文件内容。
                     byte[] buffer = new byte[this.BufferSize];
                     int bytesRead = 0;
                     this.TempUploadDataSize = 0;
@@ -930,7 +976,9 @@
 
                         this.TempUploadDataSize += bytesRead;
                     }
+                    #endregion
 
+                    requestStream.Write(endBoundaryBytes, 0, endBoundaryBytes.Length);
                 }
                 finally
                 {
@@ -1136,32 +1184,31 @@
 
         #region 实现 IDisposable 接口。
         /// <summary>
-        /// Track whether Dispose has been called.
+        /// 要检测冗余调用
         /// </summary>
-        private bool disposed = false;
+        private bool disposedValue = false;
 
         /// <summary>
         /// 释放占用的资源。
         /// </summary>
-        /// <param name="disposing">是否需要释放那些实现IDisposable接口的托管对象</param>
+        /// <param name="disposing">是否需要释放那些实现 IDisposable 接口的托管对象</param>
         protected virtual void Dispose(bool disposing)
         {
-            // Check to see if Dispose has already been called.
-            if (!this.disposed)
+            if (!disposedValue)
             {
-                // If disposing equals true, dispose all managed
-                // and unmanaged resources.
                 if (disposing)
                 {
-                    // Dispose managed resources.
+                    // TODO: 释放托管状态(托管对象)。
                     this._FileStream = null;
                     this.CheckCode = null;
                     this._UploadProgressChanged = null;
                     this._ErrorOccurred = null;
                 }
 
-                // Note disposing has been done.
-                disposed = true;
+                // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
+                // TODO: 将大型字段设置为 null。
+
+                disposedValue = true;
             }
         }
 
@@ -1170,13 +1217,10 @@
         /// </summary>
         public void Dispose()
         {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
             Dispose(true);
-            // This object will be cleaned up by the Dispose method.
-            // Therefore, you should call GC.SupressFinalize to
-            // take this object off the finalization queue
-            // and prevent finalization code for this object
-            // from executing a second time.
-            System.GC.SuppressFinalize(this);
+            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
+            // GC.SuppressFinalize(this);
         }
         #endregion
 
