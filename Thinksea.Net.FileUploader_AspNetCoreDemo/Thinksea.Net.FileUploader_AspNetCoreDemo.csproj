@@ -31,14 +31,8 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <TypeScriptCompile Include="..\Thinksea.Net.FileUploader.HttpFileUpload%28Javascript%29\Thinksea.Net.FileUploader.d.ts">
-      <Link>wwwroot\lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts</Link>
-    </TypeScriptCompile>
-  </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.min.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.min.js&#xD;&#xA;copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.js&#xD;&#xA;" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.d.ts $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts&#xD;&#xA;copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.min.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.min.js&#xD;&#xA;copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.js $(SolutionDir)Thinksea.Net.FileUploader_AspNetCoreDemo\wwwroot\Thinksea.Net.FileUploader.js&#xD;&#xA;" />
   </Target>
 
 

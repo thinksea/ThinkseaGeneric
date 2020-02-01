@@ -121,12 +121,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="..\Thinksea.Net.FileUploader.HttpFileUpload%28Javascript%29\Thinksea.Net.FileUploader.d.ts">
-      <Link>lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts</Link>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="JavascriptUploadFileDemo.ts" />
     <TypeScriptCompile Include="lib\dts\jquery-1.9.1\jquery.d.ts" />
     <TypeScriptCompile Include="lib\dts\jsext-1.0.9\jsext.d.ts" />
+    <TypeScriptCompile Include="lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
@@ -156,9 +154,14 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.min.js $(SolutionDir)Thinksea.Net.FileUploader_WebFormDemo\Thinksea.Net.FileUploader.min.js
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.d.ts $(SolutionDir)Thinksea.Net.FileUploader_WebFormDemo\lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts
+copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.min.js $(SolutionDir)Thinksea.Net.FileUploader_WebFormDemo\Thinksea.Net.FileUploader.min.js
 copy $(SolutionDir)Thinksea.Net.FileUploader.HttpFileUpload(Javascript)\Thinksea.Net.FileUploader.js $(SolutionDir)Thinksea.Net.FileUploader_WebFormDemo\Thinksea.Net.FileUploader.js
-</PostBuildEvent>
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
