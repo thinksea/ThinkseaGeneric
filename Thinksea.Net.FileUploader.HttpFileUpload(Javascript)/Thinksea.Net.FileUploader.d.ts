@@ -2,7 +2,7 @@
 /**
  * 封装了基于 HTTP 协议的文件上传客户端功能。（组件“Thinksea.Net.FileUploader”的 javascript 版本）
  * @version 4.0.0.0
- * @description 此组件需要谷歌的 JS 散列算法组件“CryptoJS”支持。
+ * @description 此组件需要谷歌的 JS 散列算法组件“CryptoJS”（版本 3.1.9-1）支持。
  */
 declare namespace Thinksea.Net.FileUploader {
     /**
