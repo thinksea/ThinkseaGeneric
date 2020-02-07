@@ -87,19 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Thinksea.Net.FileUploader.js" />
     <Content Include="Thinksea.Net.FileUploader.min.js">
       <DependentUpon>Thinksea.Net.FileUploader.js</DependentUpon>
     </Content>
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

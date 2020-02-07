@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Thinksea.Net.FileUploader.HttpFileUpload_Javascript_")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("此项目仅用于管理组件“Thinksea.Net.FileUploader”的 javascript 版本")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Thinksea.Net.FileUploader.HttpFileUpload_Javascript_")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyProduct("Thinksea.Net.FileUploader.HttpFileUpload_Javascript")]
+[assembly: AssemblyCopyright("Copyright ©  Thinksea 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
