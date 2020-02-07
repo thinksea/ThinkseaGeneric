@@ -285,11 +285,13 @@
                     {
                         #region 解析查询参数。
                         string clientFileName = this.GetUrlParameter(request, "filename"); //客户端文件名。
-                        long fileSize = string.IsNullOrEmpty(this.GetUrlParameter(request, "filesize")) ? 0 : long.Parse(this.GetUrlParameter(request, "filesize")); //文件大小。
+                        string sFileSize = this.GetUrlParameter(request, "filesize"); //文件大小。
+                        long fileSize = string.IsNullOrEmpty(sFileSize) ? 0 : long.Parse(sFileSize);
                         string sCheckCode = this.GetUrlParameter(request, "checkcode"); //文件完整性校验码，如果设置了此项参数，则在文件上传完成时执行文件完整性校验。
                         byte[] clientCheckCode = string.IsNullOrEmpty(sCheckCode) ? null : Thinksea.General.HexString2Bytes(sCheckCode);
                         string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
-                        long startByte = string.IsNullOrEmpty(this.GetUrlParameter(request, "offset")) ? 0 : long.Parse(this.GetUrlParameter(request, "offset")); //上传数据起始偏移地址。
+                        string sOffset = this.GetUrlParameter(request, "offset"); //上传数据起始偏移地址。
+                        long startByte = string.IsNullOrEmpty(sOffset) ? 0 : long.Parse(sOffset);
                         #endregion
 
 #if NETFRAMEWORK
@@ -312,7 +314,7 @@
                             {
                                 clientFileName = httpPostedFile.FileName;
                             }
-                            if (string.IsNullOrEmpty(this.GetUrlParameter(request, "filesize")))
+                            if (string.IsNullOrEmpty(sFileSize))
                             {
 #if NETFRAMEWORK
                                 fileSize = httpPostedFile.ContentLength;
