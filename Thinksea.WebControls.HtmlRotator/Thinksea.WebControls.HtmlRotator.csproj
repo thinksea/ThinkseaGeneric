@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net48</TargetFrameworks>
     <Version>2.4.5.0</Version>
-    <Copyright>版权所有 (C) www.thinksea.com 2007</Copyright>
+    <Copyright>版权所有 (C) Thinksea 2007</Copyright>
     <Product>Thinksea.WebControls.HtmlRotator</Product>
     <Description>一个用于轮换显示HTML内容的控件</Description>
     <PackageId>Thinksea.WebControls.HtmlRotator</PackageId>

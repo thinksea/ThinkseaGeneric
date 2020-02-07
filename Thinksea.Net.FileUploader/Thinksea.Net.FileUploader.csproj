@@ -3,12 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
     <Version>4.0.3.0</Version>
-    <Copyright>Copyright © www.thinksea.com 2020</Copyright>
+    <Copyright>Copyright © Thinksea 2020</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
     <Description>封装了基于 HTTP 协议的文件上传功能</Description>
     <PackageId>Thinksea.Net.FileUploader</PackageId>
     <Authors>Thinksea</Authors>
+    <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
+    <PackageTags>FileUploader</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

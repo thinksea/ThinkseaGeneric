@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
     <Description>验证码生成组件</Description>
-    <Copyright>Copyright © www.thinksea.com 2008-2019</Copyright>
+    <Copyright>Copyright © Thinksea 2008-2019</Copyright>
     <Version>4.0.0</Version>
   </PropertyGroup>
 
