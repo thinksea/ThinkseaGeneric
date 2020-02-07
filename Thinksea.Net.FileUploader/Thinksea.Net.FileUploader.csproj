@@ -6,7 +6,9 @@
     <Copyright>Copyright © Thinksea 2020</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
-    <Description>封装了基于 HTTP 协议的文件上传功能</Description>
+    <Description>封装了基于 HTTP 协议的文件上传功能。
+支持大文件上传，支持断点续传，支持秒传。
+服务端支持 .NET，客户端支持 .NET 和 Javascript</Description>
     <PackageId>Thinksea.Net.FileUploader</PackageId>
     <Authors>Thinksea</Authors>
     <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
