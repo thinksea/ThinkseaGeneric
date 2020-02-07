@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Thinksea.Collections
 {
@@ -332,7 +331,7 @@ namespace Thinksea.Collections
             {
                 RepeatSortedDictionary<TKey, TValue>.Item tmp = this.Items[key];
                 EqualityComparer<TValue> valueComparer = EqualityComparer<TValue>.Default;
-                bool r = false;
+                bool r;
                 if (valueComparer.Equals(tmp.Value, value))
                 {
                     r = this.Items.Remove(key);

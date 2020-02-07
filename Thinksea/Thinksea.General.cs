@@ -2117,7 +2117,9 @@
             al.AddRange(reg.Split(sqlString));
             foreach (string tmp in al)
             {
+#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
                 comm.CommandText = tmp.Trim();
+#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 if (comm.CommandText.Length > 0)
                 {
                     comm.ExecuteNonQuery();
@@ -2600,7 +2602,7 @@
         /// <returns>byte 数组。</returns>
         public static byte[] HexString2Bytes(string hexStr)
         {
-            string strTemp = "";
+            string strTemp;
             byte[] b = new byte[hexStr.Length / 2];
             for (int i = 0; i < hexStr.Length / 2; i++)
             {

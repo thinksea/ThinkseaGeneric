@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Thinksea.Text
 {
@@ -13,7 +11,7 @@ namespace Thinksea.Text
         /// <summary>
         /// 汉字的机内码数组
         /// </summary>
-        private static int[] pyValue = new int[]
+        private static readonly int[] pyValue = new int[]
         {
             -20319,-20317,-20304,-20295,-20292,-20283,-20265,-20257,-20242,-20230,-20051,-20036,
             -20032,-20026,-20002,-19990,-19986,-19982,-19976,-19805,-19784,-19775,-19774,-19763,
@@ -53,7 +51,7 @@ namespace Thinksea.Text
         /// <summary>
         /// 机内码对应的拼音数组
         /// </summary>
-        private static string[] pyName = new string[]
+        private static readonly string[] pyName = new string[]
         {
             "A","Ai","An","Ang","Ao","Ba","Bai","Ban","Bang","Bao","Bei","Ben",
             "Beng","Bi","Bian","Biao","Bie","Bin","Bing","Bo","Bu","Ba","Cai","Can",
@@ -120,7 +118,7 @@ namespace Thinksea.Text
                     chrAsc = i1 * 256 + i2 - 65536;
                     if (chrAsc > 0 && chrAsc < 160)
                     {
-                        if(splitChar.Length > 0 && pyString.Length > 0)
+                        if (splitChar.Length > 0 && pyString.Length > 0)
                         {
                             pyString.Append(splitChar);
                         }

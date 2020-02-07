@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Thinksea.Text
+﻿namespace Thinksea.Text
 {
     /// <summary>
     /// 封装了中文处理的基础功能。
@@ -39,7 +35,7 @@ namespace Thinksea.Text
         /// </example>
         public static string Substring(string input, int maxLength)
         {
-            int ltmp = 0;
+            int ltmp;
             int lengthTemp = 0;
             int index = 0;
             while (index < input.Length && lengthTemp < maxLength)

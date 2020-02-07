@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Thinksea.Drawing
+﻿namespace Thinksea.Drawing
 {
     /// <summary>
     /// 封装了常用图形算法。
@@ -19,7 +15,7 @@ namespace Thinksea.Drawing
         /// <returns>两个点之间的距离。</returns>
         public static double DistancePointToPoint(double x1, double y1, double x2, double y2)
         {
-            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+            return System.Math.Sqrt(System.Math.Pow(x1 - x2, 2) + System.Math.Pow(y1 - y2, 2));
         }
 
         /// <summary>
@@ -41,7 +37,7 @@ namespace Thinksea.Drawing
 
             s = ((y1 - y) * (x2 - x1) - (x1 - x) * (y2 - y1)) / (l * l);
 
-            return (Math.Abs(s * l));
+            return (System.Math.Abs(s * l));
         }
 
         /// <summary>
@@ -57,15 +53,15 @@ namespace Thinksea.Drawing
         public static double DistancePointToSegment(double x, double y, double x1, double y1, double x2, double y2)
         {
             double cross = (x2 - x1) * (x - x1) + (y2 - y1) * (y - y1);
-            if (cross <= 0) return Math.Sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
+            if (cross <= 0) return System.Math.Sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
 
             double d2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
-            if (cross >= d2) return Math.Sqrt((x - x2) * (x - x2) + (y - y2) * (y - y2));
+            if (cross >= d2) return System.Math.Sqrt((x - x2) * (x - x2) + (y - y2) * (y - y2));
 
             double r = cross / d2;
             double px = x1 + (x2 - x1) * r;
             double py = y1 + (y2 - y1) * r;
-            return Math.Sqrt((x - px) * (x - px) + (py - y) * (py - y)); //return Math.Sqrt((x - px) * (x - px) + (py - y1) * (py - y1));
+            return System.Math.Sqrt((x - px) * (x - px) + (py - y) * (py - y)); //return Math.Sqrt((x - px) * (x - px) + (py - y1) * (py - y1));
         }
 
         /// <summary>
@@ -79,7 +75,7 @@ namespace Thinksea.Drawing
         /// <remarks>返回值可能为负数。即顺时针方向的夹角角度为0到180度，逆时针方向夹角角度值在0到-180度之间。</remarks>
         public static double Angle(double x1, double y1, double x2, double y2)
         {
-            return System.Math.Atan2((y2 - y1), (x2 - x1)) * 180 / Math.PI;
+            return System.Math.Atan2((y2 - y1), (x2 - x1)) * 180 / System.Math.PI;
         }
 
         /// <summary>

@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
+    <ProjectReference Include="..\Thinksea.Logs\Thinksea.Logs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@
         /// <summary>
         /// 会产生graphics异常的PixelFormat（一般提示为“无法从带有索引像素格式的图像创建 Graphics 对象。”）
         /// </summary>
-        private static System.Drawing.Imaging.PixelFormat[] IndexedPixelFormats = {
+        private static readonly System.Drawing.Imaging.PixelFormat[] IndexedPixelFormats = {
                 System.Drawing.Imaging.PixelFormat.Undefined,
                 System.Drawing.Imaging.PixelFormat.DontCare,
                 System.Drawing.Imaging.PixelFormat.Format16bppArgb1555,
@@ -194,7 +194,7 @@
         {
             if (image == null)
             {
-                throw new System.ArgumentNullException("image");
+                throw new System.ArgumentNullException(nameof(image));
             }
 
             System.Drawing.RectangleF ImageRectangleF;
@@ -230,7 +230,7 @@
 
             System.Drawing.Imaging.PixelFormat outputFormat;
 
-            System.Drawing.Bitmap bitmap = null;
+            System.Drawing.Bitmap bitmap;
 
             if (Image.IsPixelFormatIndexed(image.PixelFormat))
             {

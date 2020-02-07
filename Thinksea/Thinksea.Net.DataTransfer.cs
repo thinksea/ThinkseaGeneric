@@ -92,9 +92,8 @@
             //{
             #region 开始写入数据。
             long tLen = 0;
-            int len = 0;
             //long currentSize = inputStream.Position;
-            len = inputStream.Read(buffer, 0, firstDataSize);
+            int len = inputStream.Read(buffer, 0, firstDataSize);
             while (len != 0)
             {
                 //if (!networkStream.CanWrite)
@@ -207,9 +206,9 @@
         {
             long tLen = 0;
             byte[] buff = new byte[dataSize < bufferSize ? dataSize : bufferSize];
-            int len = 0;
-            int tRead = 0;
-            long rightSize = 0; //剩余待传输的数据大小。
+            int len;
+            int tRead;
+            long rightSize; //剩余待传输的数据大小。
             while (tLen < dataSize) // && networkStream.CanRead
             {
                 rightSize = dataSize - tLen;

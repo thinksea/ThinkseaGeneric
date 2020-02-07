@@ -342,11 +342,9 @@
                 fs.Close();
             }
 
-            long fileLength = 0;
-            {
-                System.IO.FileInfo fi = new System.IO.FileInfo(file);
-                fileLength = fi.Length;
-            }
+            ;
+            System.IO.FileInfo fi = new System.IO.FileInfo(file);
+            long fileLength = fi.Length;
 
             if (crc == null)
             {

@@ -361,7 +361,7 @@
                 UriExtTool result = new UriExtTool();
 
                 int queryIndex = uri.IndexOf('?');
-                int sharpIndex = -1;
+                int sharpIndex;
                 if (queryIndex > -1)
                 {
                     sharpIndex = uri.IndexOf('#', queryIndex + 1);
