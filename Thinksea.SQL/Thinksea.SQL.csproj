@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
-    <Version>1.1.0.0</Version>
-    <Copyright>Copyright ©  Thinksea 2006-2010</Copyright>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net451;net48</TargetFrameworks>
+    <Version>1.2.0.0</Version>
+    <Copyright>Copyright ©  Thinksea 2006-2020</Copyright>
     <Product>Thinksea.SQL</Product>
     <Description>封装了对 SQL 的操作方法</Description>
     <PackageId>Thinksea.SQL</PackageId>
@@ -18,7 +18,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <PackageReference Include="System.Data.SqlClient">
-      <Version>4.8.0</Version>
+      <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="System.ServiceProcess.ServiceController">
       <Version>4.7.0</Version>
@@ -27,14 +27,14 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Data.SqlClient">
-      <Version>4.8.0</Version>
+      <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="System.ServiceProcess.ServiceController">
       <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
 
