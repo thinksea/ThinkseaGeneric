@@ -126,7 +126,13 @@
     <TypeScriptCompile Include="lib\dts\jsext-1.0.9\jsext.d.ts" />
     <TypeScriptCompile Include="lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild">
+      <Version>3.9.7</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
