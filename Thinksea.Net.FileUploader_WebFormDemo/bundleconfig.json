@@ -4,5 +4,11 @@
     "inputFiles": [
       "Thinksea.Net.FileUploader.js"
     ]
+  },
+  {
+    "outputFileName": "JavascriptUploadFileDemo.min.js",
+    "inputFiles": [
+      "JavascriptUploadFileDemo.js"
+    ]
   }
 ]
