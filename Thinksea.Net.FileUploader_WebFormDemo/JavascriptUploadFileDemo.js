@@ -453,6 +453,7 @@ var JavascriptUploadFileDemo;
             fileSelected(event, ctl);
         });
     }
+    JavascriptUploadFileDemo.initUploadControl = initUploadControl;
     /**
      * 校验表单数据。
      */

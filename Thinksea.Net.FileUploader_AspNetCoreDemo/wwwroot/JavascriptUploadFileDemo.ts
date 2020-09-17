@@ -254,7 +254,7 @@
      * 尝试上传下一个文件。
      * @param ctl 上传元素。
      */
-    function uploadNextItem(ctl: JQuery) {
+    function uploadNextItem(ctl: JQuery): void {
         if (ctl.hasClass("uploadItem")) { //如果是上传元素
             ctl = ctl.parent(); //查找文件列表面板。
         }
@@ -350,7 +350,7 @@
      * 当上传出现错误时调用此方法。
      * @param e
      */
-    function onerror(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs) {
+    function onerror(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs): void {
         let ctl = $("#" + e.CustomParameter);
         let progress = ctl.find("progress");
         progress.hide();
@@ -367,7 +367,7 @@
      * 当上传中止时调用此方法。
      * @param e
      */
-    function onabort(e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs) {
+    function onabort(e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs): void {
         let ctl = $("#" + e.CustomParameter);
         let progress = ctl.find("progress");
         progress.hide();
@@ -466,7 +466,7 @@
      * 初始化上传元素。
      * @param ctl
      */
-    function initUploadControl(ctl: JQuery): void {
+    export function initUploadControl(ctl: JQuery): void {
         ctl.find(".fileUpload").change(function (): void {
             fileSelected(this, ctl);
         });
@@ -484,7 +484,7 @@
     /**
      * 校验表单数据。
      */
-    function checkForm() {
+    function checkForm(): boolean {
         $("form").validator('validate');
         if (!($("form")[0] as HTMLFormElement).checkValidity()) {
             return false;
