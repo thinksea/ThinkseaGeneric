@@ -115,12 +115,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj">
-      <Project>{bb413d66-495e-41e2-b136-fe769025e893}</Project>
-      <Name>Thinksea.Net.FileUploader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="JavascriptUploadFileDemo.ts" />
     <TypeScriptCompile Include="lib\dts\jquery-1.9.1\jquery.d.ts" />
     <TypeScriptCompile Include="lib\dts\jsext-1.0.9\jsext.d.ts" />
@@ -128,10 +122,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild">
-      <Version>4.0.2</Version>
+      <Version>4.0.3</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj">
+      <Project>{bb413d66-495e-41e2-b136-fe769025e893}</Project>
+      <Name>Thinksea.Net.FileUploader</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

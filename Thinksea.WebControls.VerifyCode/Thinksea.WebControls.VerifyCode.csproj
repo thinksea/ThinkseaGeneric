@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net48</TargetFrameworks>
-    <Version>2.0.0.0</Version>
-    <Copyright>Copyright © Thinksea 2008-2019</Copyright>
+    <TargetFrameworks>net461;net48</TargetFrameworks>
+    <Version>2.1.0.0</Version>
+    <Copyright>Copyright © Thinksea 2008-2020</Copyright>
     <Product>Thinksea.WebControls.VerifyCode</Product>
     <Description>一个网页验证码控件。鉴于.NET发展方向的改变，将放弃维护此服务器控件。请转为参考示例程序“Thinksea.WebControls.VerifyCode_WebFormDemo”描述的调用方式，或自行从基类“Thinksea.VerifyCode”扩展实现。</Description>
     <PackageId>Thinksea.WebControls.VerifyCode</PackageId>

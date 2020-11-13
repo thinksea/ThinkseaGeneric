@@ -99,6 +99,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj">
       <Project>{bb413d66-495e-41e2-b136-fe769025e893}</Project>
       <Name>Thinksea.Net.FileUploader</Name>
@@ -107,9 +110,6 @@
       <Project>{2a81ee0a-8289-42e7-927d-3b07a44a2b30}</Project>
       <Name>Thinksea</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="images\remove.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

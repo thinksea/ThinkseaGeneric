@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
-    <Version>5.0.0.0</Version>
+    <TargetFrameworks>netcoreapp3.1;net461;net48;net50</TargetFrameworks>
+    <Version>5.3.0.0</Version>
     <Copyright>Copyright © Thinksea 2006-2020</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>
@@ -12,8 +12,7 @@
     <PackageTags>TcpServerPool, TaskQueue, WaitQueue, GraphicsArithmetic, Image, CRC32, Chinese, Chinese2Spell, UriParameter</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>1、已将组件“Thinksea.Logs”从项目“Thinksea”中剥离。仅用于兼容旧项目的目的，如无必要将不再进行升级维护。推荐使用.NET项目自带的日志组件或 NLog 等同类产品替代。
-2、其他的代码优化。</PackageReleaseNotes>
+    <PackageReleaseNotes>更新引用的基础组件</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -22,24 +21,24 @@
     <DocumentationFile>bin\Thinksea.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="System.Drawing.Common">
-      <Version>4.7.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>4.7.0</Version>
+      <Version>5.0.0</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
+    <PackageReference Include="System.Drawing.Common">
+      <Version>5.0.0</Version>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

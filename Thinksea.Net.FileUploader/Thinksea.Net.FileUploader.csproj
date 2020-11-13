@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net40;net48</TargetFrameworks>
-    <Version>4.0.3.0</Version>
+    <TargetFrameworks>netcoreapp3.1;net461;net48;net50</TargetFrameworks>
+    <Version>4.2</Version>
     <Copyright>Copyright © Thinksea 2020</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
@@ -15,7 +15,7 @@
     <PackageTags>FileUploader</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReleaseNotes>修复组件“Thinksea.Net.FileUploader”的BUG，增加和完善 Demo。</PackageReleaseNotes>
+    <PackageReleaseNotes>更新引用的基础组件</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -32,24 +32,24 @@
     <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http">
-      <Version>2.2.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Http">
       <Version>2.2.2</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
+    <PackageReference Include="Microsoft.AspNetCore.Http">
+      <Version>2.2.2</Version>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
