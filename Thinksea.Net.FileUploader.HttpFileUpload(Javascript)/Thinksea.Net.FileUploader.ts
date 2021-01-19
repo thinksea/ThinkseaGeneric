@@ -1,9 +1,9 @@
 ﻿/**
  * 封装了基于 HTTP 协议的文件上传客户端功能。（组件“Thinksea.Net.FileUploader”的 javascript 版本）
- * @version 4.0.0.0
+ * @version 4.1.0
  * @description 此组件依赖于下列组件
  * 1、jsext 1.2.0 source link：https://github.com/thinksea/jsext
- * 2、谷歌的 JS 散列算法组件“CryptoJS”（版本 3.1.9-1）支持。 source link：https://github.com/brix/crypto-js
+ * 2、谷歌的 JS 散列算法组件“CryptoJS”（版本 4.0.0）支持。 source link：https://github.com/brix/crypto-js
  */
 namespace Thinksea.Net.FileUploader {
     /**
