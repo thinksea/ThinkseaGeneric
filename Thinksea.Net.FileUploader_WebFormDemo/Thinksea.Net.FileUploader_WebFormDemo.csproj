@@ -117,8 +117,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="JavascriptUploadFileDemo.ts" />
     <TypeScriptCompile Include="lib\dts\jquery-1.9.1\jquery.d.ts" />
-    <TypeScriptCompile Include="lib\dts\jsext-1.0.9\jsext.d.ts" />
-    <TypeScriptCompile Include="lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts" />
+    <TypeScriptCompile Include="lib\dts\jsext-1.2.0\jsext.d.ts" />
+    <TypeScriptCompile Include="lib\dts\Thinksea.Net.FileUploader-4.1.0\Thinksea.Net.FileUploader.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild">
