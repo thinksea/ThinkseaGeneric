@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net461;net48;net50</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
-    <Copyright>Copyright © Thinksea 2008-2020</Copyright>
+    <Copyright>Copyright © Thinksea 2008-2021</Copyright>
     <Version>4.2.0</Version>
   </PropertyGroup>
 
@@ -24,13 +24,13 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>5.0.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>5.0.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
 

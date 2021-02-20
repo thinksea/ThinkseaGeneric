@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net461;net48;net50</TargetFrameworks>
     <Version>5.3.0.0</Version>
-    <Copyright>Copyright © Thinksea 2006-2020</Copyright>
+    <Copyright>Copyright © Thinksea 2006-2021</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>
     <Description>封装了编程过程中常用的基本功能</Description>
@@ -23,7 +23,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>5.0.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
 
@@ -37,7 +37,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>5.0.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
 
