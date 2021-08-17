@@ -11,6 +11,10 @@ namespace Thinksea.Windows.Forms
     /// </summary>
     public class TransparentPanel : Panel
     {
+        /// <summary>
+        /// 指定了用这个风格创建的窗口是透明的。这意味着，在这个窗口下面的任何窗口都不会被这个窗口挡住。用这个风格创建的窗口只有当它下面的窗口都更新过以后才接收WM_PAINT消息。 
+        /// </summary>
+		private const int WS_EX_TRANSPARENT = 0x00000020;
         private int _Opacity = 125;
 
         #region Property
@@ -61,7 +65,7 @@ namespace Thinksea.Windows.Forms
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle |= (int)Thinksea.Windows.Win32API.WindowExStyles.WS_EX_TRANSPARENT; //WS_EX_TRANSPARENT //窗口透明度。
+                cp.ExStyle |= WS_EX_TRANSPARENT; //WS_EX_TRANSPARENT //窗口透明度。
                 return cp;
             }
         }

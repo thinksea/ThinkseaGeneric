@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net461;net48</TargetFrameworks>
-    <Version>2.2.0.0</Version>
-    <Copyright>Copyright © Thinksea 2014-2020</Copyright>
+    <TargetFrameworks>net40;net461;net48;net5.0-windows</TargetFrameworks>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Version>2.3.0.0</Version>
+    <Copyright>Copyright © Thinksea 2014-2021</Copyright>
     <Product>Thinksea.Windows.Forms</Product>
     <Description>封装了常用的 Windows Form 控件。</Description>
     <PackageId>Thinksea.Windows.Forms</PackageId>
@@ -36,15 +37,6 @@
     <Content Include="images\refresh_16x16.png" />
     <Content Include="images\save_14x14.png" />
     <Content Include="images\SizeGrip.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Thinksea.Windows\Thinksea.Windows.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Design" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
 </Project>
