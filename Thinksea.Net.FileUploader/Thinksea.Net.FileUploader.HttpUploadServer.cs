@@ -189,7 +189,7 @@
             }
             catch (System.Exception ex)
             {
-                result = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                result = System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                 {
                     ErrorCode = 1,
                     Message = ex.Message
@@ -255,7 +255,7 @@
                         string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         FastUploadEventArgs e = new FastUploadEventArgs(clientFileName, clientCheckCode, customParameter);
                         this.FastUpload(e);
-                        string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                        string JSON = System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                         {
                             ErrorCode = 0,
                             Data = e.ResultData,//将需要返回到客户端的数据写回客户端。
@@ -271,7 +271,7 @@
                         string customParameter = this.GetUrlParameter(request, "param"); //用户自定义参数。
                         string tempFile = this.GetTempFile(clientCheckCode); //上传临时存盘文件名。
                         long p = this.GetContinueUploadPosition(tempFile);
-                        string JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                        string JSON = System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                         {
                             ErrorCode = 0,
                             Data = p,
@@ -299,7 +299,7 @@
 #elif NETCOREAPP
                         if (!request.HasFormContentType)
                         {
-                            return Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            return System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 1,
                                 Message = "未上传文件内容。"
@@ -325,7 +325,7 @@
                         }
                         else
                         {
-                            return Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            return System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 1,
                                 Message = "未上传文件内容。"
@@ -460,7 +460,7 @@
                             //}
 
                             //return finishedFileUploadEventArgs.ResultData;
-                            JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            JSON = System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 0,
                                 Data = finishedFileUploadEventArgs.ResultData,//将需要返回到客户端的数据写回客户端。
@@ -468,7 +468,7 @@
                         }
                         else
                         {
-                            JSON = Newtonsoft.Json.JsonConvert.SerializeObject(new Thinksea.Net.FileUploader.Result()
+                            JSON = System.Text.Json.JsonSerializer.Serialize(new Thinksea.Net.FileUploader.Result()
                             {
                                 ErrorCode = 0,
                             });
@@ -659,6 +659,7 @@
         /// <summary>
         /// 获取或设置需要返回到客户端的数据。
         /// </summary>
+        [System.Text.Json.Serialization.JsonInclude()]
         public object ResultData
         {
             get;

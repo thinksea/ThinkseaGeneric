@@ -254,13 +254,13 @@
      * 尝试上传下一个文件。
      * @param ctl 上传元素。
      */
-    function uploadNextItem(ctl: JQuery): void {
-        if (ctl.hasClass("uploadItem")) { //如果是上传元素
-            ctl = ctl.parent(); //查找文件列表面板。
+    function uploadNextItem(ctl: HTMLElement): void {
+        if (ctl.classList.contains("uploadItem")) { //如果是上传元素
+            ctl = ctl.parentElement; //查找文件列表面板。
         }
-        let nextItem = ctl.find(".uploadItem[data-uploadstate='wait']").first(); //查找待上传的元素
-        if (nextItem.length > 0) {
-            uploadFile((nextItem[0] as any).file as File, nextItem);
+        let nextItem = ctl.querySelector(".uploadItem[data-uploadstate='wait']"); //查找待上传的元素
+        if (nextItem) {
+            uploadFile((nextItem as any).file as File, nextItem as HTMLElement);
         }
     }
 
@@ -269,9 +269,9 @@
      * @param e
      */
     function beginUpload(e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs): void {
-        let ctl = $("#" + e.CustomParameter);
-        ctl.attr("data-begin_upload_time", new Date().toString());
-        ctl.attr("data-start_position", e.StartPosition);
+        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        ctl.setAttribute("data-begin_upload_time", new Date().toString());
+        ctl.setAttribute("data-start_position", e.StartPosition.toString());
     };
 
     /**
@@ -280,20 +280,32 @@
      */
     function progressChanged(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs): void {
         //#region 处理上传进度已更改事件。
-        let percentComplete: GLfloat = e.FinishedSize * 100.0 / e.FileLength;
-        let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
-        let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
+        //let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
+        //let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
 
-        let ctl = $("#" + e.CustomParameter);
-        let progress = ctl.find("progress");
-        progress.prop("value", Math.round((e.FinishedSize * 1.0 / e.FileLength) * parseInt(progress.prop("max"))));
-        progress.children(".ie").css("width", Math.round(percentComplete) + "%");
+        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let progress = ctl.querySelector("progress");
+        if (progress) {
+            let percentComplete: GLfloat;
+            if (e.FileLength === 0) {
+                percentComplete = 100.0;
+                progress.value = 0;
+            }
+            else {
+                percentComplete = e.FinishedSize * 100.0 / e.FileLength;
+                progress.value = Math.round((e.FinishedSize * 1.0 / e.FileLength) * progress.max);
+            }
+            let ctlIe = progress.querySelector(".ie") as HTMLElement;
+            if (ctlIe) {
+                ctlIe.style.width = Math.round(percentComplete) + "%";
+            }
+        }
         //percentComplete.toFixed(1) + "% "
         let sTimeSpan: string = "";
         {
             let nowTime = new Date();
-            let beginUploadTime: Date = new Date(ctl.attr("data-begin_upload_time"));
-            let startPosition: GLint = parseInt(ctl.attr("data-start_position")); //上传的起始位置。
+            let beginUploadTime: Date = new Date(ctl.getAttribute("data-begin_upload_time"));
+            let startPosition: GLint = parseInt(ctl.getAttribute("data-start_position")); //上传的起始位置。
             let timeSpan: GLfloat = (nowTime.getTime() - beginUploadTime.getTime()) / 1000.0; //耗费的时间（单位：秒）
             let sendSize: GLint = e.FinishedSize - startPosition; //已经发送的数据大小。
             let speed: GLfloat = sendSize / timeSpan; //上传速度
@@ -309,7 +321,10 @@
             sTimeSpan += minute.format("00") + ":";
             sTimeSpan += seconds.format("00");
         }
-        ctl.find(".fileSize").text(Math.round(e.FinishedSize * 1.0 / e.FileLength * 100) + "%,剩余时间:" + sTimeSpan);
+        let fileSize = ctl.querySelector(".fileSize") as HTMLElement;
+        if (fileSize) {
+            fileSize.innerText = Math.round(e.FinishedSize * 1.0 / e.FileLength * 100) + "%,剩余时间:" + sTimeSpan;
+        }
         //#endregion
 
         if (e.FinishedSize == e.FileLength) { //上传完成
@@ -317,29 +332,41 @@
             let result: FileUploadResult = e.ResultData;
             //let ctl = $("#" + result.CallbackParams);
             //let progress = ctl.find("progress");
-            progress.hide();
-            ctl.find(".fileUpload").val("");
-            ctl.attr("data-uploadstate", "success");
-            ctl.find(".uploadState").text(result.IsFastUpload ? "秒传完成" : "上传完成").css("color", "green").removeAttr("title").show();
+            progress.style.display = "none";
+            let fileUpload = ctl.querySelector(".fileUpload") as HTMLInputElement;
+            if (fileUpload) {
+                fileUpload.value = "";
+            }
+            ctl.setAttribute("data-uploadstate", "success");
+            let uploadState = ctl.querySelector(".uploadState") as HTMLElement;
+            if (uploadState) {
+                uploadState.innerText = result.IsFastUpload ? "秒传完成" : "上传完成";
+                uploadState.style.color = "green";
+                uploadState.removeAttribute("title");
+                uploadState.style.removeProperty("display");
+            }
 
             //if (result.CallbackParams === "ctl4") { //上传文件
             //}
-            if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+            if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
                 let file = result as FileUploadResult;
-                ctl.find(".fileSize").text(convertToFileSize(file.FileLength, "0.#"));
-                ctl.attr("data-savepath", file.SavePath);
-                let filesPanel = ctl.parent().parent(); //查找文件列表面板。
-                if (filesPanel.prop("id") === "ctl5") { //批量上传文件
-                    let uploadSuccessItems = filesPanel.find(".uploadItem[data-uploadstate='success']");
+                let fileSize = ctl.querySelector(".fileSize") as HTMLElement;
+                if (fileSize) {
+                    fileSize.innerText = convertToFileSize(file.FileLength, "0.#");
+                }
+                ctl.setAttribute("data-savepath", file.SavePath);
+                let filesPanel = ctl.parentElement.parentElement; //查找文件列表面板。
+                if (filesPanel.id === "ctl5") { //批量上传文件
+                    let uploadSuccessItems = filesPanel.querySelectorAll(".uploadItem[data-uploadstate='success']");
                     let savePaths = "";
                     for (let i = 0; i < uploadSuccessItems.length; i++) {
                         if (savePaths.length > 0) {
                             savePaths += ";";
                         }
-                        savePaths += $(uploadSuccessItems[i]).attr("data-savepath");
+                        savePaths += (uploadSuccessItems[i]).getAttribute("data-savepath");
                     }
-                    let fileUrls = filesPanel.find("input[name='fileUrls']");
-                    fileUrls.val(savePaths);
+                    let fileUrls = filesPanel.querySelector("input[name='fileUrls']") as HTMLInputElement;
+                    fileUrls.value = savePaths;
                 }
                 uploadNextItem(ctl);
             }
@@ -351,14 +378,28 @@
      * @param e
      */
     function onerror(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs): void {
-        let ctl = $("#" + e.CustomParameter);
-        let progress = ctl.find("progress");
-        progress.hide();
-        ctl.find(".fileSize").hide();
-        ctl.find(".fileUpload").val("");
-        ctl.attr("data-uploadstate", "error");
-        ctl.find(".uploadState").text("上传出错！").css("color", "red").attr("title", e.Message).show();
-        if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.display = 'none';
+        }
+        let fileSize = ctl.querySelector(".fileSize") as HTMLElement;
+        if (fileSize) {
+            fileSize.style.display = "none";
+        }
+        let fileUpload = ctl.querySelector(".fileUpload") as HTMLInputElement;
+        if (fileUpload) {
+            fileUpload.value = "";
+        }
+        ctl.setAttribute("data-uploadstate", "error");
+        let uploadState = ctl.querySelector(".uploadState") as HTMLElement;
+        if (uploadState) {
+            uploadState.innerText = "上传出错！";
+            uploadState.style.color = "red";
+            uploadState.setAttribute("title", e.Message);
+            uploadState.style.removeProperty("display");
+        }
+        if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
             uploadNextItem(ctl);
         }
     };
@@ -368,14 +409,27 @@
      * @param e
      */
     function onabort(e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs): void {
-        let ctl = $("#" + e.CustomParameter);
-        let progress = ctl.find("progress");
-        progress.hide();
-        ctl.find(".fileSize").hide();
-        ctl.find(".fileUpload").val("");
-        ctl.attr("data-uploadstate", "abort");
-        ctl.find(".uploadState").text("操作取消！").css("color", "darkgray").show();
-        if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.display = "none";
+        }
+        let fileSize = ctl.querySelector(".fileSize") as HTMLElement;
+        if (fileSize) {
+            fileSize.style.display = "none";
+        }
+        let fileUpload = ctl.querySelector(".fileUpload") as HTMLInputElement;
+        if (fileUpload) {
+            fileUpload.value = "";
+        }
+        ctl.setAttribute("data-uploadstate", "abort");
+        let uploadState = ctl.querySelector(".uploadState") as HTMLElement;
+        if (uploadState) {
+            uploadState.innerText = "操作取消！";
+            uploadState.style.color = "darkgray";
+            uploadState.style.removeProperty("display");
+        }
+        if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
             uploadNextItem(ctl);
         }
     };
@@ -385,21 +439,24 @@
      * @param file 待上传的文件。
      * @param ctl 上传元素
      */
-    function uploadFile(file: File, ctl: JQuery): void {
-        let progress = ctl.find("progress");
-        progress.show();
-        let fileSize = ctl.find(".fileSize");
-        fileSize.text("正在上传…");
-        fileSize.show();
-
+    function uploadFile(file: File, ctl: HTMLElement): void {
+        let progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.removeProperty("display");
+        }
+        let fileSize = ctl.querySelector(".fileSize") as HTMLElement;
+        if (fileSize) {
+            fileSize.innerText = "正在上传…";
+            fileSize.style.removeProperty("display");
+        }
         let uploader: Thinksea.Net.FileUploader.HttpFileUpload = new Thinksea.Net.FileUploader.HttpFileUpload();
         uploader.uploadServiceUrl = "/HttpUploadHandler";
         uploader.beginUpload = beginUpload;
         uploader.uploadProgressChanged = progressChanged;
         uploader.errorOccurred = onerror;
         uploader.onabort = onabort;
-        (ctl[0] as any).uploader = uploader;
-        uploader.startUpload(file, ctl.prop("id"));
+        (ctl as any).uploader = uploader;
+        uploader.startUpload(file, ctl.id);
 
     }
 
@@ -408,19 +465,19 @@
      * @param event
      * @param ctl
      */
-    function fileSelected(event: any, ctl: JQuery): void {
+    function fileSelected(event: any, ctl: HTMLElement): void {
         if (event.preventDefault) {
             event.preventDefault();
         }
         let files: FileList = (event.dataTransfer && event.dataTransfer.files) || (event.originalEvent && event.originalEvent.dataTransfer.files) || (event as HTMLInputElement).files; //选中的文件列表
         if (files && files.length > 0) { //如果选中了1个或多个文件
-            if (ctl.prop("id") === "ctl5") { //如果是多文件上传
-                let fileInsertMark = ctl.find(".fileinsertmark"); //查找文件插入标记元素。
-                if (fileInsertMark.length == 0) {
+            if (ctl.id === "ctl5") { //如果是多文件上传
+                let fileInsertMark = ctl.querySelector(".fileinsertmark"); //查找文件插入标记元素。
+                if (fileInsertMark === null) {
                     alert('ERROR：未找到文件插入标记元素。');
                     return;
                 }
-                let baseId = ctl.prop("id");
+                let baseId = ctl.id;
                 let nextId = 0;
                 for (let i = 0; i < files.length; i++) {
                     let file = files[i];
@@ -428,8 +485,9 @@
                     do { //生成ID
                         itemId = baseId + '_file' + nextId.toString();
                         nextId++;
-                    } while (ctl.find("#" + itemId).length > 0);
-                    let item = $('<div id="' + itemId + '" class="uploadItem thumbnail pull-left" style="position: relative; width: 350px; margin: 5px;" data-uploadstate="wait">\
+                    } while (ctl.querySelector("#" + itemId) !== null);
+                    let htmlCreator = document.createElement('div'); //创建一个 HTML 元素创建器（利用 DIV 元素将 HTML 代码片段转换为 HTML 元素）。
+                    htmlCreator.innerHTML = '<div id="' + itemId + '" class="uploadItem thumbnail pull-left" style="position: relative; width: 350px; margin: 5px;" data-uploadstate="wait">\
     <div class="uploadThumbnail pull-left ' + getFileTypeImage(file.name.getExtensionName().toLowerCase()) + '" style="width: 32px; height: 32px; margin:3px 5px 3px 3px;"></div>\
     <div class="pull-left">\
         <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 240px;" title="' + htmlEncode(file.name) + '">' + htmlEncode(file.name) + '</div>\
@@ -440,19 +498,20 @@
         <span class="uploadState" style="display: none;"></span>\
     </div>\
     <button type="button" class="deleteButton btn btn-link pull-right">删除</button>\
-</div>'); //新建上传元素。
-                    item.find(".deleteButton").on("click", function (e) {
-                        let panel = $(this).parent();
-                        let uploader: Thinksea.Net.FileUploader.HttpFileUpload = (panel[0] as any).uploader as Thinksea.Net.FileUploader.HttpFileUpload;
+</div>';
+                    let item = htmlCreator.firstElementChild as HTMLDivElement; //新建上传元素。
+                    (item.querySelector(".deleteButton") as HTMLButtonElement).onclick = function (e) {
+                        let panel = (this as HTMLButtonElement).parentElement;
+                        let uploader: Thinksea.Net.FileUploader.HttpFileUpload = (panel as any).uploader as Thinksea.Net.FileUploader.HttpFileUpload;
                         if (uploader) {
                             uploader.cancelUpload();
                         }
-                        let filesControl = panel.parent();
+                        let filesControl = panel.parentElement;
                         panel.remove();
                         uploadNextItem(filesControl);
-                    });
-                    item.insertBefore(fileInsertMark); //将上传元素添加到文件列表面板。
-                    (item[0] as any).file = files[i]; //将文件关联到上传元素。
+                    };
+                    fileInsertMark.parentElement.insertBefore(item, fileInsertMark); //将上传元素添加到文件列表面板。
+                    (item as any).file = files[i]; //将文件关联到上传元素。
                 }
                 uploadNextItem(ctl);
             }
@@ -466,29 +525,54 @@
      * 初始化上传元素。
      * @param ctl
      */
-    export function initUploadControl(ctl: JQuery): void {
-        ctl.find(".fileUpload").change(function (): void {
-            fileSelected(this, ctl);
-        });
+    export function initUploadControl(ctl: HTMLElement): void {
+        {
+            let ctls = ctl.querySelectorAll(".fileUpload");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i] as HTMLInputElement;
+                item.onchange = function (): void {
+                    fileSelected(this, ctl);
+                };
+            }
+        }
 
-        ctl.find("[data-clickupload='true']").click(function () {
-            ctl.find(".fileUpload").click();
-        });
-        ctl.find("[data-dragoverupload='true']").on("dragover", function (event) {
-            event.preventDefault();
-        }).on("drop", function (event: any) {
-            fileSelected(event, ctl);
-        });
+        {
+            let ctls = ctl.querySelectorAll("[data-clickupload='true']");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i] as HTMLElement;
+                item.onclick = function () {
+                    let fileUpload = ctl.querySelector(".fileUpload") as HTMLElement;
+                    fileUpload.click();
+                };
+            }
+        }
+
+        {
+            let ctls = ctl.querySelectorAll("[data-dragoverupload='true']");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i] as HTMLElement;
+                item.ondragover = function (event) {
+                    event.preventDefault();
+                };
+                item.ondrop = function (event) {
+                    fileSelected(event, ctl);
+                };
+            }
+        }
     }
 
     /**
      * 校验表单数据。
      */
     function checkForm(): boolean {
-        $("form").validator('validate');
-        if (!($("form")[0] as HTMLFormElement).checkValidity()) {
-            return false;
+        let forms = document.forms;
+        for (let i = 0; i < forms.length; i++) {
+            let form = forms[i];
+            if (!form.checkValidity()) {
+                return false;
+            }
         }
+        //.validator('validate');
         return true;
     }
 
@@ -497,20 +581,18 @@
      */
     export function init(): void {
         //#region 阻止拖放文件到非法区域引发页面跳转。
-        $("body").on("dragover", function (ev) { ev.preventDefault(); });
-        ($("body")[0] as any).ondrop = function (ev) {
+        document.body.ondragover = function (ev) { ev.preventDefault(); };
+        document.body.ondrop = function (ev) {
             ev.preventDefault();
         };
         //#endregion
 
-        initUploadControl($("#ctl5")); //批量上传文件
+        initUploadControl(document.getElementById("ctl5")); //批量上传文件
 
-        $("form").submit(function () {
-            return checkForm();
-        });
+        if (document.forms.length > 0) {
+            document.forms[0].onsubmit = function () {
+                return checkForm();
+            };
+        }
     }
 }
-
-$(function () {
-    JavascriptUploadFileDemo.init();
-});

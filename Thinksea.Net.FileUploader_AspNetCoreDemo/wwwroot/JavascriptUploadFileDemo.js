@@ -236,12 +236,12 @@ var JavascriptUploadFileDemo;
      * @param ctl 上传元素。
      */
     function uploadNextItem(ctl) {
-        if (ctl.hasClass("uploadItem")) { //如果是上传元素
-            ctl = ctl.parent(); //查找文件列表面板。
+        if (ctl.classList.contains("uploadItem")) { //如果是上传元素
+            ctl = ctl.parentElement; //查找文件列表面板。
         }
-        var nextItem = ctl.find(".uploadItem[data-uploadstate='wait']").first(); //查找待上传的元素
-        if (nextItem.length > 0) {
-            uploadFile(nextItem[0].file, nextItem);
+        var nextItem = ctl.querySelector(".uploadItem[data-uploadstate='wait']"); //查找待上传的元素
+        if (nextItem) {
+            uploadFile(nextItem.file, nextItem);
         }
     }
     /**
@@ -249,9 +249,9 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function beginUpload(e) {
-        var ctl = $("#" + e.CustomParameter);
-        ctl.attr("data-begin_upload_time", new Date().toString());
-        ctl.attr("data-start_position", e.StartPosition);
+        var ctl = document.getElementById(e.CustomParameter);
+        ctl.setAttribute("data-begin_upload_time", new Date().toString());
+        ctl.setAttribute("data-start_position", e.StartPosition.toString());
     }
     ;
     /**
@@ -260,19 +260,31 @@ var JavascriptUploadFileDemo;
      */
     function progressChanged(e) {
         //#region 处理上传进度已更改事件。
-        var percentComplete = e.FinishedSize * 100.0 / e.FileLength;
-        var sPosition = convertToFileSize(e.FinishedSize, "0.#");
-        var sTotalSize = convertToFileSize(e.FileLength, "0.#");
-        var ctl = $("#" + e.CustomParameter);
-        var progress = ctl.find("progress");
-        progress.prop("value", Math.round((e.FinishedSize * 1.0 / e.FileLength) * parseInt(progress.prop("max"))));
-        progress.children(".ie").css("width", Math.round(percentComplete) + "%");
+        //let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
+        //let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
+        var ctl = document.getElementById(e.CustomParameter);
+        var progress = ctl.querySelector("progress");
+        if (progress) {
+            var percentComplete = void 0;
+            if (e.FileLength === 0) {
+                percentComplete = 100.0;
+                progress.value = 0;
+            }
+            else {
+                percentComplete = e.FinishedSize * 100.0 / e.FileLength;
+                progress.value = Math.round((e.FinishedSize * 1.0 / e.FileLength) * progress.max);
+            }
+            var ctlIe = progress.querySelector(".ie");
+            if (ctlIe) {
+                ctlIe.style.width = Math.round(percentComplete) + "%";
+            }
+        }
         //percentComplete.toFixed(1) + "% "
         var sTimeSpan = "";
         {
             var nowTime = new Date();
-            var beginUploadTime = new Date(ctl.attr("data-begin_upload_time"));
-            var startPosition = parseInt(ctl.attr("data-start_position")); //上传的起始位置。
+            var beginUploadTime = new Date(ctl.getAttribute("data-begin_upload_time"));
+            var startPosition = parseInt(ctl.getAttribute("data-start_position")); //上传的起始位置。
             var timeSpan = (nowTime.getTime() - beginUploadTime.getTime()) / 1000.0; //耗费的时间（单位：秒）
             var sendSize = e.FinishedSize - startPosition; //已经发送的数据大小。
             var speed = sendSize / timeSpan; //上传速度
@@ -288,35 +300,50 @@ var JavascriptUploadFileDemo;
             sTimeSpan += minute.format("00") + ":";
             sTimeSpan += seconds.format("00");
         }
-        ctl.find(".fileSize").text(Math.round(e.FinishedSize * 1.0 / e.FileLength * 100) + "%,剩余时间:" + sTimeSpan);
+        var fileSize = ctl.querySelector(".fileSize");
+        if (fileSize) {
+            fileSize.innerText = Math.round(e.FinishedSize * 1.0 / e.FileLength * 100) + "%,剩余时间:" + sTimeSpan;
+        }
         //#endregion
         if (e.FinishedSize == e.FileLength) { //上传完成
             //alert(JSON.stringify(result));
             var result = e.ResultData;
             //let ctl = $("#" + result.CallbackParams);
             //let progress = ctl.find("progress");
-            progress.hide();
-            ctl.find(".fileUpload").val("");
-            ctl.attr("data-uploadstate", "success");
-            ctl.find(".uploadState").text(result.IsFastUpload ? "秒传完成" : "上传完成").css("color", "green").removeAttr("title").show();
+            progress.style.display = "none";
+            var fileUpload = ctl.querySelector(".fileUpload");
+            if (fileUpload) {
+                fileUpload.value = "";
+            }
+            ctl.setAttribute("data-uploadstate", "success");
+            var uploadState = ctl.querySelector(".uploadState");
+            if (uploadState) {
+                uploadState.innerText = result.IsFastUpload ? "秒传完成" : "上传完成";
+                uploadState.style.color = "green";
+                uploadState.removeAttribute("title");
+                uploadState.style.removeProperty("display");
+            }
             //if (result.CallbackParams === "ctl4") { //上传文件
             //}
-            if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+            if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
                 var file = result;
-                ctl.find(".fileSize").text(convertToFileSize(file.FileLength, "0.#"));
-                ctl.attr("data-savepath", file.SavePath);
-                var filesPanel = ctl.parent().parent(); //查找文件列表面板。
-                if (filesPanel.prop("id") === "ctl5") { //批量上传文件
-                    var uploadSuccessItems = filesPanel.find(".uploadItem[data-uploadstate='success']");
+                var fileSize_1 = ctl.querySelector(".fileSize");
+                if (fileSize_1) {
+                    fileSize_1.innerText = convertToFileSize(file.FileLength, "0.#");
+                }
+                ctl.setAttribute("data-savepath", file.SavePath);
+                var filesPanel = ctl.parentElement.parentElement; //查找文件列表面板。
+                if (filesPanel.id === "ctl5") { //批量上传文件
+                    var uploadSuccessItems = filesPanel.querySelectorAll(".uploadItem[data-uploadstate='success']");
                     var savePaths = "";
                     for (var i = 0; i < uploadSuccessItems.length; i++) {
                         if (savePaths.length > 0) {
                             savePaths += ";";
                         }
-                        savePaths += $(uploadSuccessItems[i]).attr("data-savepath");
+                        savePaths += (uploadSuccessItems[i]).getAttribute("data-savepath");
                     }
-                    var fileUrls = filesPanel.find("input[name='fileUrls']");
-                    fileUrls.val(savePaths);
+                    var fileUrls = filesPanel.querySelector("input[name='fileUrls']");
+                    fileUrls.value = savePaths;
                 }
                 uploadNextItem(ctl);
             }
@@ -328,14 +355,28 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function onerror(e) {
-        var ctl = $("#" + e.CustomParameter);
-        var progress = ctl.find("progress");
-        progress.hide();
-        ctl.find(".fileSize").hide();
-        ctl.find(".fileUpload").val("");
-        ctl.attr("data-uploadstate", "error");
-        ctl.find(".uploadState").text("上传出错！").css("color", "red").attr("title", e.Message).show();
-        if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+        var ctl = document.getElementById(e.CustomParameter);
+        var progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.display = 'none';
+        }
+        var fileSize = ctl.querySelector(".fileSize");
+        if (fileSize) {
+            fileSize.style.display = "none";
+        }
+        var fileUpload = ctl.querySelector(".fileUpload");
+        if (fileUpload) {
+            fileUpload.value = "";
+        }
+        ctl.setAttribute("data-uploadstate", "error");
+        var uploadState = ctl.querySelector(".uploadState");
+        if (uploadState) {
+            uploadState.innerText = "上传出错！";
+            uploadState.style.color = "red";
+            uploadState.setAttribute("title", e.Message);
+            uploadState.style.removeProperty("display");
+        }
+        if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
             uploadNextItem(ctl);
         }
     }
@@ -345,14 +386,27 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function onabort(e) {
-        var ctl = $("#" + e.CustomParameter);
-        var progress = ctl.find("progress");
-        progress.hide();
-        ctl.find(".fileSize").hide();
-        ctl.find(".fileUpload").val("");
-        ctl.attr("data-uploadstate", "abort");
-        ctl.find(".uploadState").text("操作取消！").css("color", "darkgray").show();
-        if (ctl.hasClass("uploadItem")) { //如果是批量上传文件
+        var ctl = document.getElementById(e.CustomParameter);
+        var progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.display = "none";
+        }
+        var fileSize = ctl.querySelector(".fileSize");
+        if (fileSize) {
+            fileSize.style.display = "none";
+        }
+        var fileUpload = ctl.querySelector(".fileUpload");
+        if (fileUpload) {
+            fileUpload.value = "";
+        }
+        ctl.setAttribute("data-uploadstate", "abort");
+        var uploadState = ctl.querySelector(".uploadState");
+        if (uploadState) {
+            uploadState.innerText = "操作取消！";
+            uploadState.style.color = "darkgray";
+            uploadState.style.removeProperty("display");
+        }
+        if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
             uploadNextItem(ctl);
         }
     }
@@ -363,19 +417,23 @@ var JavascriptUploadFileDemo;
      * @param ctl 上传元素
      */
     function uploadFile(file, ctl) {
-        var progress = ctl.find("progress");
-        progress.show();
-        var fileSize = ctl.find(".fileSize");
-        fileSize.text("正在上传…");
-        fileSize.show();
+        var progress = ctl.querySelector("progress");
+        if (progress) {
+            progress.style.removeProperty("display");
+        }
+        var fileSize = ctl.querySelector(".fileSize");
+        if (fileSize) {
+            fileSize.innerText = "正在上传…";
+            fileSize.style.removeProperty("display");
+        }
         var uploader = new Thinksea.Net.FileUploader.HttpFileUpload();
         uploader.uploadServiceUrl = "/HttpUploadHandler";
         uploader.beginUpload = beginUpload;
         uploader.uploadProgressChanged = progressChanged;
         uploader.errorOccurred = onerror;
         uploader.onabort = onabort;
-        ctl[0].uploader = uploader;
-        uploader.startUpload(file, ctl.prop("id"));
+        ctl.uploader = uploader;
+        uploader.startUpload(file, ctl.id);
     }
     /**
      * 处理文件选中事件。
@@ -388,13 +446,13 @@ var JavascriptUploadFileDemo;
         }
         var files = (event.dataTransfer && event.dataTransfer.files) || (event.originalEvent && event.originalEvent.dataTransfer.files) || event.files; //选中的文件列表
         if (files && files.length > 0) { //如果选中了1个或多个文件
-            if (ctl.prop("id") === "ctl5") { //如果是多文件上传
-                var fileInsertMark = ctl.find(".fileinsertmark"); //查找文件插入标记元素。
-                if (fileInsertMark.length == 0) {
+            if (ctl.id === "ctl5") { //如果是多文件上传
+                var fileInsertMark = ctl.querySelector(".fileinsertmark"); //查找文件插入标记元素。
+                if (fileInsertMark === null) {
                     alert('ERROR：未找到文件插入标记元素。');
                     return;
                 }
-                var baseId = ctl.prop("id");
+                var baseId = ctl.id;
                 var nextId = 0;
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
@@ -403,8 +461,9 @@ var JavascriptUploadFileDemo;
                     do { //生成ID
                         itemId = baseId + '_file' + nextId.toString();
                         nextId++;
-                    } while (ctl.find("#" + itemId).length > 0);
-                    var item = $('<div id="' + itemId + '" class="uploadItem thumbnail pull-left" style="position: relative; width: 350px; margin: 5px;" data-uploadstate="wait">\
+                    } while (ctl.querySelector("#" + itemId) !== null);
+                    var htmlCreator = document.createElement('div'); //创建一个 HTML 元素创建器（利用 DIV 元素将 HTML 代码片段转换为 HTML 元素）。
+                    htmlCreator.innerHTML = '<div id="' + itemId + '" class="uploadItem thumbnail pull-left" style="position: relative; width: 350px; margin: 5px;" data-uploadstate="wait">\
     <div class="uploadThumbnail pull-left ' + getFileTypeImage(file.name.getExtensionName().toLowerCase()) + '" style="width: 32px; height: 32px; margin:3px 5px 3px 3px;"></div>\
     <div class="pull-left">\
         <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 240px;" title="' + htmlEncode(file.name) + '">' + htmlEncode(file.name) + '</div>\
@@ -415,19 +474,20 @@ var JavascriptUploadFileDemo;
         <span class="uploadState" style="display: none;"></span>\
     </div>\
     <button type="button" class="deleteButton btn btn-link pull-right">删除</button>\
-</div>'); //新建上传元素。
-                    item.find(".deleteButton").on("click", function (e) {
-                        var panel = $(this).parent();
-                        var uploader = panel[0].uploader;
+</div>';
+                    var item = htmlCreator.firstElementChild; //新建上传元素。
+                    item.querySelector(".deleteButton").onclick = function (e) {
+                        var panel = this.parentElement;
+                        var uploader = panel.uploader;
                         if (uploader) {
                             uploader.cancelUpload();
                         }
-                        var filesControl = panel.parent();
+                        var filesControl = panel.parentElement;
                         panel.remove();
                         uploadNextItem(filesControl);
-                    });
-                    item.insertBefore(fileInsertMark); //将上传元素添加到文件列表面板。
-                    item[0].file = files[i]; //将文件关联到上传元素。
+                    };
+                    fileInsertMark.parentElement.insertBefore(item, fileInsertMark); //将上传元素添加到文件列表面板。
+                    item.file = files[i]; //将文件关联到上传元素。
                 }
                 uploadNextItem(ctl);
             }
@@ -441,27 +501,51 @@ var JavascriptUploadFileDemo;
      * @param ctl
      */
     function initUploadControl(ctl) {
-        ctl.find(".fileUpload").change(function () {
-            fileSelected(this, ctl);
-        });
-        ctl.find("[data-clickupload='true']").click(function () {
-            ctl.find(".fileUpload").click();
-        });
-        ctl.find("[data-dragoverupload='true']").on("dragover", function (event) {
-            event.preventDefault();
-        }).on("drop", function (event) {
-            fileSelected(event, ctl);
-        });
+        {
+            var ctls = ctl.querySelectorAll(".fileUpload");
+            for (var i = 0; i < ctls.length; i++) {
+                var item = ctls[i];
+                item.onchange = function () {
+                    fileSelected(this, ctl);
+                };
+            }
+        }
+        {
+            var ctls = ctl.querySelectorAll("[data-clickupload='true']");
+            for (var i = 0; i < ctls.length; i++) {
+                var item = ctls[i];
+                item.onclick = function () {
+                    var fileUpload = ctl.querySelector(".fileUpload");
+                    fileUpload.click();
+                };
+            }
+        }
+        {
+            var ctls = ctl.querySelectorAll("[data-dragoverupload='true']");
+            for (var i = 0; i < ctls.length; i++) {
+                var item = ctls[i];
+                item.ondragover = function (event) {
+                    event.preventDefault();
+                };
+                item.ondrop = function (event) {
+                    fileSelected(event, ctl);
+                };
+            }
+        }
     }
     JavascriptUploadFileDemo.initUploadControl = initUploadControl;
     /**
      * 校验表单数据。
      */
     function checkForm() {
-        $("form").validator('validate');
-        if (!$("form")[0].checkValidity()) {
-            return false;
+        var forms = document.forms;
+        for (var i = 0; i < forms.length; i++) {
+            var form = forms[i];
+            if (!form.checkValidity()) {
+                return false;
+            }
         }
+        //.validator('validate');
         return true;
     }
     /**
@@ -469,19 +553,18 @@ var JavascriptUploadFileDemo;
      */
     function init() {
         //#region 阻止拖放文件到非法区域引发页面跳转。
-        $("body").on("dragover", function (ev) { ev.preventDefault(); });
-        $("body")[0].ondrop = function (ev) {
+        document.body.ondragover = function (ev) { ev.preventDefault(); };
+        document.body.ondrop = function (ev) {
             ev.preventDefault();
         };
         //#endregion
-        initUploadControl($("#ctl5")); //批量上传文件
-        $("form").submit(function () {
-            return checkForm();
-        });
+        initUploadControl(document.getElementById("ctl5")); //批量上传文件
+        if (document.forms.length > 0) {
+            document.forms[0].onsubmit = function () {
+                return checkForm();
+            };
+        }
     }
     JavascriptUploadFileDemo.init = init;
 })(JavascriptUploadFileDemo || (JavascriptUploadFileDemo = {}));
-$(function () {
-    JavascriptUploadFileDemo.init();
-});
 //# sourceMappingURL=JavascriptUploadFileDemo.js.map

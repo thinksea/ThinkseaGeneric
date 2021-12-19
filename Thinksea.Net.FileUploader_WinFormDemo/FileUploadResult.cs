@@ -71,10 +71,18 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
             Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult fileUploadResult = obj as Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult;
             if (fileUploadResult == null)
             {
-                if (obj is Newtonsoft.Json.Linq.JObject)
+                /*
+                if (obj is Newtonsoft.Json.Linq.JObject) //如果是 Newtonsoft.Json.Linq.JObject 对象。
                 {
                     Newtonsoft.Json.Linq.JObject jobj = (Newtonsoft.Json.Linq.JObject)obj;
                     fileUploadResult = jobj.ToObject<Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult>();
+                }
+                else
+                */
+                if (obj is System.Text.Json.JsonElement) //如果是 System.Text.Json.JsonElement 对象。
+                {
+                    System.Text.Json.JsonElement jobj = (System.Text.Json.JsonElement)obj;
+                    fileUploadResult = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult>(jobj);
                 }
                 else
                 {

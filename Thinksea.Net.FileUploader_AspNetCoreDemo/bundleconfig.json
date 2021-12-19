@@ -10,5 +10,11 @@
     "inputFiles": [
       "wwwroot/JavascriptUploadFileDemo.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/Thinksea.Net.FileUploader.min.js",
+    "inputFiles": [
+      "wwwroot/Thinksea.Net.FileUploader.js"
+    ]
   }
 ]

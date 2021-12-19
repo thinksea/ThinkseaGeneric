@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net461;net48;net50</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net461;net48;net50;net60</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
     <Copyright>Copyright © Thinksea 2008-2021</Copyright>
-    <Version>4.2.0</Version>
+    <Version>4.3.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,11 +24,17 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>5.0.2</Version>
+      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
+    <PackageReference Include="System.Drawing.Common">
+      <Version>5.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
     <PackageReference Include="System.Drawing.Common">
       <Version>5.0.1</Version>
     </PackageReference>

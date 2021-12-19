@@ -493,7 +493,7 @@
                     //webRequest = null;
                 }
 
-                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                 if (result.ErrorCode != 0)
                 {
                     this.OnError("上传出错。详细信息：" + result.Message, null);
@@ -553,7 +553,7 @@
                     webRequest = null;
                 }
 
-                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                 if (result.ErrorCode != 0)
                 {
                     this.OnError("上传出错。详细信息：" + result.Message, null);
@@ -664,7 +664,7 @@
                     try
                     {
                         string responsestring = reader.ReadToEnd();
-                        Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                        Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                         long breakpoint = System.Convert.ToInt64(result.Data);
                         //long breakpoint = System.Convert.ToInt64(responsestring);
                         if (this._FindBreakpoint != null && breakpoint != 0)
@@ -723,9 +723,17 @@
                     try
                     {
                         string responsestring = reader.ReadToEnd();
-                        Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
-                        long breakpoint = System.Convert.ToInt64(result.Data);
+                        Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
+                        long breakpoint;
                         //long breakpoint = System.Convert.ToInt64(responsestring);
+                        if (result.Data is System.Text.Json.JsonElement)
+                        {
+                            breakpoint = ((System.Text.Json.JsonElement)result.Data).GetInt64();
+                        }
+                        else
+                        {
+                            breakpoint = System.Convert.ToInt64(result.Data);
+                        }
                         if (this._FindBreakpoint != null && breakpoint != 0)
                         {
                             BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint, this.CustomParameter);
@@ -1041,7 +1049,7 @@
                     //webRequest = null;
                 }
 
-                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                 if (result.ErrorCode != 0)
                 {
                     this.OnError("上传出错。详细信息：" + result.Message, null);
@@ -1110,7 +1118,7 @@
                     webRequest = null;
                 }
 
-                Thinksea.Net.FileUploader.Result result = Newtonsoft.Json.JsonConvert.DeserializeObject<Thinksea.Net.FileUploader.Result>(responsestring);
+                Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                 if (result.ErrorCode != 0)
                 {
                     this.OnError("上传出错。详细信息：" + result.Message, null);

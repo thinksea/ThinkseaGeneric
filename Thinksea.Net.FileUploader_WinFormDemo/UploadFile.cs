@@ -152,13 +152,29 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
             else
             {
                 #region 处理上传进度已更改事件。
-                int v = System.Convert.ToInt32(e.FinishedSize * 1.0 / e.FileLength * this.textProgressBar1.Maximum);
+                int v;
+                if (e.FileLength == 0)
+                {
+                    v = this.textProgressBar1.Maximum;
+                }
+                else
+                {
+                    v = System.Convert.ToInt32(e.FinishedSize * 1.0 / e.FileLength * this.textProgressBar1.Maximum);
+                }
                 this.textProgressBar1.Value = v;
                 System.TimeSpan dsp = (System.DateTime.Now - this.uploadStartTime);
                 if (dsp.TotalSeconds > 0)
                 {
                     double speed = e.FinishedSize / dsp.TotalSeconds; //平均传输速度（单位：字节/秒）。
-                    double ds = (e.FileLength - e.FinishedSize) / speed; //大概剩余时间（单位：秒）。
+                    double ds;
+                    if (speed == 0)
+                    {
+                        ds = 0;
+                    }
+                    else
+                    {
+                        ds = (e.FileLength - e.FinishedSize) / speed; //大概剩余时间（单位：秒）。
+                    }
                     System.TimeSpan tsds = System.TimeSpan.FromSeconds(ds);
                     string text = Thinksea.General.ConvertToFileSize(System.Convert.ToInt64(speed)) + "/秒";
 
