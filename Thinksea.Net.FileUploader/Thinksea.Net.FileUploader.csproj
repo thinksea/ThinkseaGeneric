@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net461;net48;net50;net60</TargetFrameworks>
-    <Version>5.0</Version>
+    <Version>5.1</Version>
     <Copyright>Copyright © Thinksea 2021</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>

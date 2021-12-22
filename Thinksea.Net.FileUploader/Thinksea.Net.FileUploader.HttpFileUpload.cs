@@ -665,8 +665,16 @@
                     {
                         string responsestring = reader.ReadToEnd();
                         Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
-                        long breakpoint = System.Convert.ToInt64(result.Data);
+                        long breakpoint;
                         //long breakpoint = System.Convert.ToInt64(responsestring);
+                        if (result.Data is System.Text.Json.JsonElement)
+                        {
+                            breakpoint = ((System.Text.Json.JsonElement)result.Data).GetInt64();
+                        }
+                        else
+                        {
+                            breakpoint = System.Convert.ToInt64(result.Data);
+                        }
                         if (this._FindBreakpoint != null && breakpoint != 0)
                         {
                             BreakpointUploadEventArgs p = new BreakpointUploadEventArgs(breakpoint, this.CustomParameter);
