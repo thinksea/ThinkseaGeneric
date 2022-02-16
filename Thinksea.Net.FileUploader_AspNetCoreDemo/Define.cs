@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Thinksea.Net.FileUploader_AspNetCoreDemo
+﻿namespace Thinksea.Net.FileUploader_AspNetCoreDemo
 {
     public class Define
     {
@@ -18,7 +13,7 @@ namespace Thinksea.Net.FileUploader_AspNetCoreDemo
         }
 
         /// <summary>
-        /// 图片文件上传目录。（以左下划线“/”为后缀。）
+        /// 图片文件上传目录。（以正斜线“/”为后缀。）
         /// </summary>
         public const string FileUploadDirectory = "/upload/files/";
     }
