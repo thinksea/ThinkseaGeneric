@@ -91,7 +91,7 @@ namespace Thinksea.WebControls.PageNavigate
             {
                 if (value < 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
                 }
                 this._NavigatePageSize = value;
                 this.ViewState["NavigatePageSize"] = value;
@@ -124,7 +124,7 @@ namespace Thinksea.WebControls.PageNavigate
             {
                 if (value < 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
                 }
                 this._PageSize = value;
                 this.ViewState["PageSize"] = value;
@@ -199,7 +199,7 @@ namespace Thinksea.WebControls.PageNavigate
                 }
                 //				if( value < 0 || (value > this.PageCount - 1 && this.PageCount > 0) )
                 //				{
-                //					throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值不能小于 0 并且不能大于 (PageCount - 1)。");
+                //					throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值不能小于 0 并且不能大于 (PageCount - 1)。");
                 //				}
                 //				this._PageIndex = value;
                 this.ViewState["PageIndex"] = this._PageIndex;
@@ -259,7 +259,7 @@ namespace Thinksea.WebControls.PageNavigate
             {
                 if (value < 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值不能小于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值不能小于 0。");
                 }
                 this._RecordsCount = value;
                 this.ViewState["RecordsCount"] = value;

@@ -475,7 +475,7 @@ namespace Thinksea.WebControls.Menu2
 			{
 				if( value < 1 )
 				{
-					throw new System.ArgumentOutOfRangeException("value", value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
+					throw new System.ArgumentOutOfRangeException(nameof(value), value, "指定的参数已超出有效取值的范围，该参数取值不能小于 1。");
 				}
 				this._MaxColumn = value;
 				if (this.IsTrackingViewState)
@@ -698,7 +698,7 @@ function Thinksea_WebControls_Menu2_menuChange_" + this.ID + @"(obj,menu)
 		obj.style.cssText='" + styleStr + @"';";
 				}
 			}
-			OutMenuHtmlText = OutMenuHtmlText + @"
+			OutMenuHtmlText += @"
 		menu.style.display='none';
 	}else{";
 			if(this.MenuTitleStyle != null )
@@ -715,7 +715,7 @@ function Thinksea_WebControls_Menu2_menuChange_" + this.ID + @"(obj,menu)
 		obj.style.cssText='" + styleStr + @"';";
 				}
 			}
-			OutMenuHtmlText = OutMenuHtmlText + @"
+			OutMenuHtmlText += @"
 		menu.style.display='';
 	}
 }
@@ -733,7 +733,7 @@ function Thinksea_WebControls_Menu2_menuChange_" + this.ID + @"(obj,menu)
 			MenuPanel.Visible = this.Visible;
 
 			int menuGroupCount = 0;//菜单组数量
-			int menuItemCount = 0;//菜单组中菜单项数量
+			int menuItemCount;//菜单组中菜单项数量
 
 			Thinksea.WebControls.Menu2.MenuGroup [] mgis = menuConnection.GetMenuGroup( );
 			foreach( Thinksea.WebControls.Menu2.MenuGroup tmpmgis in mgis )

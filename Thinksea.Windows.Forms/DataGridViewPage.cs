@@ -136,7 +136,7 @@ namespace Thinksea.Windows.Forms
                 #region 输入数据验证。
                 if (value < 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("分页索引取值不能小于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "分页索引取值不能小于 0。");
                 }
                 #endregion
 
@@ -196,7 +196,7 @@ namespace Thinksea.Windows.Forms
                 #region 输入数据验证。
                 if ((this.PagesCount == 0 && value > 0) || (this.PagesCount > 0 && value >= this.PagesCount)) //如果有记录并且分页索引超出可用分页总数。
                 {
-                    throw new System.ArgumentOutOfRangeException("分页索引取值不能大于当前可用的总页数。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "分页索引取值不能大于当前可用的总页数。");
                 }
                 #endregion
 

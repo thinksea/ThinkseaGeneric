@@ -154,9 +154,9 @@
         {
             _Polynomial = polynomial;
             // 计数器
-            uint i = 0, j = 0;
+            uint i, j;
             // 创建表的变量
-            uint dwCRC = 0;
+            uint dwCRC;
 
             for (i = 0; i < TABLE_SIZE; i++)
             {
@@ -201,13 +201,13 @@
             }
             if (offset >= data.Length)
             {
-                throw new System.ArgumentOutOfRangeException("参数 offset 超出数组最大索引范围。");
+                throw new System.ArgumentOutOfRangeException(nameof(offset), "参数 offset 超出数组最大索引范围。");
             }
 
             // 一个用于存放返回值的数组。
             byte[] crc32_result;
             // 存储返回值
-            uint _result = 0;
+            uint _result;
             //一个长度标识符
             int len = offset + count;
             if (len > data.Length)
@@ -215,7 +215,7 @@
                 len = data.Length;
             }
             // 计数器
-            int i = 0;
+            int i;
 
             const uint tableIndexMask = 0xff;
 
@@ -251,11 +251,11 @@
             // 一个用于存放返回值的数组。
             byte[] crc32_result;
             // 存储返回值
-            uint _result = 0;
+            uint _result;
             //一个长度标识符
             int len = data.Length;
             // 计数器
-            int i = 0;
+            int i;
 
             const uint tableIndexMask = 0xff;
 
@@ -313,7 +313,7 @@
             const int CRCLength = 4;//定义 CRC 长度。
             byte[] crc = null;
             byte[] buff = new byte[CRCLength + buffLength];
-            int rl = -1;
+            int rl;
             System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
             try
             {

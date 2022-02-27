@@ -17,7 +17,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static sbyte Max(sbyte[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             sbyte max = value[0];
             foreach (sbyte tmp in value)
             {
@@ -34,7 +34,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static byte Max(byte[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             byte max = value[0];
             foreach (byte tmp in value)
             {
@@ -51,7 +51,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static short Max(short[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             short max = value[0];
             foreach (short tmp in value)
             {
@@ -68,7 +68,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static ushort Max(ushort[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             ushort max = value[0];
             foreach (ushort tmp in value)
             {
@@ -85,7 +85,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static int Max(int[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             int max = value[0];
             foreach (int tmp in value)
             {
@@ -102,7 +102,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static uint Max(uint[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             uint max = value[0];
             foreach (uint tmp in value)
             {
@@ -119,7 +119,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static long Max(long[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             long max = value[0];
             foreach (long tmp in value)
             {
@@ -136,7 +136,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static ulong Max(ulong[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             ulong max = value[0];
             foreach (ulong tmp in value)
             {
@@ -153,7 +153,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static decimal Max(decimal[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             decimal max = value[0];
             foreach (decimal tmp in value)
             {
@@ -170,7 +170,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static float Max(float[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             float max = value[0];
             foreach (float tmp in value)
             {
@@ -187,7 +187,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static double Max(double[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             double max = value[0];
             foreach (double tmp in value)
             {
@@ -207,7 +207,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static sbyte Min(sbyte[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             sbyte min = value[0];
             foreach (sbyte tmp in value)
             {
@@ -224,7 +224,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static byte Min(byte[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             byte min = value[0];
             foreach (byte tmp in value)
             {
@@ -241,7 +241,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static short Min(short[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             short min = value[0];
             foreach (short tmp in value)
             {
@@ -258,7 +258,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static ushort Min(ushort[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             ushort min = value[0];
             foreach (ushort tmp in value)
             {
@@ -275,7 +275,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static int Min(int[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             int min = value[0];
             foreach (int tmp in value)
             {
@@ -292,7 +292,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static uint Min(uint[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             uint min = value[0];
             foreach (uint tmp in value)
             {
@@ -309,7 +309,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static long Min(long[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             long min = value[0];
             foreach (long tmp in value)
             {
@@ -326,7 +326,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static ulong Min(ulong[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             ulong min = value[0];
             foreach (ulong tmp in value)
             {
@@ -343,7 +343,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static decimal Min(decimal[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             decimal min = value[0];
             foreach (decimal tmp in value)
             {
@@ -360,7 +360,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static float Min(float[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             float min = value[0];
             foreach (float tmp in value)
             {
@@ -377,7 +377,7 @@
         /// <exception cref="System.ArgumentOutOfRangeException">value 元素数量为零。</exception>
         public static double Min(double[] value)
         {
-            if (value.Length == 0) throw new System.ArgumentOutOfRangeException("value 元素数量为零。", "value");
+            if (value.Length == 0) throw new System.ArgumentOutOfRangeException(nameof(value), "value 元素数量为零。");
             double min = value[0];
             foreach (double tmp in value)
             {
@@ -434,9 +434,10 @@
         /// </remarks>
         public static string Join(string separator, sbyte[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -511,9 +512,10 @@
         /// </remarks>
         public static string Join(string separator, byte[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -588,9 +590,10 @@
         /// </remarks>
         public static string Join(string separator, char[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -665,9 +668,10 @@
         /// </remarks>
         public static string Join(string separator, short[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -742,9 +746,10 @@
         /// </remarks>
         public static string Join(string separator, ushort[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -819,9 +824,10 @@
         /// </remarks>
         public static string Join(string separator, int[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -896,9 +902,10 @@
         /// </remarks>
         public static string Join(string separator, uint[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -973,9 +980,10 @@
         /// </remarks>
         public static string Join(string separator, long[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1050,9 +1058,10 @@
         /// </remarks>
         public static string Join(string separator, ulong[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1127,9 +1136,10 @@
         /// </remarks>
         public static string Join(string separator, bool[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1204,9 +1214,10 @@
         /// </remarks>
         public static string Join(string separator, decimal[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1281,9 +1292,10 @@
         /// </remarks>
         public static string Join(string separator, float[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1358,9 +1370,10 @@
         /// </remarks>
         public static string Join(string separator, double[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -1435,9 +1448,10 @@
         /// </remarks>
         public static string Join(string separator, string[] value, int startIndex, int count)
         {
-            if (value == null) throw new System.ArgumentNullException("value 为空引用（Visual Basic 中为 Nothing）。");
-            if (startIndex < 0 || count < 0) throw new System.ArgumentOutOfRangeException("startIndex 或 count 小于 0。");
-            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException("startIndex 加上 count 大于 value 中的元素数。");
+            if (value == null) throw new System.ArgumentNullException(nameof(value), "value 为空引用（Visual Basic 中为 Nothing）。");
+            if (startIndex < 0) throw new System.ArgumentOutOfRangeException(nameof(startIndex), "startIndex 小于 0。");
+            if (count < 0) throw new System.ArgumentOutOfRangeException(nameof(count), "count 小于 0。");
+            if (startIndex + count > value.Length) throw new System.ArgumentOutOfRangeException(nameof(startIndex) + " + " + nameof(count), "startIndex 加上 count 大于 value 中的元素数。");
 
             if (count == 0 || value.Length == 0) return string.Empty;
 
@@ -2117,9 +2131,7 @@
             al.AddRange(reg.Split(sqlString));
             foreach (string tmp in al)
             {
-#pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
                 comm.CommandText = tmp.Trim();
-#pragma warning restore CA2100 // Review SQL queries for security vulnerabilities
                 if (comm.CommandText.Length > 0)
                 {
                     comm.ExecuteNonQuery();
@@ -2453,7 +2465,7 @@
         public static byte[] GetSHA1(System.IO.Stream stream)
         {
             byte[] b;
-            System.Security.Cryptography.SHA1 sha1 = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+            System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
             try
             {
                 b = sha1.ComputeHash(stream);
@@ -2476,7 +2488,7 @@
         {
             long oldP = stream.Position;
             byte[] b;
-            System.Security.Cryptography.SHA1 sha1 = new System.Security.Cryptography.SHA1CryptoServiceProvider();
+            System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
             try
             {
                 stream.Position = startPosition;
@@ -2520,7 +2532,7 @@
         public static byte[] GetMD5(System.IO.Stream stream)
         {
             byte[] b;
-            System.Security.Cryptography.MD5 m = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create();
             try
             {
                 b = m.ComputeHash(stream);
@@ -2543,7 +2555,7 @@
         {
             long oldP = stream.Position;
             byte[] b;
-            System.Security.Cryptography.MD5 m = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create();
             try
             {
                 stream.Position = startPosition;

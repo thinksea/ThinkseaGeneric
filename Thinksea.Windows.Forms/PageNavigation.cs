@@ -634,12 +634,12 @@ namespace Thinksea.Windows.Forms
             {
                 if (value < 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "分页索引不能小于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "分页索引不能小于 0。");
                 }
 
                 if (this.PagesCount > 0 && value > this.PagesCount - 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "分页索引不能大于属性“PagesCount”。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "分页索引不能大于属性“PagesCount”。");
                 }
 
                 if (this._PageIndex == value)
@@ -689,7 +689,7 @@ namespace Thinksea.Windows.Forms
             {
                 if (value < 0)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "可用记录总数不能小于 0。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "可用记录总数不能小于 0。");
                 }
 
                 if (this._RecordsCount == value)
@@ -721,7 +721,7 @@ namespace Thinksea.Windows.Forms
             {
                 if (value < 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "每页最大显示记录数不能小于 1。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "每页最大显示记录数不能小于 1。");
                 }
                 if (this._PageSize == value)
                 {
@@ -768,7 +768,7 @@ namespace Thinksea.Windows.Forms
             {
                 if (value < 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "页码分组中所包含的页码最大数量不能小于 1。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "页码分组中所包含的页码最大数量不能小于 1。");
                 }
                 if (this._PageGroupSize == value)
                 {
@@ -1120,8 +1120,7 @@ namespace Thinksea.Windows.Forms
                 return;
             }
 
-            int lineNumber = 0;
-            if (!int.TryParse(this._LineNumberTextBox.Text, out lineNumber))
+            if (!int.TryParse(this._LineNumberTextBox.Text, out int lineNumber))
             {
                 this._LineNumberTextBox.Text = LineNumberTextBoxLastValue;
                 return;
@@ -1644,7 +1643,7 @@ namespace Thinksea.Windows.Forms
         /// <param name="newPageIndex">新的分页索引编号。</param>
         public PageIndexChangingEventArgs(int newPageIndex)
         {
-            this.NewPageIndex = NewPageIndex;
+            this.NewPageIndex = newPageIndex;
 
         }
 
@@ -1716,7 +1715,7 @@ namespace Thinksea.Windows.Forms
             {
                 if (value < 1)
                 {
-                    throw new System.ArgumentOutOfRangeException("value", "参数 value 取值不能小于 1。");
+                    throw new System.ArgumentOutOfRangeException(nameof(value), "参数 value 取值不能小于 1。");
                 }
                 this._LineNumber = value;
             }

@@ -388,7 +388,7 @@
 		/// <exception cref="Thinksea.RepeatException">已经存在具有该 ID 的菜单组。</exception>
 		public void AddMenuGroup( string ID, string Text, bool Expand )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			if( this.GetMenuGroup( ID ) != null )
 			{
 				throw new Thinksea.RepeatException("已经存在具有该 ID 的菜单组。");
@@ -420,7 +420,7 @@
 		/// <exception cref="Thinksea.RepeatException">已经存在具有该 ID 的菜单项。</exception>
 		public void AddMenuItem( string MenuGroupID, string ID, string Text, string URL, string Target, string [] Access )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			System.Xml.XmlNodeList xnl = this.xmlDocument.SelectNodes( "/Menu/MenuGroup" );
 			foreach( System.Xml.XmlNode tmp in xnl )
 			{
@@ -463,7 +463,7 @@
 		/// <exception cref="Thinksea.NotFoundException">没有找到指定的菜单组。</exception>
 		public void ModifyMenuGroup( string ID, string Text, bool Expand )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			System.Xml.XmlNodeList xnl = this.xmlDocument.SelectNodes( "/Menu/MenuGroup" );
 			foreach( System.Xml.XmlNode tmp in xnl )
 			{
@@ -499,7 +499,7 @@
 		/// <exception cref="Thinksea.NotFoundException">没有找到指定的菜单项。</exception>
 		public void ModifyMenuItem( string ID, string Text, string URL, string Target, string [] Access )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			System.Xml.XmlNodeList xnl = this.xmlDocument.SelectNodes( "/Menu/MenuGroup/MenuItem" );
 			foreach( System.Xml.XmlNode tmp in xnl )
 			{
@@ -875,7 +875,7 @@
 			}
 			set
 			{
-				if( value == "" ) throw new System.ArgumentOutOfRangeException("Value 不允许为空。");
+				if( value == "" ) throw new System.ArgumentOutOfRangeException(nameof(value), "Value 不允许为空。");
 
 				this._ID = value;
 			}
@@ -928,7 +928,7 @@
 		/// <param name="Expand">菜单组展开状态。</param>
 		public MenuGroup( string ID, string Text, bool Expand )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			this._ID = ID;
 			this._Text = Text;
 			this._Expand = Expand;
@@ -968,7 +968,7 @@
 			}
 			set
 			{
-				if( value == "" ) throw new System.ArgumentOutOfRangeException("Value 不允许为空。");
+				if( value == "" ) throw new System.ArgumentOutOfRangeException(nameof(value), "Value 不允许为空。");
 
 				this._ID = value;
 			}
@@ -1057,7 +1057,7 @@
 		/// <param name="Access">访问权限列表。（指示允许访问这个菜单项的用户）</param>
 		public MenuItem( string ID, string Text, string URL, string Target, string [] Access )
 		{
-			if( ID == "" ) throw new System.ArgumentOutOfRangeException("ID 不允许为空。");
+			if( ID == "" ) throw new System.ArgumentOutOfRangeException(nameof(ID), "ID 不允许为空。");
 			this._ID = ID;
 			this._Text = Text;
 			this._URL = URL;

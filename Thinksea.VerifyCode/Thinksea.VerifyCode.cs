@@ -238,7 +238,13 @@
         #endregion
 
         #region 产生波形滤镜效果
+        /// <summary>
+        /// PI
+        /// </summary>
         private const double PI = 3.1415926535897932384626433832795;
+        /// <summary>
+        /// 2*PI
+        /// </summary>
         private const double PI2 = 6.283185307179586476925286766559;
 
         /// <summary>
@@ -266,13 +272,12 @@
             {
                 for (int j = 0; j < destBmp.Height; j++)
                 {
-                    double dx = 0;
-                    dx = bXDir ? (PI2 * (double)j) / dBaseAxisLen : (PI2 * (double)i) / dBaseAxisLen;
+                    double dx = bXDir ? (PI2 * (double)j) / dBaseAxisLen : (PI2 * (double)i) / dBaseAxisLen;
                     dx += dPhase;
                     double dy = System.Math.Sin(dx);
 
                     // 取得当前点的颜色
-                    int nOldX = 0, nOldY = 0;
+                    int nOldX, nOldY;
                     nOldX = bXDir ? i + (int)(dy * dMultValue) : i;
                     nOldY = bXDir ? j : j + (int)(dy * dMultValue);
 
@@ -313,7 +318,7 @@
             int px1 = 0;  // 曲线横坐标起始位置  
             int px2 = rand.Next(System.Convert.ToInt32(imageL / 2), System.Convert.ToInt32(imageL * 0.667));  // 曲线横坐标结束位置             
             double px;
-            for (px = px1; px <= px2; px = px + 0.9)
+            for (px = px1; px <= px2; px += 0.9)
             {
                 if (w != 0)
                 {
@@ -352,7 +357,7 @@
             b = py - A * System.Math.Sin(w * px + f) - imageH / 2;
             px1 = px2;
             px2 = imageL;
-            for (px = px1; px <= px2; px = px + 0.9)
+            for (px = px1; px <= px2; px += 0.9)
             {
                 if (w != 0)
                 {
@@ -429,7 +434,7 @@
 
                         string code = "";
 
-                        int randValue = -1;
+                        int randValue;
 
                         for (int i = 0; i < codeLen; i++)
                         {
@@ -492,7 +497,7 @@
 
             System.Random rand = new System.Random();
 
-            int left = 0, top = 0, top1 = 1, top2 = 1;
+            int left, top, top1, top2;
 
             int n1 = (imageHeight - fSize - iPadding * 2);
             int n2 = n1 / 4;

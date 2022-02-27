@@ -1284,7 +1284,7 @@ namespace Thinksea.Windows.Forms
                     case System.Windows.Forms.Keys.Right:
                         {
                             System.Windows.Forms.TreeNode sNode = this.SelectedNode;
-                            System.Windows.Forms.TreeNode oldParent = null;
+                            System.Windows.Forms.TreeNode oldParent;
                             if (sNode == null)
                             {
                                 if (this.Nodes.Count > 0)
@@ -1529,7 +1529,7 @@ namespace Thinksea.Windows.Forms
             this.Node = node;
             this.OldParentNode = oldParentNode;
             this.NewParentNode = newParentNode;
-            this.NewIndex = NewIndex;
+            this.NewIndex = newIndex;
 
         }
 

@@ -428,7 +428,7 @@
                         bBuf[1] = br.ReadByte();
                         input.Seek(lPos + 1, System.IO.SeekOrigin.Begin);
                         bBuf[2] = br.ReadByte();
-                        lPos = lPos + 1;
+                        lPos++;
                     } while ((bBuf[1] == 0xFF && bBuf[2] != 0xFF) == false && lPos < lFlen);
 
                     for (iCount = 0; iCount < bBuf.Length; iCount++)
