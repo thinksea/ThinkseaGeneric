@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net461;net48;net50;net60</TargetFrameworks>
-    <Version>5.1</Version>
+    <Version>5.2</Version>
     <Copyright>Copyright © Thinksea 2021</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
@@ -28,23 +28,22 @@
     <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	<PackageReference Include="System.Text.Json" Version="6.0.5" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Http">
       <Version>2.2.2</Version>
     </PackageReference>
-	<PackageReference Include="System.Text.Json">
-		<Version>6.0.1</Version>
-	</PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System.Web" />
-	<PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Web" />
-	<PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
