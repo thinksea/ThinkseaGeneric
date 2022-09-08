@@ -90,7 +90,7 @@
         /// <summary>
         /// 队列锁。
         /// </summary>
-        private System.Threading.ReaderWriterLock datasRWLock = new System.Threading.ReaderWriterLock();
+        private System.Threading.ReaderWriterLockSlim datasRWLock = new System.Threading.ReaderWriterLockSlim();
 
         private volatile int _MaxSize = -1;
         /// <summary>
@@ -126,7 +126,7 @@
         /// <param name="newRunTime">新的启动时间。</param>
         protected internal void SetTaskRunTime(Task<T> item, System.DateTime newRunTime)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 bool r = this.datas.Remove(item.RunTime, item);
@@ -142,7 +142,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
 
         }
@@ -172,7 +172,7 @@
         /// <returns>添加成功返回 true；否则返回 false。</returns>
         public bool Add(Task<T> item)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 if (this.MaxSize == -1 || this.datas.Count < MaxSize)
@@ -185,7 +185,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -200,7 +200,7 @@
         ///// </remarks>
         //public bool AddOnly(Task<T> item)
         //{
-        //    this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+        //    this.datasRWLock.EnterWriteLock();
         //    try
         //    {
         //        bool r = this.datas.ContainsValue(item.RunTime, item);
@@ -218,7 +218,7 @@
         //    }
         //    finally
         //    {
-        //        this.datasRWLock.ReleaseWriterLock();
+        //        this.datasRWLock.ExitWriteLock();
         //    }
         //    return false;
         //}
@@ -234,7 +234,7 @@
         /// </remarks>
         public bool AddOnly(Task<T> item, System.Predicate<Task<T>> match)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 foreach (var tmp in this.datas.Values)
@@ -254,7 +254,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -264,7 +264,7 @@
         /// </summary>
         public void Clear()
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 foreach (var tmp in this.datas.Values)
@@ -276,7 +276,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -286,7 +286,7 @@
         /// <param name="item">待移除的对象。</param>
         public void Remove(Task<T> item)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 bool r = this.datas.Remove(item.RunTime, item);
@@ -301,7 +301,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -324,7 +324,7 @@
             int msTimeout = millisecondsTimeout;
             while (true)
             {
-                this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterWriteLock();
                 try
                 {
                     #region 计算最少需要等待的时间。
@@ -365,7 +365,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseWriterLock();
+                    this.datasRWLock.ExitWriteLock();
                 }
 
                 if (!Event.WaitOne(msTimeout, false) && msTimeout == millisecondsTimeout)
@@ -395,7 +395,7 @@
             int msTimeout = millisecondsTimeout;
             while (true)
             {
-                this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterReadLock();
                 try
                 {
                     #region 计算最少需要等待的时间。
@@ -434,7 +434,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseReaderLock();
+                    this.datasRWLock.ExitReadLock();
                 }
 
                 if (!Event.WaitOne(msTimeout, false) && msTimeout == millisecondsTimeout)
@@ -452,14 +452,14 @@
         /// <returns>找不到返回 false；否则返回 true。</returns>
         public bool Contains(Task<T> item)
         {
-            this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterReadLock();
             try
             {
                 this.datas.ContainsValue(item.RunTime, item);
             }
             finally
             {
-                this.datasRWLock.ReleaseReaderLock();
+                this.datasRWLock.ExitReadLock();
             }
             return false;
 
@@ -472,7 +472,7 @@
         /// <returns>如果找到与指定谓词定义的条件匹配的第一个元素，则为该元素；否则为类型 T 的默认值。</returns>
         public Task<T> Find(System.Predicate<Task<T>> match)
         {
-            this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterReadLock();
             try
             {
                 foreach (var tmp in this.datas.Values)
@@ -485,7 +485,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseReaderLock();
+                this.datasRWLock.ExitReadLock();
             }
             return null;
         }

@@ -22,7 +22,7 @@
         /// <summary>
         /// 队列锁。
         /// </summary>
-        private System.Threading.ReaderWriterLock datasRWLock = new System.Threading.ReaderWriterLock();
+        private System.Threading.ReaderWriterLockSlim datasRWLock = new System.Threading.ReaderWriterLockSlim();
 
         private volatile int _MaxSize = -1;
         /// <summary>
@@ -76,7 +76,7 @@
         /// <returns>添加成功返回 true；否则返回 false。</returns>
         public bool Add(T item)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 if (this.MaxSize == -1 || this.datas.Count < MaxSize)
@@ -88,7 +88,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -103,7 +103,7 @@
         /// </remarks>
         public bool AddOnly(T item)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 if (this.datas.Contains(item))
@@ -119,7 +119,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -135,7 +135,7 @@
         /// </remarks>
         public bool AddOnly(T item, System.Predicate<T> match)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 foreach (var tmp in this.datas)
@@ -154,7 +154,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -164,7 +164,7 @@
         /// </summary>
         public void Clear()
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 this.datas.Clear();
@@ -172,7 +172,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -182,7 +182,7 @@
         /// <param name="item">待移除的对象。</param>
         public void Remove(T item)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 this.datas.Remove(item);
@@ -193,7 +193,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -215,7 +215,7 @@
         {
             while (true)
             {
-                this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterWriteLock();
                 try
                 {
                     if (this.datas.Count > 0)
@@ -230,7 +230,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseWriterLock();
+                    this.datasRWLock.ExitWriteLock();
                 }
 
                 if (!Event.WaitOne(millisecondsTimeout, false))
@@ -259,7 +259,7 @@
         {
             while (true)
             {
-                this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterReadLock();
                 try
                 {
                     if (this.datas.Count > 0)
@@ -271,7 +271,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseReaderLock();
+                    this.datasRWLock.ExitReadLock();
                 }
 
                 if (!Event.WaitOne(millisecondsTimeout, false))
@@ -292,14 +292,14 @@
         /// </remarks>
         public bool Contains(T item)
         {
-            this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterReadLock();
             try
             {
                 return this.datas.Contains(item);
             }
             finally
             {
-                this.datasRWLock.ReleaseReaderLock();
+                this.datasRWLock.ExitReadLock();
             }
 
         }
@@ -312,7 +312,7 @@
         /// <returns>如果找到与指定谓词定义的条件匹配的第一个元素，则为 true；否则为 false。</returns>
         public bool Find(System.Predicate<T> match, out T result)
         {
-            this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterReadLock();
             try
             {
                 foreach (var tmp in this.datas)
@@ -327,7 +327,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseReaderLock();
+                this.datasRWLock.ExitReadLock();
             }
             result = default(T);
             return false;

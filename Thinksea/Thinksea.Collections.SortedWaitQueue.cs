@@ -22,7 +22,7 @@
         /// <summary>
         /// 队列锁。
         /// </summary>
-        private System.Threading.ReaderWriterLock datasRWLock = new System.Threading.ReaderWriterLock();
+        private System.Threading.ReaderWriterLockSlim datasRWLock = new System.Threading.ReaderWriterLockSlim();
 
         private volatile int _MaxSize = -1;
         /// <summary>
@@ -97,7 +97,7 @@
         /// <returns>添加成功返回 true；否则返回 false。</returns>
         public bool Add(TKey key, TValue value)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 if (this.MaxSize == -1 || this.datas.Count < MaxSize)
@@ -109,7 +109,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
             return false;
         }
@@ -119,7 +119,7 @@
         /// </summary>
         public void Clear()
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 this.datas.Clear();
@@ -127,7 +127,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -137,7 +137,7 @@
         /// <param name="key">用其进行排序的键。</param>
         public void Remove(TKey key)
         {
-            this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterWriteLock();
             try
             {
                 this.datas.Remove(key);
@@ -148,7 +148,7 @@
             }
             finally
             {
-                this.datasRWLock.ReleaseWriterLock();
+                this.datasRWLock.ExitWriteLock();
             }
         }
 
@@ -170,7 +170,7 @@
         {
             while (true)
             {
-                this.datasRWLock.AcquireWriterLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterWriteLock();
                 try
                 {
                     if (this.datas.Count > 0)
@@ -185,7 +185,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseWriterLock();
+                    this.datasRWLock.ExitWriteLock();
                 }
 
                 if (!Event.WaitOne(millisecondsTimeout, false))
@@ -214,7 +214,7 @@
         {
             while (true)
             {
-                this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+                this.datasRWLock.EnterReadLock();
                 try
                 {
                     if (this.datas.Count > 0)
@@ -228,7 +228,7 @@
                 }
                 finally
                 {
-                    this.datasRWLock.ReleaseReaderLock();
+                    this.datasRWLock.ExitReadLock();
                 }
 
                 if (!Event.WaitOne(millisecondsTimeout, false))
@@ -246,14 +246,14 @@
         /// <returns>找不到返回 false；否则返回 true。</returns>
         public bool Contains(TKey key)
         {
-            this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+            this.datasRWLock.EnterReadLock();
             try
             {
                 return this.datas.ContainsKey(key);
             }
             finally
             {
-                this.datasRWLock.ReleaseReaderLock();
+                this.datasRWLock.ExitReadLock();
             }
 
         }
@@ -266,7 +266,7 @@
         ///// <returns>如果找到与指定谓词定义的条件匹配的第一个元素，则为 true；否则为 false。</returns>
         //public bool Find(System.Predicate<TKey> match, out TValue value)
         //{
-        //    this.datasRWLock.AcquireReaderLock(System.Threading.Timeout.Infinite);
+        //    this.datasRWLock.EnterReadLock();
         //    try
         //    {
         //        foreach (var tmp in this.datas)
@@ -281,7 +281,7 @@
         //    }
         //    finally
         //    {
-        //        this.datasRWLock.ReleaseReaderLock();
+        //        this.datasRWLock.ExitReadLock();
         //    }
         //    value = default(TValue);
         //    return false;
