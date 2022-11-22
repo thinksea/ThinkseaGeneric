@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net461;net48;net50;net60</TargetFrameworks>
-    <Version>5.2</Version>
-    <Copyright>Copyright © Thinksea 2021</Copyright>
+    <TargetFrameworks>net48;net60</TargetFrameworks>
+    <Version>5.3</Version>
+    <Copyright>Copyright © Thinksea 2021-2022</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
     <Description>封装了基于 HTTP 协议的文件上传功能。
@@ -29,27 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Text.Json" Version="6.0.5" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.AspNetCore.Http">
-      <Version>2.2.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <Reference Include="System.Web" />
+	<PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Web" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net50'">
-    <PackageReference Include="Microsoft.AspNetCore.Http">
-      <Version>2.2.2</Version>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
