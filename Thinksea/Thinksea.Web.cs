@@ -710,7 +710,8 @@
         /// </example>
         public static string ConvertToJavaScriptString(string str)
         {
-            return str.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\"", "\\\"").Replace("\r", "\\r").Replace("\n", "\\n");
+            return str.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\"", "\\\"").Replace("\r", "\\r").Replace("\n", "\\n")
+				.Replace("/", "\\/").Replace("<", "\\<"); //避免异常终止 <script> 标签，阻止 XSS 攻击。
 
         }
 

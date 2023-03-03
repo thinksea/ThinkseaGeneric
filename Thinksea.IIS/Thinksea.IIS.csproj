@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
-    <PackageReference Include="System.DirectoryServices" Version="7.0.0" />
+    <PackageReference Include="System.DirectoryServices" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
