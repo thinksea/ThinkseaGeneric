@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net48;net60</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
-    <Copyright>Copyright © Thinksea 2008-2022</Copyright>
-    <Version>4.7.0</Version>
+    <Copyright>Copyright © Thinksea 2008-2023</Copyright>
+    <Version>4.8.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,7 +24,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>7.0.0</Version>
+      <Version>8.0.0</Version>
     </PackageReference>
   </ItemGroup>
 

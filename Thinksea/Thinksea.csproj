@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net60</TargetFrameworks>
-    <Version>5.7.2.0</Version>
+    <Version>5.8.0.0</Version>
     <Copyright>Copyright © Thinksea 2006-2023</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>
@@ -27,7 +27,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
     <PackageReference Include="System.Drawing.Common">
-      <Version>7.0.0</Version>
+      <Version>8.0.0</Version>
     </PackageReference>
   </ItemGroup>
 

@@ -667,9 +667,9 @@
                         Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                         long breakpoint;
                         //long breakpoint = System.Convert.ToInt64(responsestring);
-                        if (result.Data is System.Text.Json.JsonElement)
+                        if (result.Data is System.Text.Json.JsonElement element)
                         {
-                            breakpoint = ((System.Text.Json.JsonElement)result.Data).GetInt64();
+                            breakpoint = element.GetInt64();
                         }
                         else
                         {
@@ -734,9 +734,9 @@
                         Thinksea.Net.FileUploader.Result result = System.Text.Json.JsonSerializer.Deserialize<Thinksea.Net.FileUploader.Result>(responsestring);
                         long breakpoint;
                         //long breakpoint = System.Convert.ToInt64(responsestring);
-                        if (result.Data is System.Text.Json.JsonElement)
+                        if (result.Data is System.Text.Json.JsonElement element)
                         {
-                            breakpoint = ((System.Text.Json.JsonElement)result.Data).GetInt64();
+                            breakpoint = element.GetInt64();
                         }
                         else
                         {

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net60</TargetFrameworks>
-    <Version>5.3</Version>
-    <Copyright>Copyright © Thinksea 2021-2022</Copyright>
+    <Version>5.5</Version>
+    <Copyright>Copyright © Thinksea 2021-2023</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
     <Description>封装了基于 HTTP 协议的文件上传功能。
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Text.Json" Version="7.0.2" />
+	<PackageReference Include="System.Text.Json" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
@@ -37,9 +37,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
-    <PackageReference Include="Microsoft.AspNetCore.Http">
-      <Version>2.2.2</Version>
-    </PackageReference>
+   <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
