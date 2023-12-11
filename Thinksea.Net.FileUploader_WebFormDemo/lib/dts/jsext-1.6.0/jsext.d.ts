@@ -109,44 +109,93 @@ interface Date {
      * 增加/减少毫秒。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addMilliseconds2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addMilliseconds(value: GLint): Date;
+    /**
+     * 增加/减少毫秒。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addMilliseconds2(value: GLint): Date;
     /**
      * 增加/减少秒。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addSeconds2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addSeconds(value: GLint): Date;
+    /**
+     * 增加/减少秒。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addSeconds2(value: GLint): Date;
     /**
      * 增加/减少分钟。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addMinutes2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addMinutes(value: GLint): Date;
+    /**
+     * 增加/减少分钟。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addMinutes2(value: GLint): Date;
     /**
      * 增加/减少小时。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addHours2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addHours(value: GLint): Date;
+    /**
+     * 增加/减少小时。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addHours2(value: GLint): Date;
     /**
      * 增加/减少天。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addDays2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addDays(value: GLint): Date;
+    /**
+     * 增加/减少天。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addDays2(value: GLint): Date;
     /**
      * 增加/减少月。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addMonths2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addMonths(value: GLint): Date;
+    /**
+     * 增加/减少月。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addMonths2(value: GLint): Date;
     /**
      * 增加/减少年。
      * @param value 一个整数，正数表示增加，负数表示减少。
      * @returns {Date} 调整后的新 Date 实例。
+     * @deprecated 此方法已弃用，请使用替代方法 addYears2，注意：新方法的功能实现与此方法之间的差异性。
      */
     addYears(value: GLint): Date;
+    /**
+     * 增加/减少年。注意：执行此方法并不会导致更改此实例中的数据。
+     * @param value 一个整数，正数表示增加，负数表示减少。
+     * @returns {Date} 调整后的新 Date 实例。
+     */
+    addYears2(value: GLint): Date;
 }
 interface Array<T> {
     /**

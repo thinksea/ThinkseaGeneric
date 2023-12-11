@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net60</TargetFrameworks>
-    <Version>5.8.0.0</Version>
+    <Version>5.9.0.0</Version>
     <Copyright>Copyright © Thinksea 2006-2023</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>
@@ -11,7 +11,6 @@
     <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
     <PackageTags>TcpServerPool, TaskQueue, WaitQueue, GraphicsArithmetic, Image, CRC32, Chinese, Chinese2Spell, UriParameter</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>修改方法“Thinksea.Web.ConvertToJavaScriptString”，新增对字符'/'，'&lt;'和'&gt;'转义，用于缓解 XSS 攻击威胁。</PackageReleaseNotes>
   </PropertyGroup>
 

@@ -15,7 +15,6 @@
   <PropertyGroup>
     <DocumentationFile>bin\Thinksea.VerifyCode.xml</DocumentationFile>
     <Authors>Thinksea</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
     <PackageTags>VerifyCode</PackageTags>
