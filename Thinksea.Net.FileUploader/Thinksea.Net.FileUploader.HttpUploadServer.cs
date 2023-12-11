@@ -121,15 +121,22 @@
         /// <returns>文件完整性校验码。</returns>
         public virtual byte[] GetCheckCode(System.IO.Stream stream)
         {
-            return Thinksea.General.GetSHA1(stream); //获取SHA1码。
+            //return Thinksea.General.GetSHA1(stream); //获取SHA1码。
+
+            byte[] b;
+            using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
+            {
+                b = sha1.ComputeHash(stream);
+            }
+            return b;
         }
 
-        /// <summary>
-        /// 获取指定文件的续传位置。
-        /// </summary>
-        /// <param name="taskFile">任务文件。</param>
-        /// <returns>返回找到的续传位置，否则返回 0 表示重头开始上传；</returns>
-        public virtual long GetContinueUploadPosition(string taskFile)
+		/// <summary>
+		/// 获取指定文件的续传位置。
+		/// </summary>
+		/// <param name="taskFile">任务文件。</param>
+		/// <returns>返回找到的续传位置，否则返回 0 表示重头开始上传；</returns>
+		public virtual long GetContinueUploadPosition(string taskFile)
         {
             if (!System.IO.File.Exists(taskFile))
             {

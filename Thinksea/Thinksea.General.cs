@@ -2465,17 +2465,48 @@
         public static byte[] GetSHA1(System.IO.Stream stream)
         {
             byte[] b;
-            System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
-            try
+            using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
             {
+                //try
+                //{
                 b = sha1.ComputeHash(stream);
-            }
-            finally
-            {
-                sha1.Clear();
+                //}
+                //finally
+                //{
+                //    sha1.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                //}
             }
             return b;
 
+        }
+
+        /// <summary>
+        /// 异步计算数据流的 SHA1 值。从指定流的当前位置开始计算。
+        /// </summary>
+        /// <param name="stream">提供数据的流。</param>
+        /// <returns>计算得出的 SHA1 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetSHA1Async(System.IO.Stream stream)
+        {
+            byte[] b;
+            using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
+            {
+                //try
+                //{
+#if NETCOREAPP
+                b = await sha1.ComputeHashAsync(stream);
+#else //#elif NETFRAMEWORK
+                b = await System.Threading.Tasks.Task.Run(() =>
+                {
+                    return sha1.ComputeHash(stream);
+                });
+#endif
+                //}
+                //finally
+                //{
+                //    sha1.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                //}
+            }
+            return b;
         }
 
         /// <summary>
@@ -2488,16 +2519,52 @@
         {
             long oldP = stream.Position;
             byte[] b;
-            System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
-            try
+            using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
             {
-                stream.Position = startPosition;
-                b = sha1.ComputeHash(stream);
+                try
+                {
+                    stream.Position = startPosition;
+                    b = sha1.ComputeHash(stream);
+                }
+                finally
+                {
+                    //sha1.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                    stream.Position = oldP;
+                }
             }
-            finally
+            return b;
+
+        }
+
+        /// <summary>
+        /// 异步计算数据流的 SHA1 值。
+        /// </summary>
+        /// <param name="stream">提供数据的流。</param>
+        /// <param name="startPosition">指示从指定的位置开始读取数据计算 SHA1 值。</param>
+        /// <returns>计算得出的 SHA1 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetSHA1Async(System.IO.Stream stream, long startPosition)
+        {
+            long oldP = stream.Position;
+            byte[] b;
+            using (System.Security.Cryptography.SHA1 sha1 = System.Security.Cryptography.SHA1.Create())
             {
-                sha1.Clear();
-                stream.Position = oldP;
+                try
+                {
+                    stream.Position = startPosition;
+#if NETCOREAPP
+                b = await sha1.ComputeHashAsync(stream);
+#else //#elif NETFRAMEWORK
+                    b = await System.Threading.Tasks.Task.Run(() =>
+                    {
+                        return sha1.ComputeHash(stream);
+                    });
+#endif
+                }
+                finally
+                {
+                    //sha1.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                    stream.Position = oldP;
+                }
             }
             return b;
 
@@ -2525,6 +2592,27 @@
         }
 
         /// <summary>
+        /// 异步计算文件的 SHA1 值。
+        /// </summary>
+        /// <param name="filePath">文件。</param>
+        /// <returns>计算得出的文件 SHA1 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetSHA1Async(string filePath)
+        {
+            byte[] b;
+            System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            try
+            {
+                b = await GetSHA1Async(fs);
+            }
+            finally
+            {
+                fs.Close();
+            }
+            return b;
+
+        }
+
+        /// <summary>
         /// 计算数据流的 MD5 值。从指定流的当前位置开始计算。
         /// </summary>
         /// <param name="stream">提供数据的流。</param>
@@ -2532,14 +2620,46 @@
         public static byte[] GetMD5(System.IO.Stream stream)
         {
             byte[] b;
-            System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create();
-            try
+            using (System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create())
             {
+                //try
+                //{
                 b = m.ComputeHash(stream);
+                //}
+                //finally
+                //{
+                //    m.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                //}
             }
-            finally
+            return b;
+
+        }
+
+        /// <summary>
+        /// 异步计算数据流的 MD5 值。从指定流的当前位置开始计算。
+        /// </summary>
+        /// <param name="stream">提供数据的流。</param>
+        /// <returns>计算得出的 MD5 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetMD5Async(System.IO.Stream stream)
+        {
+            byte[] b;
+            using (System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create())
             {
-                m.Clear();
+                //try
+                //{
+#if NETCOREAPP
+                b = await m.ComputeHashAsync(stream);
+#else //#elif NETFRAMEWORK
+                b = await System.Threading.Tasks.Task.Run(() =>
+                {
+                    return m.ComputeHash(stream);
+                });
+#endif
+                //}
+                //finally
+                //{
+                //    m.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                //}
             }
             return b;
 
@@ -2555,16 +2675,52 @@
         {
             long oldP = stream.Position;
             byte[] b;
-            System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create();
-            try
+            using (System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create())
             {
-                stream.Position = startPosition;
-                b = m.ComputeHash(stream);
+                try
+                {
+                    stream.Position = startPosition;
+                    b = m.ComputeHash(stream);
+                }
+                finally
+                {
+                    //m.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                    stream.Position = oldP;
+                }
             }
-            finally
+            return b;
+
+        }
+
+        /// <summary>
+        /// 异步计算数据流的 MD5 值。
+        /// </summary>
+        /// <param name="stream">提供数据的流。</param>
+        /// <param name="startPosition">指示从指定的位置开始读取数据计算 MD5 值。</param>
+        /// <returns>计算得出的 MD5 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetMD5Async(System.IO.Stream stream, long startPosition)
+        {
+            long oldP = stream.Position;
+            byte[] b;
+            using (System.Security.Cryptography.MD5 m = System.Security.Cryptography.MD5.Create())
             {
-                m.Clear();
-                stream.Position = oldP;
+                try
+                {
+                    stream.Position = startPosition;
+#if NETCOREAPP
+                b = await m.ComputeHashAsync(stream);
+#else //#elif NETFRAMEWORK
+                    b = await System.Threading.Tasks.Task.Run(() =>
+                    {
+                        return m.ComputeHash(stream);
+                    });
+#endif
+                }
+                finally
+                {
+                    //m.Clear(); // 清除哈希算法内部状态，这样可以确保下一次计算哈希值时是从初始状态开始的。
+                    stream.Position = oldP;
+                }
             }
             return b;
 
@@ -2590,6 +2746,28 @@
             return b;
 
         }
+
+        /// <summary>
+        /// 异步计算文件的 MD5 值。
+        /// </summary>
+        /// <param name="filePath">文件。</param>
+        /// <returns>计算得出的文件 MD5 值。</returns>
+        public static async System.Threading.Tasks.Task<byte[]> GetMD5Async(string filePath)
+        {
+            byte[] b;
+            System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);
+            try
+            {
+                b = await GetMD5Async(fs);
+            }
+            finally
+            {
+                fs.Close();
+            }
+            return b;
+
+        }
+
         #endregion
 
         /// <summary>

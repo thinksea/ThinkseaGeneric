@@ -5,26 +5,26 @@
     /// </summary>
     public interface IFileUpload : System.IDisposable
     {
-        /// <summary>
-        /// 开始上传指定文件数据。
-        /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        void StartUpload(System.IO.Stream FileStream, string FileName, string CustomParameter);
-        /// <summary>
-        /// 开始上传指定文件数据。
-        /// </summary>
-        /// <param name="FileStream">文件数据流。</param>
-        /// <param name="FileName">文件名。</param>
-        /// <param name="CustomParameter">自定义参数。</param>
-        /// <param name="BufferSize">缓冲区大小。</param>
-        /// <param name="ChunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
-        void StartUpload(System.IO.Stream FileStream, string FileName, string CustomParameter, int BufferSize, int ChunkSize);
-        /// <summary>
-        /// 放弃上传文件。
-        /// </summary>
-        void CancelUpload();
+		/// <summary>
+		/// 开始上传指定文件。
+		/// </summary>
+		/// <param name="fileStream">文件数据流。</param>
+		/// <param name="fileName">文件名。</param>
+		/// <param name="customParameter">自定义参数。</param>
+		System.Threading.Tasks.Task StartUploadAsync(System.IO.Stream fileStream, string fileName, string customParameter);
+		/// <summary>
+		/// 开始上传指定文件。
+		/// </summary>
+		/// <param name="fileStream">文件数据流。</param>
+		/// <param name="fileName">文件名。</param>
+		/// <param name="customParameter">自定义参数。</param>
+		/// <param name="bufferSize">缓冲区大小。</param>
+		/// <param name="chunkSize">每次与上传服务器建立连接后允许发送的最大数据量。</param>
+		System.Threading.Tasks.Task StartUploadAsync(System.IO.Stream fileStream, string fileName, string customParameter, int bufferSize, int chunkSize);
+		/// <summary>
+		/// 放弃上传文件。
+		/// </summary>
+		void CancelUpload();
         /// <summary>
         /// 当上传进度更改时引发此事件。
         /// </summary>

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Thinksea.Net.FileUploader_WinFormDemo
 {
-    public partial class UploadFile : UserControl
+	public partial class UploadFile : UserControl
     {
         private Thinksea.Net.FileUploader.HttpFileUpload httpFileUpload = null;
         private bool _ShowFileName = false;
@@ -89,10 +84,13 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
             private set;
         }
 
-        /// <summary>
-        /// 开始上传文件。
-        /// </summary>
-        public void BeginUploadFile(string CustomParameter)
+		/// <summary>
+		/// 开始上传文件。
+		/// </summary>
+		/// <remarks>
+		/// 注意：当准备放弃当前正在进行的上传任务时（例如：销毁控件），应该及时调用方法 <see cref="CancelUploadFile"/>，否则，也许直到文件上传完成后才会释放被占用的资源。
+		/// </remarks>
+		public void BeginUploadFile(string CustomParameter)
         {
             if (string.IsNullOrEmpty(this.File))
             {
@@ -107,10 +105,10 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
             this.httpFileUpload.FindBreakpoint += HttpFileUpload_FindBreakpoint;
             this.textProgressBar1.Value = 0;
             this.textProgressBar1.Text = "正在计算……";
-            this.fileStream = new System.IO.FileStream(this.File, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            this.httpFileUpload.StartUpload(fileStream, fileName, CustomParameter);
             this.uploadStartTime = System.DateTime.Now;
+            this.fileStream = new System.IO.FileStream(this.File, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             this.btnCancel.Show();
+            var task = this.httpFileUpload.StartUploadAsync(fileStream, fileName, CustomParameter); //开始上传文件并且不等待任务完成。
         }
 
         private void HttpFileUpload_FindBreakpoint(object sender, Thinksea.Net.FileUploader.BreakpointUploadEventArgs e)
@@ -217,7 +215,7 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
         }
 
         /// <summary>
-        /// 取消上传文件。
+        /// 放弃上传文件。
         /// </summary>
         public void CancelUploadFile()
         {
