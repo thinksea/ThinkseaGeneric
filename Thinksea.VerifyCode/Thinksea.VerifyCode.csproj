@@ -4,7 +4,7 @@
     <TargetFrameworks>net48;net60</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
     <Copyright>Copyright © Thinksea 2008-2023</Copyright>
-    <Version>4.8.0</Version>
+    <Version>4.9.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

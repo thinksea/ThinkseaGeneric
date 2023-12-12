@@ -74,7 +74,7 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
         /// <summary>
         /// 上传起始时间。
         /// </summary>
-        private System.DateTime uploadStartTime;
+        private System.DateTimeOffset uploadStartTime;
         /// <summary>
         /// 指示上传是否已完成。
         /// </summary>
@@ -105,7 +105,7 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
             this.httpFileUpload.FindBreakpoint += HttpFileUpload_FindBreakpoint;
             this.textProgressBar1.Value = 0;
             this.textProgressBar1.Text = "正在计算……";
-            this.uploadStartTime = System.DateTime.Now;
+            this.uploadStartTime = System.DateTimeOffset.UtcNow;
             this.fileStream = new System.IO.FileStream(this.File, System.IO.FileMode.Open, System.IO.FileAccess.Read);
             this.btnCancel.Show();
             var task = this.httpFileUpload.StartUploadAsync(fileStream, fileName, CustomParameter); //开始上传文件并且不等待任务完成。
@@ -160,7 +160,7 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
                     v = System.Convert.ToInt32(e.FinishedSize * 1.0 / e.FileLength * this.textProgressBar1.Maximum);
                 }
                 this.textProgressBar1.Value = v;
-                System.TimeSpan dsp = (System.DateTime.Now - this.uploadStartTime);
+                System.TimeSpan dsp = (System.DateTimeOffset.UtcNow - this.uploadStartTime);
                 if (dsp.TotalSeconds > 0)
                 {
                     double speed = e.FinishedSize / dsp.TotalSeconds; //平均传输速度（单位：字节/秒）。
