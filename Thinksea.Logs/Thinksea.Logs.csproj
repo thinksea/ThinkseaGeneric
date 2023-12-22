@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net60</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
     <Copyright>Copyright © Thinksea 2006-2022</Copyright>
     <Authors>Thinksea</Authors>
     <Description>封装了一个轻量级的日志功能。此组件从项目“Thinksea”中剥离，仅用于兼容旧项目的目的，如无必要将不再进行升级维护。推荐使用.NET项目自带的日志组件或 NLog 等同类产品替代。</Description>
-    <Version>4.7</Version>
+    <Version>4.8</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

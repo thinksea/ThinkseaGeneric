@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0-windows;net8.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
-    <Version>1.5.0.0</Version>
+    <Version>1.6.0.0</Version>
     <Copyright>Copyright © Thinksea 2009-2023</Copyright>
     <Product>Thinksea.Windows.Forms.IPAddress</Product>
     <Description>IP 地址输入控件</Description>
@@ -19,9 +19,6 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Design" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
   </ItemGroup>
 
 </Project>

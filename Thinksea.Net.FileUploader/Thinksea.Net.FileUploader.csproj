@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net60</TargetFrameworks>
-    <Version>6.0</Version>
+    <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
+    <Version>6.1</Version>
     <Copyright>Copyright © Thinksea 2021-2023</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
@@ -33,7 +33,11 @@
 	<PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net60'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+   <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
