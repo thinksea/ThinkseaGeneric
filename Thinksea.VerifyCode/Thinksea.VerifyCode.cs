@@ -258,7 +258,7 @@
         /// <returns></returns>
         private static System.Drawing.Bitmap TwistImage(System.Drawing.Bitmap srcBmp, System.Drawing.Color backColor, bool bXDir, double dMultValue, double dPhase)
         {
-            System.Drawing.Bitmap destBmp = new System.Drawing.Bitmap(srcBmp.Width, srcBmp.Height);
+			System.Drawing.Bitmap destBmp = new System.Drawing.Bitmap(srcBmp.Width, srcBmp.Height);
 
             // 将位图背景填充为白色
             System.Drawing.Graphics graph = System.Drawing.Graphics.FromImage(destBmp);

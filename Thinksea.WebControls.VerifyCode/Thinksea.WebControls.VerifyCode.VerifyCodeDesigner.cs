@@ -1,12 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Web;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.Design;
-using System.Web.UI.HtmlControls;
-using System.ComponentModel;
-using System.IO;
-using Thinksea.WebControls.VerifyCode;
 
 namespace Thinksea.WebControls.VerifyCode
 {

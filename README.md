@@ -6,6 +6,12 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2024-3-25
+
++ 从项目“Thinksea”中移除组件“Thinksea.Image”。对于 .Net Framework 项目，此组件的最后支持版本为 5.11.0（<https://github.com/thinksea/ThinkseaGeneric/releases/tag/5.11.0>）
++ 新增组件“Thinksea.Drawing.ThumbnailImage”，用于生成缩略图。（nuget 包检索关键字是“Thinksea.Drawing”）
++ 已将组件“Thinksea.Drawing.GraphicsArithmetic”从项目“Thinksea”中剥离，迁移到项目“Thinksea.Drawing”中。
+
 ###### version：2023-12-11
 
 + 更新项目中引用的基础组件。

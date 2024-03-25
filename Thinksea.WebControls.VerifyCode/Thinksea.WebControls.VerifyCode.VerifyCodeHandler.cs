@@ -1,17 +1,16 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 
 namespace Thinksea.WebControls.VerifyCode
 {
-    /// <summary>
-    /// 生成一个验证码图片。
-    /// </summary>
-    /// <remarks>
-    /// 您将需要在您网站的 web.config 文件中配置此处理程序，
-    /// 并向 IIS 注册此处理程序，然后才能进行使用。有关详细信息，
-    /// 请参见下面的链接: http://go.microsoft.com/?linkid=8101007
-    /// </remarks>
-    public class VerifyCodeHandler : Thinksea.VerifyCode, IHttpHandler, System.Web.SessionState.IRequiresSessionState
+	/// <summary>
+	/// 生成一个验证码图片。
+	/// </summary>
+	/// <remarks>
+	/// 您将需要在您网站的 web.config 文件中配置此处理程序，
+	/// 并向 IIS 注册此处理程序，然后才能进行使用。有关详细信息，
+	/// 请参见下面的链接: http://go.microsoft.com/?linkid=8101007
+	/// </remarks>
+	public class VerifyCodeHandler : Thinksea.VerifyCode, IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
         /// <summary>
         /// 一个静态构造方法。

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
-    <Version>6.2</Version>
+    <Version>6.3</Version>
     <Copyright>Copyright © Thinksea 2021-2024</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Text.Json" Version="8.0.1" />
+	<PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">

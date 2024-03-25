@@ -1,43 +1,37 @@
 ﻿using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
-
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Collections;
-using System.Diagnostics;
+using System.Web.UI;
 
 namespace Thinksea.WebControls.VerifyCode
 {
-    /// <summary>
-    /// 验证码控件。
-    /// </summary>
-    /// <remarks>
-    /// <note>要求应用本控件的网络页面必须启动 Session 会话。</note>
-    /// </remarks>
-    /// <example>
-    /// <para lang="C#">
-    /// 两种使用方法：
-    /// <br/>1、对于“用户登录页”和“用户登录信息输入验证页”为同一页面的情况，请使用方法“IsVerify”进行验证。示例代码如下：
-    /// </para>
-    /// <code lang="C#">
-    /// if( ! this.VerifyCode1.IsVerify(this.VerifyCode.Text) )
-    /// {
-    ///		this.Response.Write("您输入的验证码错误");
-    ///	}
-    ///	</code>
-    /// <para lang="C#">
-    ///	2、对于“用户登录页”和“用户登录信息输入验证页”为不同页面的情况，请使用静态方法“IsVerify”进行验证。示例代码如下：
-    /// </para>
-    ///	<code lang="C#">
-    ///	if( ! Thinksea.WebControls.VerifyCode.VerifyCode.IsVerify(this.VerifyCode.Text, "VerifyCode1") )
-    ///	{
-    ///		this.Response.Write("您输入的验证码错误");
-    ///	}
-    ///	</code>
-    /// </example>
-    [ToolboxData("<{0}:VerifyCode runat=server></{0}:VerifyCode>"),
+	/// <summary>
+	/// 验证码控件。
+	/// </summary>
+	/// <remarks>
+	/// <note>要求应用本控件的网络页面必须启动 Session 会话。</note>
+	/// </remarks>
+	/// <example>
+	/// <para lang="C#">
+	/// 两种使用方法：
+	/// <br/>1、对于“用户登录页”和“用户登录信息输入验证页”为同一页面的情况，请使用方法“IsVerify”进行验证。示例代码如下：
+	/// </para>
+	/// <code lang="C#">
+	/// if( ! this.VerifyCode1.IsVerify(this.VerifyCode.Text) )
+	/// {
+	///		this.Response.Write("您输入的验证码错误");
+	///	}
+	///	</code>
+	/// <para lang="C#">
+	///	2、对于“用户登录页”和“用户登录信息输入验证页”为不同页面的情况，请使用静态方法“IsVerify”进行验证。示例代码如下：
+	/// </para>
+	///	<code lang="C#">
+	///	if( ! Thinksea.WebControls.VerifyCode.VerifyCode.IsVerify(this.VerifyCode.Text, "VerifyCode1") )
+	///	{
+	///		this.Response.Write("您输入的验证码错误");
+	///	}
+	///	</code>
+	/// </example>
+	[ToolboxData("<{0}:VerifyCode runat=server></{0}:VerifyCode>"),
     DefaultProperty("Length"),
         //	System.ComponentModel.DefaultEvent("PageSelectedCommand"),
         //	ValidationPropertyAttribute("Text"),
