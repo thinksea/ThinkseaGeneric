@@ -7,6 +7,7 @@
     <Version>1.0</Version>
     <Copyright>Copyright © 2024 Thinksea</Copyright>
     <Authors>Thinksea</Authors>
+    <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
     <Description>封装了缩略图生成功能</Description>
   </PropertyGroup>
 
