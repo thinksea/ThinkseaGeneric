@@ -53,25 +53,25 @@ var JavascriptUploadFileDemo;
      */
     function convertFileSizeToByte(size) {
         if (size.endsWith("EB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthEB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthEB;
         }
         else if (size.endsWith("PB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthPB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthPB;
         }
         else if (size.endsWith("TB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthTB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthTB;
         }
         else if (size.endsWith("GB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthGB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthGB;
         }
         else if (size.endsWith("MB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthMB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthMB;
         }
         else if (size.endsWith("KB")) {
-            return parseFloat(size.substr(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthKB;
+            return parseFloat(size.substring(0, size.length - 2).trimEnd(null).replace(",", "")) * convertToFileSize.FileLengthKB;
         }
         else if (size.endsWith("B")) {
-            return parseInt(size.substr(0, size.length - 1).trimEnd(null).replace(",", "")); // * FileLengthB
+            return parseInt(size.substring(0, size.length - 1).trimEnd(null).replace(",", "")); // * FileLengthB
         }
         return parseInt(size);
     }

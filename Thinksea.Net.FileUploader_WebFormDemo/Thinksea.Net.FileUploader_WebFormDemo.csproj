@@ -90,7 +90,7 @@
     <Content Include="JavascriptUploadFileDemo.min.js">
       <DependentUpon>JavascriptUploadFileDemo.js</DependentUpon>
     </Content>
-    <Content Include="lib\jsext-1.6.0\jsext.min.js" />
+    <Content Include="lib\jsext-1.7.1\jsext.min.js" />
     <Content Include="Thinksea.Net.FileUploader.js" />
     <Content Include="Thinksea.Net.FileUploader.min.js">
       <DependentUpon>Thinksea.Net.FileUploader.js</DependentUpon>
@@ -116,12 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="JavascriptUploadFileDemo.ts" />
-    <TypeScriptCompile Include="lib\dts\jsext-1.6.0\jsext.d.ts" />
+    <TypeScriptCompile Include="lib\dts\jsext-1.7.1\jsext.d.ts" />
     <TypeScriptCompile Include="lib\dts\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild">
-      <Version>5.4.3</Version>
+      <Version>5.5.3</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
