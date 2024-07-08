@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 封装了基于 HTTP 协议的文件上传客户端功能。（组件“Thinksea.Net.FileUploader”的 javascript 版本）
  * @version 4.2.0
  * @description 此组件依赖于下列组件

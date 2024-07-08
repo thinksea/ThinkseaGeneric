@@ -1,4 +1,4 @@
-interface Number {
+﻿interface Number {
     /**
      * 格式化数字显示方式。
      * @param pattern 格式化字符串。取值范围如下
