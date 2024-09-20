@@ -178,7 +178,7 @@ namespace Thinksea.Drawing
                 ImageMagick.MagickImageInfo tempImage = new ImageMagick.MagickImageInfo(imageStream);
                 if (tempImage != null)
                 {
-                    return new System.Drawing.Size(tempImage.Width, tempImage.Height);
+                    return new System.Drawing.Size(System.Convert.ToInt32(tempImage.Width), System.Convert.ToInt32(tempImage.Height));
                 }
             }
             catch (ImageMagick.MagickMissingDelegateErrorException ex)
@@ -1076,7 +1076,7 @@ namespace Thinksea.Drawing
                         using (var tempImage = new ImageMagick.MagickImage(webpStream, ImageMagick.MagickFormat.WebP))
                         {
                             //tempImage.Density = new ImageMagick.Density(InchConvertFrom(this.ResizedImage.Metadata.HorizontalResolution, this.ResizedImage.Metadata.ResolutionUnits), InchConvertFrom(this.ResizedImage.Metadata.VerticalResolution, this.ResizedImage.Metadata.ResolutionUnits));
-                            tempImage.Quality = imageQuality;
+                            tempImage.Quality = System.Convert.ToUInt32(imageQuality);
                             tempImage.Write(outputStream, ImageMagick.MagickFormat.Avif);
                         }
                     }

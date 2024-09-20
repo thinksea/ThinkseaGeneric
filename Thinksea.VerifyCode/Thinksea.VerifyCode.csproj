@@ -4,7 +4,7 @@
     <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
     <Copyright>Copyright © Thinksea 2008-2024</Copyright>
-    <Version>4.14.0</Version>
+    <Version>4.15.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="8.0.7" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
   </ItemGroup>
 
 </Project>

@@ -216,12 +216,14 @@
             {
                 if (!response.Headers.ContainsKey(Microsoft.Net.Http.Headers.HeaderNames.Pragma))
                 {
-                    response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.Pragma, "no-cache");
+                    //response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.Pragma, "no-cache");
+                    response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Pragma] = "no-cache";
                 }
                 //response.CacheControl = "no-store";
                 if (!response.Headers.ContainsKey(Microsoft.Net.Http.Headers.HeaderNames.CacheControl))
                 {
-                    response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.CacheControl, "no-cache");
+                    //response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.CacheControl, "no-cache");
+                    response.Headers[Microsoft.Net.Http.Headers.HeaderNames.CacheControl] = "no-cache";
                 }
 
                 System.Net.Http.Headers.MediaTypeHeaderValue mediaType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");

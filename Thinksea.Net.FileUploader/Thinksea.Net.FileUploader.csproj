@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
-    <Version>6.4</Version>
+    <Version>6.5</Version>
     <Copyright>Copyright © Thinksea 2021-2024</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>

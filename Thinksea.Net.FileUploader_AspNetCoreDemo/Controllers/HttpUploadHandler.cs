@@ -46,7 +46,7 @@ namespace Thinksea.Net.FileUploader_AspNetCoreDemo.Controllers
             var response = context.Response;
 
             //context.Response.AppendHeader("Access-Control-Allow-Origin", "*"); //解决 AJAX 跨域访问本接口。
-            response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.AccessControlAllowOrigin, "*"); //解决 AJAX 跨域访问本接口。
+            response.Headers[Microsoft.Net.Http.Headers.HeaderNames.AccessControlAllowOrigin] = "*"; //解决 AJAX 跨域访问本接口。
 
             base.ProcessRequest(context);
         }
