@@ -126,7 +126,7 @@ namespace Thinksea.WebControls.VerifyCode
             string generateVerifyCodeQuestion, generateVerifyCodeAnswer;
             VerifyCodeHandler.GenerateVerifyCode(out generateVerifyCodeQuestion, out generateVerifyCodeAnswer);
             string _VerifyCode = ""; //用于存储验证码的密码字符串。
-            _VerifyCode = Thinksea.WebControls.VerifyCode.VerifyCodeHandler.EncryptPassword(generateVerifyCodeAnswer.ToLower());
+            _VerifyCode = Thinksea.WebControls.VerifyCode.VerifyCodeHandler.EncryptPassword(generateVerifyCodeAnswer.ToLowerInvariant());
 			//if (this.IsTrackingViewState)
 			{
                 context.Session["VerifyCode" + VerifyCodeID] = _VerifyCode;
@@ -213,7 +213,7 @@ namespace Thinksea.WebControls.VerifyCode
             if (savedVerifyCode != null)
             {
                 System.Web.HttpContext.Current.Session.Remove(sName);
-                if ((string)savedVerifyCode == Thinksea.WebControls.VerifyCode.VerifyCodeHandler.EncryptPassword(VerifyCode.ToLower()))
+                if ((string)savedVerifyCode == Thinksea.WebControls.VerifyCode.VerifyCodeHandler.EncryptPassword(VerifyCode.ToLowerInvariant()))
                 {
                     return true;
                 }

@@ -27,7 +27,7 @@
         /// <returns>存在返回 true；否则返回 false。</returns>
         public static bool IsExistsPermission(string path, string identity)
         {
-            identity = identity.ToLower();
+            identity = identity.ToLowerInvariant();
             bool hasDomain = (identity.IndexOf('\\') != -1);
 
             if (System.IO.Directory.Exists(path))
@@ -36,7 +36,7 @@
                 System.Security.AccessControl.AuthorizationRuleCollection arc = ds.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
                 foreach (System.Security.AccessControl.FileSystemAccessRule tmp in arc)
                 {
-                    string ident = tmp.IdentityReference.Value.ToLower();
+                    string ident = tmp.IdentityReference.Value.ToLowerInvariant();
                     if (hasDomain)
                     {
                         if (ident == identity)
@@ -59,7 +59,7 @@
                 System.Security.AccessControl.AuthorizationRuleCollection arc = ds.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
                 foreach (System.Security.AccessControl.FileSystemAccessRule tmp in arc)
                 {
-                    string ident = tmp.IdentityReference.Value.ToLower();
+                    string ident = tmp.IdentityReference.Value.ToLowerInvariant();
                     if (hasDomain)
                     {
                         if (ident == identity)

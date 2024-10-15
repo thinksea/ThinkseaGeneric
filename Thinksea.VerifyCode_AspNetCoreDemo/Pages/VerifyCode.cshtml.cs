@@ -157,7 +157,7 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
             //string generateVerifyCode = VerifyCode.GenerateVerifyCodeString();
             string generateVerifyCodeQuestion, generateVerifyCodeAnswer;
             VerifyCode.GenerateVerifyCode(out generateVerifyCodeQuestion, out generateVerifyCodeAnswer);
-            string _VerifyCode = generateVerifyCodeAnswer.ToLower(); //用于存储验证码的密码字符串。
+            string _VerifyCode = generateVerifyCodeAnswer.ToLowerInvariant(); //用于存储验证码的密码字符串。
             //if (this.IsTrackingViewState)
             {
                 SaveVerifyCode(context, VerifyCodeID, _VerifyCode);
@@ -220,7 +220,7 @@ namespace Thinksea.VerifyCode_AspNetCoreDemo.Pages
             if (savedVerifyCode != null)
             {
                 DestructionVerifyCode(context, verifyCodeId);
-                if ((string)savedVerifyCode == verifyCode.ToLower())
+                if ((string)savedVerifyCode == verifyCode.ToLowerInvariant())
                 {
                     return true;
                 }

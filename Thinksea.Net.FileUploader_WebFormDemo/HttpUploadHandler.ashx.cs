@@ -118,7 +118,7 @@ namespace Thinksea.Net.FileUploader_WebFormDemo
 
             System.Collections.Generic.Dictionary<string, string> parms = this.ConvertParamFromString(e.Parameters);
 
-            string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLower();
+            string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLowerInvariant();
             #endregion
 
             //e.ResultData = new FileUploadResult
@@ -140,7 +140,7 @@ namespace Thinksea.Net.FileUploader_WebFormDemo
                 #region 文件类型以及自定义参数的处理。
                 System.Collections.Generic.Dictionary<string, string> parms = this.ConvertParamFromString(e.Parameters);
 
-                string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLower();
+                string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLowerInvariant();
                 #endregion
 
                 #region 校验是否满足文件上传条件。
@@ -169,7 +169,7 @@ namespace Thinksea.Net.FileUploader_WebFormDemo
             #region 文件类型以及自定义参数的处理。
             System.Collections.Generic.Dictionary<string, string> parms = this.ConvertParamFromString(e.Parameters);
 
-            string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLower();
+            string ClientFileExtension = System.IO.Path.GetExtension(e.ClientFileName).ToLowerInvariant();
             #endregion
 
             #region

@@ -166,11 +166,11 @@ namespace Thinksea.Windows
         /// <returns>共享信息。找不到返回 null。</returns>
         public Share GetShare(string ShareName)
         {
-            ShareName = ShareName.ToLower();
+            ShareName = ShareName.ToLowerInvariant();
             System.Management.ManagementObjectSearcher searcher = new System.Management.ManagementObjectSearcher("SELECT * FROM Win32_share");
             foreach (System.Management.ManagementObject share in searcher.Get())
             {
-                if (((string)share.GetPropertyValue("Name")).ToLower() == ShareName)
+                if (((string)share.GetPropertyValue("Name")).ToLowerInvariant() == ShareName)
                 {
                     Share s = new Share((string)share.GetPropertyValue("Path"), (string)share.GetPropertyValue("Name"));
                     s.Description = (string)share.GetPropertyValue("Description");
@@ -224,11 +224,11 @@ namespace Thinksea.Windows
         /// <returns>存在返回 true；否则返回 false。</returns>
         public bool IsExistsShare(string ShareName)
         {
-            ShareName = ShareName.ToLower();
+            ShareName = ShareName.ToLowerInvariant();
             System.Management.ManagementObjectSearcher searcher = new System.Management.ManagementObjectSearcher("SELECT * FROM Win32_share");
             foreach (System.Management.ManagementObject share in searcher.Get())
             {
-                if (((string)share.GetPropertyValue("Name")).ToLower() == ShareName)
+                if (((string)share.GetPropertyValue("Name")).ToLowerInvariant() == ShareName)
                 {
                     return true;
                 }

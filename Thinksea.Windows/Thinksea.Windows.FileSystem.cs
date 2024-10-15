@@ -175,7 +175,7 @@
             {
                 System.IO.DirectoryInfo diSource = new System.IO.DirectoryInfo(sourceDirectory);
                 System.IO.DirectoryInfo diDest = new System.IO.DirectoryInfo(destDirectory);
-                if (diSource.FullName.ToLower() == diDest.FullName.ToLower()) return;
+                if (diSource.FullName.ToLowerInvariant() == diDest.FullName.ToLowerInvariant()) return;
                 if (System.IO.Path.GetPathRoot(diSource.FullName) == System.IO.Path.GetPathRoot(diDest.FullName) && diDest.Exists == false)
                 {
                     if (!diDest.Parent.Exists)

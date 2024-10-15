@@ -2401,7 +2401,7 @@
                 {
                     intIndex = i;
                 }
-                else if (char.ToLower(ch1) != char.ToLower(ch2))
+                else if (char.ToLowerInvariant(ch1) != char.ToLowerInvariant(ch2))
                 {
                     break;
                 }

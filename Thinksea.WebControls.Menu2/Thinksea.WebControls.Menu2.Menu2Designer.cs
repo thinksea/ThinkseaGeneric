@@ -45,7 +45,7 @@ namespace Thinksea.WebControls.Menu2 {
 											, "https://"
 											, "ftp://"
 										};
-			string tmpPath = Path.ToLower();
+			string tmpPath = Path.ToLowerInvariant();
 			foreach( string tmp in sta )
 			{
 				if( tmpPath.StartsWith( tmp ) ) return true;

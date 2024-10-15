@@ -464,7 +464,7 @@
                 {
                     foreach (var item in this.query)
                     {
-                        if (item.Key.ToLower() == name.ToLower())
+                        if (item.Key.ToLowerInvariant() == name.ToLowerInvariant())
                         {
                             if (item.Value == null)
                             {
@@ -493,7 +493,7 @@
                     for (int i = 0; i < this.query.Count; i++)
                     {
                         var item = this.query[i];
-                        if (item.Key.ToLower() == name.ToLower())
+                        if (item.Key.ToLowerInvariant() == name.ToLowerInvariant())
                         {
                             this.query[i] = new QueryItem(name, (value == null ? null : System.Uri.EscapeDataString(value)));
                             return;
@@ -518,7 +518,7 @@
                     for (int i = 0; i < this.query.Count; i++)
                     {
                         var item = this.query[i];
-                        if (item.Key.ToLower() == name.ToLower())
+                        if (item.Key.ToLowerInvariant() == name.ToLowerInvariant())
                         {
                             this.query.Remove(item);
                         }

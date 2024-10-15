@@ -727,7 +727,7 @@
         /// <returns>用户组列表。</returns>
         public string[] GetGroupsByUser(string commonName)
         {
-            commonName = commonName.ToLower();
+            commonName = commonName.ToLowerInvariant();
             System.Collections.Generic.List<string> result = new System.Collections.Generic.List<string>();
             string [] gs = this.GetGroups();
             foreach (string tmp in gs)//此处采用了笨拙的反查方法，有待优化。
@@ -735,7 +735,7 @@
                 string [] us = this.GetUsersByGroup(tmp);
                 foreach(string tmp2 in us)
                 {
-                    if (tmp2.ToLower() == commonName)
+                    if (tmp2.ToLowerInvariant() == commonName)
                     {
                         result.Add(tmp);
                         break;

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48</TargetFrameworks>
-    <Version>2.3.0.0</Version>
-    <Copyright>Copyright © Thinksea 2008-2022</Copyright>
+    <Version>2.4.0.0</Version>
+    <Copyright>Copyright © Thinksea 2008-2024</Copyright>
     <Product>Thinksea WebControls Calendar</Product>
     <Description>一个日期选择控件</Description>
     <PackageId>Thinksea.WebControls.DateTimePicker</PackageId>

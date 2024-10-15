@@ -33,7 +33,7 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
 			this.uploadFileRaw.Hide();
 			this.btnUploadRaw.Show();
 			string file = this.openFileDialog1.FileName;
-			string ext = System.IO.Path.GetExtension(file).ToLower();
+			string ext = System.IO.Path.GetExtension(file).ToLowerInvariant();
 			Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult data = Thinksea.Net.FileUploader_WinFormDemo.FileUploadResult.ConvertFrom(e.ResultData);
 			string fileSavePath = data.SavePath;
 			this.lFileSize_Raw.Text = Thinksea.General.ConvertToFileSize(data.FileLength);

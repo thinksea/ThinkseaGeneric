@@ -655,7 +655,7 @@ function " + this.ClientID + @"_Show( msec, panelControlID, tempPanelControlID )
 			}
 
             writer.Write(@"<script type=""text/javascript"">
-HtmlRotator('" + this.ClientID + @"', 2, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLower() + @");
+HtmlRotator('" + this.ClientID + @"', 2, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLowerInvariant() + @");
 </script>
 ");
 
@@ -699,7 +699,7 @@ HtmlRotator('" + this.ClientID + @"', 2, " + this.PlaySpeed.ToString() + @", " +
             }
 
             writer.Write(@"<script type=""text/javascript"">
-HtmlRotator('" + this.ClientID + @"', 4, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLower() + @");
+HtmlRotator('" + this.ClientID + @"', 4, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLowerInvariant() + @");
 </script>
 ");
 
@@ -745,7 +745,7 @@ HtmlRotator('" + this.ClientID + @"', 4, " + this.PlaySpeed.ToString() + @", " +
             }
 
             writer.Write(@"<script type=""text/javascript"">
-HtmlRotator('" + this.ClientID + @"', 1, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLower() + @");
+HtmlRotator('" + this.ClientID + @"', 1, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLowerInvariant() + @");
 </script>
 ");
 
@@ -791,7 +791,7 @@ HtmlRotator('" + this.ClientID + @"', 1, " + this.PlaySpeed.ToString() + @", " +
             }
 
             writer.Write(@"<script type=""text/javascript"">
-HtmlRotator('" + this.ClientID + @"', 3, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLower() + @");
+HtmlRotator('" + this.ClientID + @"', 3, " + this.PlaySpeed.ToString() + @", " + this.PauseTime.ToString() + ", " + this.StopOnMouseOver.ToString().ToLowerInvariant() + @");
 </script>
 ");
 

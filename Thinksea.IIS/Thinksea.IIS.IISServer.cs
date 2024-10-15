@@ -594,12 +594,12 @@ namespace Thinksea.IIS.IISServer
         /// <returns>找不到返回 null。</returns>
         private System.DirectoryServices.DirectoryEntry returnSite(string Name)
         {
-            Name = Name.ToLower().Trim();
+            Name = Name.ToLowerInvariant().Trim();
             int MajorVersion = this.GetIISMajorVersion();
             int MinorVersion = this.GetIISMinorVersion();
             if (MajorVersion == 5 && MinorVersion == 1) //IIS 5.1
             {
-                if (this.IIS51Service != null && this.IIS51Service.Properties["ServerComment"][0].ToString().ToLower().Trim() == Name)
+                if (this.IIS51Service != null && this.IIS51Service.Properties["ServerComment"][0].ToString().ToLowerInvariant().Trim() == Name)
                 {
                     return this.IIS51Service;
                 }
@@ -613,7 +613,7 @@ namespace Thinksea.IIS.IISServer
                     System.DirectoryServices.DirectoryEntry Server = (System.DirectoryServices.DirectoryEntry)ie.Current;
                     if (Server.SchemaClassName == "IIsWebServer")
                     {
-                        if (Server.Properties["ServerComment"][0].ToString().ToLower().Trim() == Name)
+                        if (Server.Properties["ServerComment"][0].ToString().ToLowerInvariant().Trim() == Name)
                         {
                             return Server;
                         }
@@ -636,7 +636,7 @@ namespace Thinksea.IIS.IISServer
         {
             foreach (System.DirectoryServices.DirectoryEntry child in Server.Children)
             {
-                string name = child.Name.ToLower();
+                string name = child.Name.ToLowerInvariant();
                 if (name == "iiswebvirtualdir" || name == "root")
                 {
                     return child;
@@ -717,17 +717,17 @@ namespace Thinksea.IIS.IISServer
                     item.AppAspNetVersion = AspNetVersion.Default;
                     foreach (string tmp in Root.Properties["ScriptMaps"])
                     {
-                        if (tmp.ToLower().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
+                        if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
                         {
                             item.AppAspNetVersion = AspNetVersion.ASP_NET_1_1;
                             break;
                         }
-                        else if (tmp.ToLower().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
+                        else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
                         {
                             item.AppAspNetVersion = AspNetVersion.ASP_NET_2_0;
                             break;
                         }
-                        else if (tmp.ToLower().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
+                        else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
                         {
                             item.AppAspNetVersion = AspNetVersion.ASP_NET_4_0;
                             break;
@@ -867,7 +867,7 @@ namespace Thinksea.IIS.IISServer
                 {
                     return false;
                 }
-                return ConvertToSite(this.IIS51Service).Name.ToLower().Trim() == Name.ToLower().Trim();
+                return ConvertToSite(this.IIS51Service).Name.ToLowerInvariant().Trim() == Name.ToLowerInvariant().Trim();
             }
             else if (MajorVersion == 6) //IIS 6
             {
@@ -896,7 +896,7 @@ namespace Thinksea.IIS.IISServer
                     return null;
                 }
                 Site ws = ConvertToSite(this.IIS51Service);
-                if (ws.Name.ToLower().Trim() == Name.ToLower().Trim())
+                if (ws.Name.ToLowerInvariant().Trim() == Name.ToLowerInvariant().Trim())
                 {
                     return ws;
                 }
@@ -1372,7 +1372,7 @@ namespace Thinksea.IIS.IISServer
             {
                 throw new System.Exception("指定的 Server 不是网站。");
             }
-            ApplicationName = ApplicationName.ToLower().Trim();
+            ApplicationName = ApplicationName.ToLowerInvariant().Trim();
 
             System.DirectoryServices.DirectoryEntry Server2 = null;
             System.Collections.IEnumerator ie = Server.Children.GetEnumerator();
@@ -1391,7 +1391,7 @@ namespace Thinksea.IIS.IISServer
                 System.DirectoryServices.DirectoryEntry Server3 = (System.DirectoryServices.DirectoryEntry)ie.Current;
                 if (Server3.SchemaClassName == "IIsWebVirtualDir" || Server3.SchemaClassName == "IIsWebDirectory")
                 {
-                    if (Server3.Name.ToLower() == ApplicationName)
+                    if (Server3.Name.ToLowerInvariant() == ApplicationName)
                     {
                         return Server3;
                     }
@@ -1430,17 +1430,17 @@ namespace Thinksea.IIS.IISServer
             item_virdir.AppAspNetVersion = AspNetVersion.Default;
             foreach (string tmp in AppDir.Properties["ScriptMaps"])
             {
-                if (tmp.ToLower().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
+                if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
                 {
                     item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_1_1;
                     break;
                 }
-                else if (tmp.ToLower().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
+                else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
                 {
                     item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_2_0;
                     break;
                 }
-                else if (tmp.ToLower().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
+                else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
                 {
                     item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_4_0;
                     break;
@@ -1488,12 +1488,12 @@ namespace Thinksea.IIS.IISServer
             //item_virdir.AppAspNetVersion = AspNetVersion.Default;
             //foreach (string tmp in VirDir.Properties["ScriptMaps"])
             //{
-            //    if (tmp.ToLower().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
+            //    if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
             //    {
             //        item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_1_1;
             //        break;
             //    }
-            //    else if (tmp.ToLower().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
+            //    else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
             //    {
             //        item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_2_0;
             //        break;
@@ -1650,17 +1650,17 @@ namespace Thinksea.IIS.IISServer
                         item_virdir.AppAspNetVersion = AspNetVersion.Default;
                         foreach (string tmp in VirDir.Properties["ScriptMaps"])
                         {
-                            if (tmp.ToLower().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
+                            if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v1.1.4322"))//Microsoft.NET\Framework\v1.1.4322
                             {
                                 item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_1_1;
                                 break;
                             }
-                            else if (tmp.ToLower().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
+                            else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v2.0.50727"))//microsoft.net\framework\v2.0.50727
                             {
                                 item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_2_0;
                                 break;
                             }
-                            else if (tmp.ToLower().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
+                            else if (tmp.ToLowerInvariant().Contains(@"microsoft.net\framework\v4.0.30319"))//microsoft.net\framework\v4.0.30319
                             {
                                 item_virdir.AppAspNetVersion = AspNetVersion.ASP_NET_4_0;
                                 break;
@@ -1722,7 +1722,7 @@ namespace Thinksea.IIS.IISServer
                 {
                     foreach (System.DirectoryServices.DirectoryEntry VirDir in Server.Children)
                     {
-                        if (VirDir.Name.ToLower() == iisApp.Name.ToLower())
+                        if (VirDir.Name.ToLowerInvariant() == iisApp.Name.ToLowerInvariant())
                         {
                             Server.Children.Remove(VirDir);
                             Server.CommitChanges();
@@ -1910,7 +1910,7 @@ namespace Thinksea.IIS.IISServer
         {
             if (this.GetIISMajorVersion() < 7)
             {
-                ApplicationName = ApplicationName.ToLower();
+                ApplicationName = ApplicationName.ToLowerInvariant();
                 //System.DirectoryServices.DirectoryEntry Service = this.GetService();
                 System.DirectoryServices.DirectoryEntry Server = returnSite(SiteName);
 
@@ -1922,7 +1922,7 @@ namespace Thinksea.IIS.IISServer
                 Server = getRoot(Server);
                 foreach (System.DirectoryServices.DirectoryEntry VirDir in Server.Children)
                 {
-                    if (VirDir.Name.ToLower().Trim() == ApplicationName)
+                    if (VirDir.Name.ToLowerInvariant().Trim() == ApplicationName)
                     {
                         VirDir.DeleteTree();
                         //Server.Children.Remove(VirDir);
@@ -1961,11 +1961,11 @@ namespace Thinksea.IIS.IISServer
             int MajorVersion = this.GetIISMajorVersion();
             if (MajorVersion == 6) //IIS 6
             {
-                Name = Name.ToLower();
+                Name = Name.ToLowerInvariant();
                 System.DirectoryServices.DirectoryEntry apppools = this.ApplicationPoolService;
                 foreach (System.DirectoryServices.DirectoryEntry a in apppools.Children)
                 {
-                    if (a.Name.ToLower() == Name)
+                    if (a.Name.ToLowerInvariant() == Name)
                     {
                         return true;
                     }
@@ -2130,12 +2130,12 @@ namespace Thinksea.IIS.IISServer
             int MajorVersion = this.GetIISMajorVersion();
             if (MajorVersion == 6) //IIS 6
             {
-                Name = Name.ToLower();
+                Name = Name.ToLowerInvariant();
                 System.DirectoryServices.DirectoryEntry apppools = this.ApplicationPoolService;
                 System.DirectoryServices.DirectoryEntry has = null;
                 foreach (System.DirectoryServices.DirectoryEntry a in apppools.Children)
                 {
-                    if (a.Name.ToLower() == Name)
+                    if (a.Name.ToLowerInvariant() == Name)
                     {
                         has = a;
                         break;
