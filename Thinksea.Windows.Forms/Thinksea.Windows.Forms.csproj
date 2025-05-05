@@ -4,11 +4,12 @@
     <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <Version>2.9.0.0</Version>
-    <Copyright>Copyright © Thinksea 2014-2023</Copyright>
+    <Copyright>Copyright © Thinksea 2014-2025</Copyright>
     <Product>Thinksea.Windows.Forms</Product>
     <Description>封装了常用的 Windows Form 控件。</Description>
     <PackageId>Thinksea.Windows.Forms</PackageId>
     <Authors>Thinksea</Authors>
+    <PackageOutputPath>$(SolutionDir)publish\packages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

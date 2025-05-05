@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Version>6.8</Version>
-    <Copyright>Copyright © Thinksea 2021-2024</Copyright>
+    <Copyright>Copyright © Thinksea 2021-2025</Copyright>
     <Product>Thinksea Net FileUploader</Product>
     <Company>Thinksea</Company>
     <Description>封装了基于 HTTP 协议的文件上传功能。
@@ -16,6 +16,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReleaseNotes>更新项目中引用的基础组件。
 文件上传组件更改为使用 System.Net.Http.HttpClient</PackageReleaseNotes>
+    <PackageOutputPath>$(SolutionDir)publish\packages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

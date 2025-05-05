@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Version>6.2.0.0</Version>
-    <Copyright>Copyright © Thinksea 2006-2024</Copyright>
+    <Copyright>Copyright © Thinksea 2006-2025</Copyright>
     <Product>Thinksea</Product>
     <Company>Thinksea</Company>
     <Description>封装了编程过程中常用的基本功能</Description>
@@ -12,6 +12,7 @@
     <PackageTags>TcpServerPool, TaskQueue, WaitQueue, GraphicsArithmetic, Image, CRC32, Chinese, Chinese2Spell, UriBuilder, UriParameter</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageOutputPath>$(SolutionDir)publish\packages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

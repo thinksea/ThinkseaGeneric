@@ -418,6 +418,34 @@
 
             }
 
+			/// <summary>
+			/// 对参数按照参数名升序排序。
+			/// </summary>
+			public void SortQuery() {
+                if (this.query != null)
+                {
+                    this.query.Sort((a, b) => { return string.Compare(a.Key, b.Key, System.StringComparison.OrdinalIgnoreCase); });
+                }
+            }
+
+            /// <summary>
+            /// 删除值为 null 或者空字符串的参数。
+            /// </summary>
+            public void RemoveNullOrEmpty()
+            {
+                if (this.query != null)
+                {
+                    for (int i = this.query.Count - 1; i >= 0; i--)
+                    {
+                        var item = this.query[i];
+                        if (string.IsNullOrEmpty(item.Value))
+                        {
+                            this.query.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
             /// <summary>
             /// 返回此实例的字符串表示形式。
             /// </summary>

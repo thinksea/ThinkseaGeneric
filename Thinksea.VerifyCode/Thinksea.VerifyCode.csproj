@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Description>验证码图片生成组件</Description>
-    <Copyright>Copyright © Thinksea 2008-2024</Copyright>
+    <Copyright>Copyright © Thinksea 2008-2025</Copyright>
     <Version>4.17.0</Version>
   </PropertyGroup>
 
@@ -19,6 +19,7 @@
     <PackageProjectUrl>https://github.com/thinksea/ThinkseaGeneric</PackageProjectUrl>
     <PackageTags>VerifyCode</PackageTags>
     <PackageReleaseNotes>更新引用的基础组件</PackageReleaseNotes>
+    <PackageOutputPath>$(SolutionDir)publish\packages</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

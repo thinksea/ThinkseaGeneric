@@ -4,11 +4,12 @@
     <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <Version>1.7.0.0</Version>
-    <Copyright>Copyright © Thinksea 2013-2023</Copyright>
+    <Copyright>Copyright © Thinksea 2013-2025</Copyright>
     <Product>Thinksea.Windows.Forms.MdiTabControl</Product>
     <Description>一个选项卡控件。</Description>
     <PackageId>Thinksea.Windows.Forms.MdiTabControl</PackageId>
     <Authors>Thinksea</Authors>
+    <PackageOutputPath>$(SolutionDir)publish\packages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
