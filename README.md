@@ -1,4 +1,4 @@
-# ThinkseaGeneric
+﻿# ThinkseaGeneric
 使用 C# 编写的 .NET 公共资源库，封装了程序开发过程中常用的基础功能。
 
 说明：因为解决方案中包含了过多的项目，为了方便描述，所以主要使用提交时间作为解决方案整体版本命名。
@@ -6,6 +6,11 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2025-5-5
+
++ 新增类对象 Thinksea.Web.UriBuilder 用于构建 URI。
++ 不再支持“NET 6.0”。
+
 ###### version：2024-3-25
 
 + 从项目“Thinksea”中移除组件“Thinksea.Image”。对于 .Net Framework 项目，此组件的最后支持版本为 5.11.0（<https://github.com/thinksea/ThinkseaGeneric/releases/tag/5.11.0>）

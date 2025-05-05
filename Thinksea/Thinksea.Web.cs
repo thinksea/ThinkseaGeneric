@@ -165,13 +165,13 @@
             System.Text.RegularExpressions.RegexOptions regexOptions = System.Text.RegularExpressions.RegexOptions.ExplicitCapture | System.Text.RegularExpressions.RegexOptions.Singleline | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
             string r = System.Web.HttpUtility.HtmlEncode(text).Replace("\t", "    ");
             r = System.Text.RegularExpressions.Regex.Replace(r, @"^ (?<notspace>[^ ]|$)",
-                delegate(System.Text.RegularExpressions.Match m)
+                delegate (System.Text.RegularExpressions.Match m)
                 {
                     return "&nbsp;" + m.Groups["notspace"].Value;
                 }
                 , regexOptions);
             r = System.Text.RegularExpressions.Regex.Replace(r, @"(?<space> +) (?<notspace>[^ ]|$)",
-                delegate(System.Text.RegularExpressions.Match m)
+                delegate (System.Text.RegularExpressions.Match m)
                 {
                     return m.Groups["space"].Value.Replace(" ", "&nbsp;") + " " + m.Groups["notspace"].Value;
                 }
@@ -288,7 +288,7 @@
         /// <summary>
         /// 封装了 URI 扩展处理功能。
         /// </summary>
-        private class UriExtTool
+        public class UriBuilder
         {
             /// <summary>
             /// 定义 URI 的基础参数数据结构。
@@ -354,12 +354,9 @@
             /// <summary>
             /// 用指定的 URI 创建此实例。
             /// </summary>
-            /// <param name="uri">一个可能包含参数的 uri 字符串。</param>
-            /// <returns>URI 解析实例。</returns>
-            public static UriExtTool Create(string uri)
+            /// <param name="uri">一个 uri 字符串。</param>
+            public UriBuilder(string uri)
             {
-                UriExtTool result = new UriExtTool();
-
                 int queryIndex = uri.IndexOf('?');
                 int sharpIndex;
                 if (queryIndex > -1)
@@ -373,20 +370,20 @@
 
                 if (queryIndex > -1)
                 {
-                    result.path = uri.Substring(0, queryIndex);
+                    this.path = uri.Substring(0, queryIndex);
                 }
                 else if (sharpIndex > -1)
                 {
-                    result.path = uri.Substring(0, sharpIndex);
+                    this.path = uri.Substring(0, sharpIndex);
                 }
                 else
                 {
-                    result.path = uri;
+                    this.path = uri;
                 }
 
                 if (sharpIndex > -1)
                 {
-                    result.mark = uri.Substring(sharpIndex);
+                    this.mark = uri.Substring(sharpIndex);
                 }
 
                 if (queryIndex > -1)
@@ -402,24 +399,23 @@
                     }
                     if (queryString.Length > 0)
                     {
-                        result.query = new System.Collections.Generic.List<QueryItem>();
+                        this.query = new System.Collections.Generic.List<QueryItem>();
                         string[] queryList = queryString.Split('&', '?');
                         foreach (string item in queryList)
                         {
                             int enqIndex = item.IndexOf('=');
                             if (enqIndex > -1)
                             {
-                                result.query.Add(new QueryItem(item.Substring(0, enqIndex), item.Substring(enqIndex + 1)));
+                                this.query.Add(new QueryItem(item.Substring(0, enqIndex), item.Substring(enqIndex + 1)));
                             }
                             else
                             {
-                                result.query.Add(new QueryItem(item, null));
+                                this.query.Add(new QueryItem(item, null));
                             }
                         }
                     }
                 }
 
-                return result;
             }
 
             /// <summary>
@@ -565,7 +561,7 @@
         /// </example>
         public static string GetUriParameter(string uri, string name)
         {
-            var r = UriExtTool.Create(uri);
+            var r = new UriBuilder(uri);
             return r.GetUriParameter(name);
         }
 
@@ -596,7 +592,7 @@
         /// </example>
         public static string SetUriParameter(string uri, string name, string value)
         {
-            var r = UriExtTool.Create(uri);
+            var r = new UriBuilder(uri);
             r.SetUriParameter(name, value);
             return r.ToString();
         }
@@ -624,7 +620,7 @@
         /// </example>
         public static string RemoveUriParameter(string uri, string name)
         {
-            var r = UriExtTool.Create(uri);
+            var r = new UriBuilder(uri);
             r.RemoveUriParameter(name);
             return r.ToString();
         }
@@ -652,7 +648,7 @@
         /// </example>
         public static string ClearUriParameter(string uri, bool retainSharp)
         {
-            var r = UriExtTool.Create(uri);
+            var r = new UriBuilder(uri);
             r.ClearUriParameter(retainSharp);
             return r.ToString();
         }
@@ -679,7 +675,7 @@
         /// </example>
         public static string ClearUriParameter(string uri)
         {
-            var r = UriExtTool.Create(uri);
+            var r = new UriBuilder(uri);
             r.ClearUriParameter(false);
             return r.ToString();
         }
@@ -711,7 +707,7 @@
         public static string ConvertToJavaScriptString(string str)
         {
             return str.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\"", "\\\"").Replace("\r", "\\r").Replace("\n", "\\n")
-				.Replace("/", "\\/").Replace("<", "\\<").Replace(">", "\\>"); //避免异常终止 <script> 标签，阻止 XSS 攻击。
+                .Replace("/", "\\/").Replace("<", "\\<").Replace(">", "\\>"); //避免异常终止 <script> 标签，阻止 XSS 攻击。
 
         }
 
@@ -828,7 +824,7 @@
             return false;
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// 构造方法。
