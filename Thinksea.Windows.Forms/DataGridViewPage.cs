@@ -120,6 +120,7 @@ namespace Thinksea.Windows.Forms
         Category("Data"),
         Description("当前分页索引。"),
         ReadOnly(true),
+		System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
         ]
         public int CurrentPageIndex
         {

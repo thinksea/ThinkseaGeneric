@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Globalization;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
+using System.Windows.Forms;
 using Thinksea.Windows.Forms.IPAddress.Properties;
 
 namespace Thinksea.Windows.Forms.IPAddress
@@ -275,7 +273,8 @@ namespace Thinksea.Windows.Forms.IPAddress
             }
         }
 
-        public int FieldId
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public int FieldId
         {
             get
             {
@@ -295,7 +294,8 @@ namespace Thinksea.Windows.Forms.IPAddress
             }
         }
 
-        public byte RangeLower
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public byte RangeLower
         {
             get
             {
@@ -322,7 +322,8 @@ namespace Thinksea.Windows.Forms.IPAddress
             }
         }
 
-        public byte RangeUpper
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public byte RangeUpper
         {
             get
             {

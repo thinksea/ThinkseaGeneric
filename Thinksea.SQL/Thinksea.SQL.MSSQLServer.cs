@@ -115,17 +115,17 @@
         /// </summary>
         /// <param name="DataBase">数据库名称。</param>
         /// <returns>一个数据库连接。</returns>
-        private System.Data.SqlClient.SqlConnection CreateConnection(string DataBase)
+        private Microsoft.Data.SqlClient.SqlConnection CreateConnection(string DataBase)
         {
             if (this.ConnectionType == SQLServerConnectionType.WindowsConnection)
             {
-                return new System.Data.SqlClient.SqlConnection("server='" + this.DataSource.Replace("'", "''") + "'; database='" + DataBase.Replace("'", "''") + "'; Trusted_Connection=Yes;");
+                return new Microsoft.Data.SqlClient.SqlConnection("server='" + this.DataSource.Replace("'", "''") + "'; database='" + DataBase.Replace("'", "''") + "'; Trusted_Connection=Yes;");
             }
             else if (this.ConnectionType == SQLServerConnectionType.SQLServerConnection)
             {
-                return new System.Data.SqlClient.SqlConnection("Data Source='" + this.DataSource.Replace("'", "''") + "'; Initial Catalog='" + DataBase.Replace("'", "''") + "'; User ID='" + this.UserID.Replace("'", "''") + "'; Password='" + this.Password.Replace("'", "''") + "';");
+                return new Microsoft.Data.SqlClient.SqlConnection("Data Source='" + this.DataSource.Replace("'", "''") + "'; Initial Catalog='" + DataBase.Replace("'", "''") + "'; User ID='" + this.UserID.Replace("'", "''") + "'; Password='" + this.Password.Replace("'", "''") + "';");
             }
-            return new System.Data.SqlClient.SqlConnection("server='" + this.DataSource.Replace("'", "''") + "'; database='" + DataBase.Replace("'", "''") + "'; Trusted_Connection=Yes;");
+            return new Microsoft.Data.SqlClient.SqlConnection("server='" + this.DataSource.Replace("'", "''") + "'; database='" + DataBase.Replace("'", "''") + "'; Trusted_Connection=Yes;");
 
         }
 
@@ -156,7 +156,7 @@
         /// <returns>连接成功返回 True；否则返回 False。</returns>
         public bool TestSQLConnection(string DataBase)
         {
-            System.Data.SqlClient.SqlConnection Connection = this.CreateConnection(DataBase);
+			Microsoft.Data.SqlClient.SqlConnection Connection = this.CreateConnection(DataBase);
             try
             {
                 Connection.Open();
@@ -190,15 +190,15 @@
         /// <returns>存在返回 true；否则返回 false。</returns>
         public bool ExistsSQLDataBase(string DataBase)
         {
-            System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + UserID + "; Password=" + Password + ";");
-            System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");// new Microsoft.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + UserID + "; Password=" + Password + ";");
+			Microsoft.Data.SqlClient.SqlCommand sqlCommand = new Microsoft.Data.SqlClient.SqlCommand();
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.sysdatabases where [Name]=N'" + DataBase + "'";
 
             Connection.Open();
             try
             {
-                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
+				Microsoft.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     if (sdr.Read())
@@ -225,15 +225,15 @@
         public string[] GetSQLDataBases()
         {
             System.Collections.Generic.List<string> l = new System.Collections.Generic.List<string>();
-            System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
-            System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlCommand sqlCommand = new Microsoft.Data.SqlClient.SqlCommand();
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.sysdatabases where [dbid]>6";
 
             Connection.Open();
             try
             {
-                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
+				Microsoft.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     while (sdr.Read())
@@ -261,15 +261,15 @@
         /// <returns>存在返回 true；否则返回 false。</returns>
         public bool ExistsSQLUser(string UserID)
         {
-            System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
-            System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlCommand sqlCommand = new Microsoft.Data.SqlClient.SqlCommand();
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = @"select [Name] from master.dbo.syslogins where [Name]=N'" + Thinksea.General.FixSQLCommandText(UserID) + @"'";
 
             Connection.Open();
             try
             {
-                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
+				Microsoft.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     if (sdr.Read())
@@ -296,15 +296,15 @@
         public string[] GetSQLUsers()
         {
             System.Collections.Generic.List<string> l = new System.Collections.Generic.List<string>();
-            System.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
-            System.Data.SqlClient.SqlCommand sqlCommand = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlConnection Connection = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlCommand sqlCommand = new Microsoft.Data.SqlClient.SqlCommand();
             sqlCommand.Connection = Connection;
             sqlCommand.CommandText = "select [Name] from master.dbo.syslogins";
 
             Connection.Open();
             try
             {
-                System.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
+				Microsoft.Data.SqlClient.SqlDataReader sdr = sqlCommand.ExecuteReader();
                 try
                 {
                     while (sdr.Read())
@@ -344,8 +344,8 @@ LOG ON
 ( NAME = [" + DataBaseName + @"_Log],
    FILENAME = N'" + Path + @"_Log.ldf')
 ";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + SAUserID + "; Password=" + SAPassword + ";");
-            conn.Open();
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new Microsoft.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + SAUserID + "; Password=" + SAPassword + ";");
+			conn.Open();
             try
             {
                 Thinksea.General.ExecuteSQL(conn, SQL);
@@ -364,8 +364,8 @@ LOG ON
         public void CreateSQLDataBase(string DataBaseName)
         {
             string SQL = @"CREATE DATABASE [" + Thinksea.General.FixSQLCommandText(DataBaseName) + @"]";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("server=" + this.DataSource + "; database=master; Trusted_Connection=Yes;");
-            conn.Open();
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new Microsoft.Data.SqlClient.SqlConnection("server=" + this.DataSource + "; database=master; Trusted_Connection=Yes;");
+			conn.Open();
             try
             {
                 Thinksea.General.ExecuteSQL(conn, SQL);
@@ -407,8 +407,8 @@ EXEC sp_addlogin N'" + UserID + @"', N'" + Password + @"', N'" + DataBaseName + 
 EXEC sp_grantdbaccess N'" + UserID + @"'
 EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
 ";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + SAUserID + "; Password=" + SAPassword + ";");
-            conn.Open();
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new Microsoft.Data.SqlClient.SqlConnection("Data Source=" + this.DataSource + "; Initial Catalog = master; User ID=" + SAUserID + "; Password=" + SAPassword + ";");
+			conn.Open();
             try
             {
                 Thinksea.General.ExecuteSQL(conn, SQL);
@@ -441,8 +441,8 @@ EXEC sp_addlogin N'" + UserID + @"', N'" + Password + @"', N'" + DataBaseName + 
 EXEC sp_grantdbaccess N'" + UserID + @"'
 EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
 ";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new System.Data.SqlClient.SqlConnection("server=" + this.DataSource + "; database=master; Trusted_Connection=Yes;");
-            conn.Open();
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");// new Microsoft.Data.SqlClient.SqlConnection("server=" + this.DataSource + "; database=master; Trusted_Connection=Yes;");
+			conn.Open();
             try
             {
                 Thinksea.General.ExecuteSQL(conn, SQL);
@@ -463,7 +463,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
         public void CreateSQLUser(string UserID, string Password)
         {
             string SQL = @"EXEC sp_addlogin N'" + Thinksea.General.FixSQLCommandText(UserID) + @"', N'" + Thinksea.General.FixSQLCommandText(Password) + @"'";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
             conn.Open();
             try
             {
@@ -485,7 +485,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
         public void CreateSQLUser(string UserID, string Password, string DefaultDataBase)
         {
             string SQL = @"EXEC sp_addlogin N'" + Thinksea.General.FixSQLCommandText(UserID) + @"', N'" + Thinksea.General.FixSQLCommandText(Password) + @"', N'" + DefaultDataBase + @"'";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
             conn.Open();
             try
             {
@@ -510,7 +510,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
             string SQL = @"EXEC sp_grantdbaccess N'" + UserID + @"'
 EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
 ";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
             conn.Open();
             try
             {
@@ -533,7 +533,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
             UserID = Thinksea.General.FixSQLCommandText(UserID);
 
             string SQL = @"EXEC sp_revokedbaccess '" + UserID + @"'";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
             conn.Open();
             try
             {
@@ -554,7 +554,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
         public void DeleteSQLDataBase(string DataBaseName)
         {
             string SQL = @"drop DATABASE [" + Thinksea.General.FixSQLCommandText(DataBaseName) + @"]";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
             conn.Open();
             try
             {
@@ -574,7 +574,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
         public void DeleteSQLUser(string UserID)
         {
             string SQL = @"EXEC sp_droplogin N'" + Thinksea.General.FixSQLCommandText(UserID) + @"'";
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection("master");
             conn.Open();
             try
             {
@@ -595,7 +595,7 @@ EXEC sp_addrolemember 'db_owner', N'" + UserID + @"'
         /// <param name="SQLString">SQL 代码。</param>
         public void ExecuteSQL(string DataBaseName, string SQLString)
         {
-            System.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
+			Microsoft.Data.SqlClient.SqlConnection conn = this.CreateConnection(DataBaseName);
             conn.Open();
             try
             {

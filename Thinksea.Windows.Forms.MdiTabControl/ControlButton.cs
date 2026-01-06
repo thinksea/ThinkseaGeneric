@@ -42,7 +42,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         private readonly Color defaultBackLowColor = SystemColors.ControlDark;
         private readonly Color defaultBorderColor = SystemColors.ControlDarkDark;
 
-        internal ToolStripRenderMode RenderMode
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		internal ToolStripRenderMode RenderMode
         {
             get
             {
@@ -55,7 +56,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public ButtonStyle Style
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public ButtonStyle Style
         {
             get
             {

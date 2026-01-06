@@ -98,6 +98,7 @@ namespace Thinksea.Windows.Forms
         /// </summary>
 		[Category("Behavior")]
         [Description("是否使用省略模式剪辑文本。")]
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public virtual EllipsisFormat AutoEllipsis
 		{
 			get { return _ellipsis; }

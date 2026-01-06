@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Thinksea.Windows.Forms
@@ -64,10 +61,11 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// 获取或设置自动滚动定位的位置。
-        /// </summary>
-        public new Point AutoScrollPosition
+		/// <summary>
+		/// 获取或设置自动滚动定位的位置。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public new Point AutoScrollPosition
         {
             get
             {

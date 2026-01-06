@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Thinksea.Windows.Forms
@@ -19,6 +16,7 @@ namespace Thinksea.Windows.Forms
         [
         Browsable(false),
         ReadOnly(true),
+		System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
         ]
         public string NodeName
         {
@@ -67,7 +65,9 @@ namespace Thinksea.Windows.Forms
         /// <summary>
         /// 获取或设置选中的节点文本。
         /// </summary>
-        [Browsable(false), ReadOnly(true)]
+        [Browsable(false), ReadOnly(true),
+		System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
+        ]
         public new string Text
         {
             get

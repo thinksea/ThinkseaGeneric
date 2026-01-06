@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing;
 using Thinksea.Windows.Forms.IPAddress.Properties;
 
 namespace Thinksea.Windows.Forms.IPAddress
@@ -92,7 +93,8 @@ namespace Thinksea.Windows.Forms.IPAddress
             }
         }
 
-        public bool ReadOnly
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public bool ReadOnly
         {
             get
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Thinksea.Windows.Forms
@@ -227,7 +228,8 @@ namespace Thinksea.Windows.Forms
             this.NotifyDataGridViewOfValueChange();
         }
 
-        public object EditingControlFormattedValue
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public object EditingControlFormattedValue
         {
             get
             {
@@ -265,7 +267,8 @@ namespace Thinksea.Windows.Forms
             this.BackColor = dataGridViewCellStyle.BackColor;
         }
 
-        public int EditingControlRowIndex
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public int EditingControlRowIndex
         {
             get
             {
@@ -307,7 +310,8 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        public System.Windows.Forms.DataGridView EditingControlDataGridView
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public System.Windows.Forms.DataGridView EditingControlDataGridView
         {
             get
             {
@@ -319,7 +323,8 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        public bool EditingControlValueChanged
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public bool EditingControlValueChanged
         {
             get
             {

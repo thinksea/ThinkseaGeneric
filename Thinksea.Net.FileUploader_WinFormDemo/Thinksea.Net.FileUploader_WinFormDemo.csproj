@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
@@ -20,13 +20,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Thinksea.Net.FileUploader\Thinksea.Net.FileUploader.csproj" />
     <ProjectReference Include="..\Thinksea\Thinksea.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.4" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="9.0.4" />
-    <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
 </Project>

@@ -503,7 +503,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool SetFocus
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool SetFocus
         {
             set
             {
@@ -902,7 +903,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the tab close button image.
         /// </summary>
         [Browsable(true), Category("Appearance"), Description("Gets or sets the tab close button image.")]
-        public Bitmap TabCloseButtonImage
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap TabCloseButtonImage
         {
             get
             {
@@ -922,7 +924,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the tab close button image in hot state.
         /// </summary>
         [Browsable(true), Category("Appearance"), Description("Gets or sets the tab close button image in hot state.")]
-        public Bitmap TabCloseButtonImageHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap TabCloseButtonImageHot
         {
             get
             {
@@ -942,7 +945,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the tab close button image in disabled state.
         /// </summary>
         [Browsable(true), Category("Appearance"), Description("Gets or sets the tab close button image in disabled state.")]
-        public Bitmap TabCloseButtonImageDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap TabCloseButtonImageDisabled
         {
             get
             {
@@ -1773,7 +1777,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         }
 
         [Browsable(false)]
-        public ToolStripRenderer MenuRenderer
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public ToolStripRenderer MenuRenderer
         {
             get
             {

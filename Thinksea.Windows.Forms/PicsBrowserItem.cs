@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Thinksea.Windows.Forms
@@ -14,10 +11,11 @@ namespace Thinksea.Windows.Forms
     [ToolboxItem(false)]
     public partial class PicsBrowserItem : UserControl
     {
-        /// <summary>
-        /// 获取或设置图片。
-        /// </summary>
-        public Image Image
+		/// <summary>
+		/// 获取或设置图片。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Image Image
         {
             get
             {
@@ -29,10 +27,11 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// 获取或设置图片说明文字。
-        /// </summary>
-        public string Declaration
+		/// <summary>
+		/// 获取或设置图片说明文字。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public string Declaration
         {
             get
             {
@@ -45,10 +44,11 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// 图片名称。
-        /// </summary>
-        public new string Name
+		/// <summary>
+		/// 图片名称。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public new string Name
         {
             get
             {
@@ -60,10 +60,11 @@ namespace Thinksea.Windows.Forms
             }
         }
 
-        /// <summary>
-        /// 获取或设置删除按钮当前是否可见。
-        /// </summary>
-        public bool ShowDeleteButton
+		/// <summary>
+		/// 获取或设置删除按钮当前是否可见。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public bool ShowDeleteButton
         {
             get
             {

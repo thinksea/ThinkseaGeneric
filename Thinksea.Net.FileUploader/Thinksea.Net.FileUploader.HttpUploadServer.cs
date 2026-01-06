@@ -172,7 +172,7 @@
         /// <returns>参数值。</returns>
         private string GetUrlParameter(Microsoft.AspNetCore.Http.HttpRequest request, string key)
         {
-            return request.Query[key];
+			return request.Query[key];
         }
 #endif
 

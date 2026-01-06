@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EnvDTE" Version="17.13.40008" />
+    <PackageReference Include="EnvDTE" Version="17.14.40260" />
   </ItemGroup>
 
 </Project>

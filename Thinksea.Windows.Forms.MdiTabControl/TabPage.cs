@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Thinksea.Windows.Forms.MdiTabControl
@@ -247,7 +244,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the starting color of the Background linear gradient for the tab.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the starting color of the Background linear gradient for the tab.")]
-        public Color BackHighColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Color BackHighColor
         {
             get
             {
@@ -264,7 +262,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the ending color of the Background linear gradient for the tab.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the ending color of the Background linear gradient for the tab.")]
-        public Color BackLowColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Color BackLowColor
         {
             get
             {
@@ -278,7 +277,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         }
 
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the border color.")]
-        internal Color BorderColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		internal Color BorderColor
         {
             get
             {
@@ -295,7 +295,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the starting color of the Background linear gradient for a non selected tab.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the starting color of the Background linear gradient for a non selected tab.")]
-        public Color BackHighColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Color BackHighColorDisabled
         {
             get
             {
@@ -312,7 +313,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the ending color of the Background linear gradient for a non selected tab.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the ending color of the Background linear gradient for a non selected tab.")]
-        public Color BackLowColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Color BackLowColorDisabled
         {
             get
             {
@@ -329,7 +331,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the border color of the tab when not selected.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the border color of the tab when not selected.")]
-        public Color BorderColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Color BorderColorDisabled
         {
             get
             {
@@ -346,6 +349,7 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets the System.Drawing.Color structure that represents the fore color of the tab when not selected.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets the System.Drawing.Color structure that represents the fore color of the tab when not selected.")]
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color ForeColorDisabled
         {
             get
@@ -359,7 +363,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool IsSelected
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool IsSelected
         {
             get
             {
@@ -391,7 +396,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal int MaximumWidth
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal int MaximumWidth
         {
             get
             {
@@ -405,7 +411,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal int MinimumWidth
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal int MinimumWidth
         {
             get
             {
@@ -419,7 +426,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal int PadLeft
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal int PadLeft
         {
             get
             {
@@ -433,7 +441,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal int PadRight
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal int PadRight
         {
             get
             {
@@ -451,7 +460,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         /// Gets or sets whether the tab close button is visble or not.
         /// </summary>
         [System.ComponentModel.Description("Gets or sets whether the tab close button is visble or not.")]
-        public bool CloseButtonVisible
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public bool CloseButtonVisible
         {
             get
             {
@@ -468,7 +478,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public Bitmap CloseButtonImage
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap CloseButtonImage
         {
             get
             {
@@ -481,7 +492,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public Bitmap CloseButtonImageHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap CloseButtonImageHot
         {
             get
             {
@@ -494,7 +506,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public Bitmap CloseButtonImageDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Bitmap CloseButtonImageDisabled
         {
             get
             {
@@ -507,7 +520,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackHighColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackHighColor
         {
             get
             {
@@ -519,7 +533,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackLowColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackLowColor
         {
             get
             {
@@ -531,7 +546,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBorderColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBorderColor
         {
             get
             {
@@ -543,7 +559,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonForeColor
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonForeColor
         {
             get
             {
@@ -555,7 +572,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackHighColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackHighColorDisabled
         {
             get
             {
@@ -567,7 +585,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackLowColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackLowColorDisabled
         {
             get
             {
@@ -579,7 +598,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBorderColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBorderColorDisabled
         {
             get
             {
@@ -591,7 +611,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonForeColorDisabled
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonForeColorDisabled
         {
             get
             {
@@ -603,7 +624,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackHighColorHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackHighColorHot
         {
             get
             {
@@ -615,7 +637,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBackLowColorHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBackLowColorHot
         {
             get
             {
@@ -627,7 +650,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonBorderColorHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonBorderColorHot
         {
             get
             {
@@ -639,7 +663,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public System.Drawing.Color CloseButtonForeColorHot
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public System.Drawing.Color CloseButtonForeColorHot
         {
             get
             {
@@ -651,7 +676,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool HotTrack
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool HotTrack
         {
             get
             {
@@ -664,7 +690,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal Size CloseButtonSize
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal Size CloseButtonSize
         {
             get
             {
@@ -678,7 +705,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool FontBoldOnSelect
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool FontBoldOnSelect
         {
             get
             {
@@ -692,7 +720,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal Size IconSize
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal Size IconSize
         {
             get
             {
@@ -706,7 +735,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal System.Drawing.Drawing2D.SmoothingMode SmoothingMode
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal System.Drawing.Drawing2D.SmoothingMode SmoothingMode
         {
             get
             {
@@ -719,7 +749,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal TabControl.TabAlignment Alignment
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal TabControl.TabAlignment Alignment
         {
             get
             {
@@ -732,7 +763,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool GlassGradient
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool GlassGradient
         {
             get
             {
@@ -744,7 +776,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal bool BorderEnhanced
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal bool BorderEnhanced
         {
             get
             {
@@ -756,7 +789,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal ToolStripRenderMode RenderMode
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal ToolStripRenderMode RenderMode
         {
             get
             {
@@ -769,7 +803,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        internal TabControl.Weight BorderEnhanceWeight
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		internal TabControl.Weight BorderEnhanceWeight
         {
             get
             {
@@ -781,7 +816,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
             }
         }
 
-        public Icon Icon
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public Icon Icon
         {
             get
             {
@@ -1297,7 +1333,8 @@ namespace Thinksea.Windows.Forms.MdiTabControl
         }
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public new Padding Padding
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public new Padding Padding
         {
             get
             {

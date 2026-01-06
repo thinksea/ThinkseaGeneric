@@ -8,7 +8,8 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
     {
         private Thinksea.Net.FileUploader.HttpFileUpload httpFileUpload = null;
         private bool _ShowFileName = false;
-        public bool ShowFileName
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+		public bool ShowFileName
         {
             get
             {
@@ -19,10 +20,11 @@ namespace Thinksea.Net.FileUploader_WinFormDemo
                 this._ShowFileName = value;
             }
         }
-        /// <summary>
-        /// 获取或设置待上传的文件。
-        /// </summary>
-        public string File
+		/// <summary>
+		/// 获取或设置待上传的文件。
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public string File
         {
             get;
             set;

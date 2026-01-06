@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Thinksea.Windows.Forms
 {
@@ -618,8 +616,9 @@ namespace Thinksea.Windows.Forms
         Category("Appearance"),
         Description("当前分页索引。"),
         ReadOnly(true),
-        ]
-        public int PageIndex
+		System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
+		]
+		public int PageIndex
         {
             get
             {
@@ -1527,10 +1526,11 @@ namespace Thinksea.Windows.Forms
     /// </summary>
     public class PageNumberButton : System.Windows.Forms.ToolStripButton
     {
-        /// <summary>
-        /// 获取或设置分页编号（从 1 开始的整数）
-        /// </summary>
-        public int PageNumber
+		/// <summary>
+		/// 获取或设置分页编号（从 1 开始的整数）
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public int PageNumber
         {
             get
             {
@@ -1565,10 +1565,11 @@ namespace Thinksea.Windows.Forms
     /// </summary>
     public class CurrentPageNumberButton : System.Windows.Forms.ToolStripLabel
     {
-        /// <summary>
-        /// 获取或设置分页编号（从 1 开始的整数）
-        /// </summary>
-        public int PageNumber
+		/// <summary>
+		/// 获取或设置分页编号（从 1 开始的整数）
+		/// </summary>
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public int PageNumber
         {
             get
             {

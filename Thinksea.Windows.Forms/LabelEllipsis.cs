@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace Thinksea.Windows.Forms
 {
@@ -74,6 +73,7 @@ namespace Thinksea.Windows.Forms
         /// </summary>
 		[Category("Behavior")]
 		[Description("是否使用省略模式剪辑文本。")]
+		[System.ComponentModel.DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public new EllipsisFormat AutoEllipsis
 		{
 			get { return _ellipsis; }

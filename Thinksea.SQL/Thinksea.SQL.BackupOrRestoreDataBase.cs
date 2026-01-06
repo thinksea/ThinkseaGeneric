@@ -41,12 +41,12 @@
         /// </summary>
         /// <param name="Connection">已经打开的数据库连接。</param>
         /// <returns>数据表名称集合。</returns>
-        private string[] GetTables(System.Data.SqlClient.SqlConnection Connection)
+        private string[] GetTables(Microsoft.Data.SqlClient.SqlConnection Connection)
         {
             System.Collections.Generic.List<string> tables = new System.Collections.Generic.List<string>();
 
-            System.Data.SqlClient.SqlDataReader sdr = null;
-            System.Data.SqlClient.SqlCommand comm = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlDataReader sdr = null;
+			Microsoft.Data.SqlClient.SqlCommand comm = new Microsoft.Data.SqlClient.SqlCommand();
             comm.Connection = Connection;
             comm.CommandText = @"SELECT name FROM sysobjects where xtype='U' and name<>'dtproperties' order by name asc";
             sdr = comm.ExecuteReader();
@@ -89,11 +89,11 @@
         /// <param name="Connection">已经打开的数据库连接。</param>
         /// <param name="xtw">XML 书写器。</param>
         /// <param name="TableName">数据表名称。</param>
-        private void BackupTable(System.Data.SqlClient.SqlConnection Connection, System.Xml.XmlTextWriter xtw, string TableName)
+        private void BackupTable(Microsoft.Data.SqlClient.SqlConnection Connection, System.Xml.XmlTextWriter xtw, string TableName)
         {
             xtw.WriteStartElement(TableName);
-            System.Data.SqlClient.SqlDataReader sdr = null;
-            System.Data.SqlClient.SqlCommand comm = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlDataReader sdr = null;
+			Microsoft.Data.SqlClient.SqlCommand comm = new Microsoft.Data.SqlClient.SqlCommand();
             comm.Connection = Connection;
 
             comm.CommandText = @"SELECT * FROM [" + TableName + "]";
@@ -202,7 +202,7 @@
         /// <param name="Connection">已经打开的数据库连接。</param>
         /// <param name="XMLFile">XML 文件名。</param>
         /// <param name="Description">文档备注。</param>
-        public void BackupAllTables(System.Data.SqlClient.SqlConnection Connection, string XMLFile, string Description)
+        public void BackupAllTables(Microsoft.Data.SqlClient.SqlConnection Connection, string XMLFile, string Description)
         {
             System.Xml.XmlTextWriter xtw = new System.Xml.XmlTextWriter(XMLFile, System.Text.Encoding.UTF8);
             try
@@ -301,7 +301,7 @@
         /// <param name="Connection">已经打开的数据库连接。</param>
         /// <param name="XmlDoc">XML 文档。</param>
         /// <param name="TableName">数据表名称。</param>
-        private void RestoreTable(System.Data.SqlClient.SqlConnection Connection, System.Xml.XmlDocument XmlDoc, string TableName)
+        private void RestoreTable(Microsoft.Data.SqlClient.SqlConnection Connection, System.Xml.XmlDocument XmlDoc, string TableName)
         {
             System.Xml.XmlNodeList XmlNodeList = XmlDoc.SelectNodes(@"/Root/" + TableName);
             if (XmlNodeList.Count == 0)
@@ -309,12 +309,12 @@
                 return;
             }
 
-            System.Data.SqlClient.SqlCommand comm = new System.Data.SqlClient.SqlCommand();
+			Microsoft.Data.SqlClient.SqlCommand comm = new Microsoft.Data.SqlClient.SqlCommand();
             comm.Connection = Connection;
 
             bool HasIdentity = false;//表是否有标识列。
-            #region 判断指定的表是否有标识列。
-            System.Data.SqlClient.SqlDataReader sdr = null;
+			#region 判断指定的表是否有标识列。
+			Microsoft.Data.SqlClient.SqlDataReader sdr = null;
             comm.CommandText = @"select OBJECTPROPERTY(OBJECT_ID(N'" + Thinksea.General.FixSQLCommandText(TableName) + @"'),'TableHasIdentity')";//判断指定的表是否有标识列。
             sdr = comm.ExecuteReader();
             try
@@ -362,7 +362,7 @@
                             sql += ", [" + attr.Name + "]";
                             sql2 += ", @" + attr.Name;
                         }
-                        System.Data.SqlClient.SqlParameter sp = new System.Data.SqlClient.SqlParameter("@" + attr.Name, (System.Data.SqlDbType)System.Enum.Parse(typeof(System.Data.SqlDbType), attr.Value, true));
+						Microsoft.Data.SqlClient.SqlParameter sp = new Microsoft.Data.SqlClient.SqlParameter("@" + attr.Name, (System.Data.SqlDbType)System.Enum.Parse(typeof(System.Data.SqlDbType), attr.Value, true));
                         sp.SourceColumn = attr.Name;
                         comm.Parameters.Add(sp);
                     }
@@ -375,7 +375,7 @@
                 {
                     foreach (System.Xml.XmlNode column in row.ChildNodes)
                     {
-                        System.Data.SqlClient.SqlParameter sp = comm.Parameters["@" + column.Name];
+						Microsoft.Data.SqlClient.SqlParameter sp = comm.Parameters["@" + column.Name];
                         switch (sp.SqlDbType)
                         {
                             case System.Data.SqlDbType.BigInt:
@@ -472,7 +472,7 @@
         /// </summary>
         /// <param name="Connection">已经打开的数据库连接。</param>
         /// <param name="XMLFile">XML 文件名。</param>
-        public void RestoreAllTables(System.Data.SqlClient.SqlConnection Connection, string XMLFile)
+        public void RestoreAllTables(Microsoft.Data.SqlClient.SqlConnection Connection, string XMLFile)
         {
             System.Xml.XmlDocument Doc = new System.Xml.XmlDocument();
             try
