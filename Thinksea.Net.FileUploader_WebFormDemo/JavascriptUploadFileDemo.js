@@ -1,3 +1,4 @@
+"use strict";
 var JavascriptUploadFileDemo;
 (function (JavascriptUploadFileDemo) {
     ;
@@ -22,8 +23,7 @@ var JavascriptUploadFileDemo;
      * 1.42 GB
      * 86.76 TB
      */
-    function convertToFileSize(size, format) {
-        if (format === void 0) { format = "0.##"; }
+    function convertToFileSize(size, format = "0.##") {
         if (size >= convertToFileSize.FileLengthEB) {
             return (size * 1.0 / convertToFileSize.FileLengthEB).format(format) + " EB";
         }
@@ -93,7 +93,7 @@ var JavascriptUploadFileDemo;
      * @returns CSS 样式表
      */
     function getFileTypeImage(ext) {
-        var r = "";
+        let r = "";
         switch (ext) {
             case ".ico":
                 r = "ico";
@@ -239,7 +239,7 @@ var JavascriptUploadFileDemo;
         if (ctl.classList.contains("uploadItem")) { //如果是上传元素
             ctl = ctl.parentElement; //查找文件列表面板。
         }
-        var nextItem = ctl.querySelector(".uploadItem[data-uploadstate='wait']"); //查找待上传的元素
+        let nextItem = ctl.querySelector(".uploadItem[data-uploadstate='wait']"); //查找待上传的元素
         if (nextItem) {
             uploadFile(nextItem.file, nextItem);
         }
@@ -249,7 +249,7 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function beginUpload(e) {
-        var ctl = document.getElementById(e.CustomParameter);
+        let ctl = document.getElementById(e.CustomParameter);
         ctl.setAttribute("data-begin_upload_time", new Date().toString());
         ctl.setAttribute("data-start_position", e.StartPosition.toString());
     }
@@ -262,10 +262,10 @@ var JavascriptUploadFileDemo;
         //#region 处理上传进度已更改事件。
         //let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
         //let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
-        var ctl = document.getElementById(e.CustomParameter);
-        var progress = ctl.querySelector("progress");
+        let ctl = document.getElementById(e.CustomParameter);
+        let progress = ctl.querySelector("progress");
         if (progress) {
-            var percentComplete = void 0;
+            let percentComplete;
             if (e.FileLength === 0) {
                 percentComplete = 100.0;
                 progress.value = 0;
@@ -274,25 +274,25 @@ var JavascriptUploadFileDemo;
                 percentComplete = e.FinishedSize * 100.0 / e.FileLength;
                 progress.value = Math.round((e.FinishedSize * 1.0 / e.FileLength) * progress.max);
             }
-            var ctlIe = progress.querySelector(".ie");
+            let ctlIe = progress.querySelector(".ie");
             if (ctlIe) {
                 ctlIe.style.width = Math.round(percentComplete) + "%";
             }
         }
         //percentComplete.toFixed(1) + "% "
-        var sTimeSpan = "";
+        let sTimeSpan = "";
         {
-            var nowTime = new Date();
-            var beginUploadTime = new Date(ctl.getAttribute("data-begin_upload_time"));
-            var startPosition = parseInt(ctl.getAttribute("data-start_position")); //上传的起始位置。
-            var timeSpan = (nowTime.getTime() - beginUploadTime.getTime()) / 1000.0; //耗费的时间（单位：秒）
-            var sendSize = e.FinishedSize - startPosition; //已经发送的数据大小。
-            var speed = sendSize / timeSpan; //上传速度
-            var timeNeeded = e.FileLength / speed; //剩余时间（单位：秒）
-            var days = Math.floor(timeNeeded / 86400);
-            var hour = Math.floor((timeNeeded % 86400) / 3600);
-            var minute = Math.floor((timeNeeded % 3600) / 60);
-            var seconds = Math.ceil(timeNeeded % 60);
+            let nowTime = new Date();
+            let beginUploadTime = new Date(ctl.getAttribute("data-begin_upload_time"));
+            let startPosition = parseInt(ctl.getAttribute("data-start_position")); //上传的起始位置。
+            let timeSpan = (nowTime.getTime() - beginUploadTime.getTime()) / 1000.0; //耗费的时间（单位：秒）
+            let sendSize = e.FinishedSize - startPosition; //已经发送的数据大小。
+            let speed = sendSize / timeSpan; //上传速度
+            let timeNeeded = e.FileLength / speed; //剩余时间（单位：秒）
+            let days = Math.floor(timeNeeded / 86400);
+            let hour = Math.floor((timeNeeded % 86400) / 3600);
+            let minute = Math.floor((timeNeeded % 3600) / 60);
+            let seconds = Math.ceil(timeNeeded % 60);
             if (days > 0) {
                 sTimeSpan += days.format("0") + ".";
             }
@@ -300,23 +300,23 @@ var JavascriptUploadFileDemo;
             sTimeSpan += minute.format("00") + ":";
             sTimeSpan += seconds.format("00");
         }
-        var fileSize = ctl.querySelector(".fileSize");
+        let fileSize = ctl.querySelector(".fileSize");
         if (fileSize) {
             fileSize.innerText = Math.round(e.FinishedSize * 1.0 / e.FileLength * 100) + "%,剩余时间:" + sTimeSpan;
         }
         //#endregion
         if (e.FinishedSize == e.FileLength) { //上传完成
             //alert(JSON.stringify(result));
-            var result = e.ResultData;
+            let result = e.ResultData;
             //let ctl = $("#" + result.CallbackParams);
             //let progress = ctl.find("progress");
             progress.style.display = "none";
-            var fileUpload = ctl.querySelector(".fileUpload");
+            let fileUpload = ctl.querySelector(".fileUpload");
             if (fileUpload) {
                 fileUpload.value = "";
             }
             ctl.setAttribute("data-uploadstate", "success");
-            var uploadState = ctl.querySelector(".uploadState");
+            let uploadState = ctl.querySelector(".uploadState");
             if (uploadState) {
                 uploadState.innerText = result.IsFastUpload ? "秒传完成" : "上传完成";
                 uploadState.style.color = "green";
@@ -326,23 +326,23 @@ var JavascriptUploadFileDemo;
             //if (result.CallbackParams === "ctl4") { //上传文件
             //}
             if (ctl.classList.contains("uploadItem")) { //如果是批量上传文件
-                var file = result;
-                var fileSize_1 = ctl.querySelector(".fileSize");
-                if (fileSize_1) {
-                    fileSize_1.innerText = convertToFileSize(file.FileLength, "0.#");
+                let file = result;
+                let fileSize = ctl.querySelector(".fileSize");
+                if (fileSize) {
+                    fileSize.innerText = convertToFileSize(file.FileLength, "0.#");
                 }
                 ctl.setAttribute("data-savepath", file.SavePath);
-                var filesPanel = ctl.parentElement.parentElement; //查找文件列表面板。
+                let filesPanel = ctl.parentElement?.parentElement; //查找文件列表面板。
                 if (filesPanel.id === "ctl5") { //批量上传文件
-                    var uploadSuccessItems = filesPanel.querySelectorAll(".uploadItem[data-uploadstate='success']");
-                    var savePaths = "";
-                    for (var i = 0; i < uploadSuccessItems.length; i++) {
+                    let uploadSuccessItems = filesPanel.querySelectorAll(".uploadItem[data-uploadstate='success']");
+                    let savePaths = "";
+                    for (let i = 0; i < uploadSuccessItems.length; i++) {
                         if (savePaths.length > 0) {
                             savePaths += ";";
                         }
                         savePaths += (uploadSuccessItems[i]).getAttribute("data-savepath");
                     }
-                    var fileUrls = filesPanel.querySelector("input[name='fileUrls']");
+                    let fileUrls = filesPanel.querySelector("input[name='fileUrls']");
                     fileUrls.value = savePaths;
                 }
                 uploadNextItem(ctl);
@@ -355,21 +355,21 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function onerror(e) {
-        var ctl = document.getElementById(e.CustomParameter);
-        var progress = ctl.querySelector("progress");
+        let ctl = document.getElementById(e.CustomParameter);
+        let progress = ctl.querySelector("progress");
         if (progress) {
             progress.style.display = 'none';
         }
-        var fileSize = ctl.querySelector(".fileSize");
+        let fileSize = ctl.querySelector(".fileSize");
         if (fileSize) {
             fileSize.style.display = "none";
         }
-        var fileUpload = ctl.querySelector(".fileUpload");
+        let fileUpload = ctl.querySelector(".fileUpload");
         if (fileUpload) {
             fileUpload.value = "";
         }
         ctl.setAttribute("data-uploadstate", "error");
-        var uploadState = ctl.querySelector(".uploadState");
+        let uploadState = ctl.querySelector(".uploadState");
         if (uploadState) {
             uploadState.innerText = "上传出错！";
             uploadState.style.color = "red";
@@ -386,21 +386,21 @@ var JavascriptUploadFileDemo;
      * @param e
      */
     function onabort(e) {
-        var ctl = document.getElementById(e.CustomParameter);
-        var progress = ctl.querySelector("progress");
+        let ctl = document.getElementById(e.CustomParameter);
+        let progress = ctl.querySelector("progress");
         if (progress) {
             progress.style.display = "none";
         }
-        var fileSize = ctl.querySelector(".fileSize");
+        let fileSize = ctl.querySelector(".fileSize");
         if (fileSize) {
             fileSize.style.display = "none";
         }
-        var fileUpload = ctl.querySelector(".fileUpload");
+        let fileUpload = ctl.querySelector(".fileUpload");
         if (fileUpload) {
             fileUpload.value = "";
         }
         ctl.setAttribute("data-uploadstate", "abort");
-        var uploadState = ctl.querySelector(".uploadState");
+        let uploadState = ctl.querySelector(".uploadState");
         if (uploadState) {
             uploadState.innerText = "操作取消！";
             uploadState.style.color = "darkgray";
@@ -417,16 +417,16 @@ var JavascriptUploadFileDemo;
      * @param ctl 上传元素
      */
     function uploadFile(file, ctl) {
-        var progress = ctl.querySelector("progress");
+        let progress = ctl.querySelector("progress");
         if (progress) {
             progress.style.removeProperty("display");
         }
-        var fileSize = ctl.querySelector(".fileSize");
+        let fileSize = ctl.querySelector(".fileSize");
         if (fileSize) {
             fileSize.innerText = "正在上传…";
             fileSize.style.removeProperty("display");
         }
-        var uploader = new Thinksea.Net.FileUploader.HttpFileUpload();
+        let uploader = new Thinksea.Net.FileUploader.HttpFileUpload();
         uploader.uploadServiceUrl = "/HttpUploadHandler.ashx";
         uploader.beginUpload = beginUpload;
         uploader.uploadProgressChanged = progressChanged;
@@ -444,25 +444,24 @@ var JavascriptUploadFileDemo;
         if (event.preventDefault) {
             event.preventDefault();
         }
-        var files = (event.dataTransfer && event.dataTransfer.files) || (event.originalEvent && event.originalEvent.dataTransfer.files) || event.files; //选中的文件列表
+        let files = (event.dataTransfer && event.dataTransfer.files) || (event.originalEvent && event.originalEvent.dataTransfer.files) || event.files; //选中的文件列表
         if (files && files.length > 0) { //如果选中了1个或多个文件
             if (ctl.id === "ctl5") { //如果是多文件上传
-                var fileInsertMark = ctl.querySelector(".fileinsertmark"); //查找文件插入标记元素。
+                let fileInsertMark = ctl.querySelector(".fileinsertmark"); //查找文件插入标记元素。
                 if (fileInsertMark === null) {
                     alert('ERROR：未找到文件插入标记元素。');
                     return;
                 }
-                var baseId = ctl.id;
-                var nextId = 0;
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    var itemId = //新上传元素的ID
-                     void 0; //新上传元素的ID
+                let baseId = ctl.id;
+                let nextId = 0;
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+                    let itemId; //新上传元素的ID
                     do { //生成ID
                         itemId = baseId + '_file' + nextId.toString();
                         nextId++;
                     } while (ctl.querySelector("#" + itemId) !== null);
-                    var htmlCreator = document.createElement('div'); //创建一个 HTML 元素创建器（利用 DIV 元素将 HTML 代码片段转换为 HTML 元素）。
+                    let htmlCreator = document.createElement('div'); //创建一个 HTML 元素创建器（利用 DIV 元素将 HTML 代码片段转换为 HTML 元素）。
                     htmlCreator.innerHTML = '<div id="' + itemId + '" class="uploadItem thumbnail pull-left" style="position: relative; width: 350px; margin: 5px;" data-uploadstate="wait">\
     <div class="uploadThumbnail pull-left ' + getFileTypeImage(file.name.getExtensionName().toLowerCase()) + '" style="width: 32px; height: 32px; margin:3px 5px 3px 3px;"></div>\
     <div class="pull-left">\
@@ -475,14 +474,14 @@ var JavascriptUploadFileDemo;
     </div>\
     <button type="button" class="deleteButton btn btn-link pull-right">删除</button>\
 </div>';
-                    var item = htmlCreator.firstElementChild; //新建上传元素。
+                    let item = htmlCreator.firstElementChild; //新建上传元素。
                     item.querySelector(".deleteButton").onclick = function (e) {
-                        var panel = this.parentElement;
-                        var uploader = panel.uploader;
+                        let panel = this.parentElement;
+                        let uploader = panel.uploader;
                         if (uploader) {
                             uploader.cancelUpload();
                         }
-                        var filesControl = panel.parentElement;
+                        let filesControl = panel.parentElement;
                         panel.remove();
                         uploadNextItem(filesControl);
                     };
@@ -502,28 +501,28 @@ var JavascriptUploadFileDemo;
      */
     function initUploadControl(ctl) {
         {
-            var ctls = ctl.querySelectorAll(".fileUpload");
-            for (var i = 0; i < ctls.length; i++) {
-                var item = ctls[i];
+            let ctls = ctl.querySelectorAll(".fileUpload");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i];
                 item.onchange = function () {
                     fileSelected(this, ctl);
                 };
             }
         }
         {
-            var ctls = ctl.querySelectorAll("[data-clickupload='true']");
-            for (var i = 0; i < ctls.length; i++) {
-                var item = ctls[i];
+            let ctls = ctl.querySelectorAll("[data-clickupload='true']");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i];
                 item.onclick = function () {
-                    var fileUpload = ctl.querySelector(".fileUpload");
+                    let fileUpload = ctl.querySelector(".fileUpload");
                     fileUpload.click();
                 };
             }
         }
         {
-            var ctls = ctl.querySelectorAll("[data-dragoverupload='true']");
-            for (var i = 0; i < ctls.length; i++) {
-                var item = ctls[i];
+            let ctls = ctl.querySelectorAll("[data-dragoverupload='true']");
+            for (let i = 0; i < ctls.length; i++) {
+                let item = ctls[i];
                 item.ondragover = function (event) {
                     event.preventDefault();
                 };
@@ -538,9 +537,9 @@ var JavascriptUploadFileDemo;
      * 校验表单数据。
      */
     function checkForm() {
-        var forms = document.forms;
-        for (var i = 0; i < forms.length; i++) {
-            var form = forms[i];
+        let forms = document.forms;
+        for (let i = 0; i < forms.length; i++) {
+            let form = forms[i];
             if (!form.checkValidity()) {
                 return false;
             }

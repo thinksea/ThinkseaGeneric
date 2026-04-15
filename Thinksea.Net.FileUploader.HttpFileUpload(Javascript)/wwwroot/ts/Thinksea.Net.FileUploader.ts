@@ -43,37 +43,37 @@ namespace Thinksea.Net.FileUploader {
          * 当开始上传文件时引发此事件。
          * @param e 事件参数。
          */
-        public beginUpload: (e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs) => void = null;
+        public beginUpload: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs) => void) | null = null;
         /**
          * 当发现可用的断点上传信息时引发此事件。
          * @param e 事件参数。
          */
-        public findBreakpoint: (e: Thinksea.Net.FileUploader.HttpFileUpload.BreakpointUploadEventArgs) => void = null;
+        public findBreakpoint: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BreakpointUploadEventArgs) => void) | null = null;
         /**
          * 当上传进度更改后引发此事件。
          * @param e 上传进度事件数据。
          */
-        public uploadProgressChanged: (e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs) => void = null;
+        public uploadProgressChanged: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs) => void) | null = null;
         /**
          * 当上传过程中出现错误时引发此事件。
          * @param e 事件参数。
          */
-        public errorOccurred: (e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs) => void = null;
+        public errorOccurred: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs) => void) | null = null;
         /**
          * 当上传中止时引发此事件。
          * @param e 事件参数。
          */
-        public onabort: (e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs) => void = null;
+        public onabort: ((e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs) => void) | null = null;
 
         /**
          * 自定义参数。
          */
-        private customParameter: string;
+        private customParameter?: string;
 
         /**
          * 文件完整性校验码，例如 SHA1 或 MD5 等。
          */
-        private checkCode: string = null;
+        private checkCode: string | null = null;
 
 
         /**
@@ -185,26 +185,28 @@ namespace Thinksea.Net.FileUploader {
             url = url.setUriParameter("cmd", "fastupload")
                 .setUriParameter("filename", file.name)
                 .setUriParameter("filesize", file.size.toString())
-                .setUriParameter("checkcode", _self.checkCode)
-                .setUriParameter("param", _self.customParameter);
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
 
             let xhr = new XMLHttpRequest();
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
-                xhr.addEventListener("error", function (e2: ErrorEvent) {
+                xhr.addEventListener("error", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
-                        Message: e2.message,
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
                         CustomParameter: _self.customParameter,
                     };
-                    _self.errorOccurred(e);
+                    _self.errorOccurred!(e);
                 }, false);
             }
             if (_self.onabort) {
-                xhr.addEventListener("abort", function (e2: Event) {
+                xhr.addEventListener("abort", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
-                    _self.onabort(e);
+                    _self.onabort!(e);
                 }, false);
             }
             /**
@@ -274,26 +276,28 @@ namespace Thinksea.Net.FileUploader {
             url = url.setUriParameter("cmd", "getoffset")
                 .setUriParameter("filename", file.name)
                 .setUriParameter("filesize", file.size.toString())
-                .setUriParameter("checkcode", _self.checkCode)
-                .setUriParameter("param", _self.customParameter);
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
 
             let xhr = new XMLHttpRequest();
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
-                xhr.addEventListener("error", function (e2: ErrorEvent) {
+                xhr.addEventListener("error", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
-                        Message: e2.message,
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
                         CustomParameter: _self.customParameter,
                     };
-                    _self.errorOccurred(e);
+                    _self.errorOccurred!(e);
                 }, false);
             }
             if (_self.onabort) {
-                xhr.addEventListener("abort", function (e2: Event) {
+                xhr.addEventListener("abort", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
-                    _self.onabort(e);
+                    _self.onabort!(e);
                 }, false);
             }
             /**
@@ -359,8 +363,8 @@ namespace Thinksea.Net.FileUploader {
             url = url.setUriParameter("cmd", "upload")
                 .setUriParameter("filename", file.name)
                 .setUriParameter("filesize", file.size.toString())
-                .setUriParameter("checkcode", _self.checkCode)
-                .setUriParameter("param", _self.customParameter);
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
 
             let chunkSize = 204800;
             let pos: GLint64 = startPosition, end: GLint64 = startPosition;
@@ -368,20 +372,22 @@ namespace Thinksea.Net.FileUploader {
             let xhr = new XMLHttpRequest();
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
-                xhr.addEventListener("error", function (e2: ErrorEvent) {
+                xhr.addEventListener("error", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
-                        Message: e2.message,
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
                         CustomParameter: _self.customParameter,
                     };
-                    _self.errorOccurred(e);
+                    _self.errorOccurred!(e);
                 }, false);
             }
             if (_self.onabort) {
-                xhr.addEventListener("abort", function (e2: Event) {
+                xhr.addEventListener("abort", function (e2: ProgressEvent) {
                     let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
-                    _self.onabort(e);
+                    _self.onabort!(e);
                 }, false);
             }
             /**
@@ -499,7 +505,7 @@ namespace Thinksea.Net.FileUploader {
             /**
              * 自定义参数。
              */
-            readonly CustomParameter: string;
+            readonly CustomParameter?: string;
         };
 
         /**
@@ -517,7 +523,7 @@ namespace Thinksea.Net.FileUploader {
             /**
              * 自定义参数。
              */
-            readonly CustomParameter: string;
+            readonly CustomParameter?: string;
             /**
              * 获取需要返回到客户端的数据。
              */
@@ -535,7 +541,7 @@ namespace Thinksea.Net.FileUploader {
             /**
              * 自定义参数。
              */
-            readonly CustomParameter: string;
+            readonly CustomParameter?: string;
         };
 
         /**
@@ -549,7 +555,7 @@ namespace Thinksea.Net.FileUploader {
             /**
              * 自定义参数。
              */
-            readonly CustomParameter: string;
+            readonly CustomParameter?: string;
         };
 
         /**
@@ -559,7 +565,7 @@ namespace Thinksea.Net.FileUploader {
             /**
              * 自定义参数。
              */
-            readonly CustomParameter: string;
+            readonly CustomParameter?: string;
         };
 
     }

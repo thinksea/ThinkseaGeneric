@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Text.Json" Version="10.0.1" />
+	<PackageReference Include="System.Text.Json" Version="10.0.6" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
@@ -34,7 +34,7 @@
 	<PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == '.NETCoreApp' And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '8.0'))" ><!--.net 8.0或更高版本增加的框架引用-->
+  <ItemGroup Condition="$([MSBuild]::GetTargetFrameworkIdentifier('$(TargetFramework)')) == '.NETCoreApp' And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '8.0'))"><!--.net 8.0或更高版本增加的框架引用-->
    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

@@ -256,7 +256,7 @@
      */
     function uploadNextItem(ctl: HTMLElement): void {
         if (ctl.classList.contains("uploadItem")) { //如果是上传元素
-            ctl = ctl.parentElement; //查找文件列表面板。
+            ctl = ctl.parentElement!; //查找文件列表面板。
         }
         let nextItem = ctl.querySelector(".uploadItem[data-uploadstate='wait']"); //查找待上传的元素
         if (nextItem) {
@@ -269,7 +269,7 @@
      * @param e
      */
     function beginUpload(e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs): void {
-        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         ctl.setAttribute("data-begin_upload_time", new Date().toString());
         ctl.setAttribute("data-start_position", e.StartPosition.toString());
     };
@@ -283,8 +283,8 @@
         //let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
         //let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
 
-        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
-        let progress = ctl.querySelector("progress");
+        let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
+        let progress = ctl.querySelector("progress")!;
         if (progress) {
             let percentComplete: GLfloat;
             if (e.FileLength === 0) {
@@ -304,8 +304,8 @@
         let sTimeSpan: string = "";
         {
             let nowTime = new Date();
-            let beginUploadTime: Date = new Date(ctl.getAttribute("data-begin_upload_time"));
-            let startPosition: GLint = parseInt(ctl.getAttribute("data-start_position")); //上传的起始位置。
+            let beginUploadTime: Date = new Date(ctl.getAttribute("data-begin_upload_time")!);
+            let startPosition: GLint = parseInt(ctl.getAttribute("data-start_position")!); //上传的起始位置。
             let timeSpan: GLfloat = (nowTime.getTime() - beginUploadTime.getTime()) / 1000.0; //耗费的时间（单位：秒）
             let sendSize: GLint = e.FinishedSize - startPosition; //已经发送的数据大小。
             let speed: GLfloat = sendSize / timeSpan; //上传速度
@@ -355,7 +355,7 @@
                     fileSize.innerText = convertToFileSize(file.FileLength, "0.#");
                 }
                 ctl.setAttribute("data-savepath", file.SavePath);
-                let filesPanel = ctl.parentElement.parentElement; //查找文件列表面板。
+                let filesPanel = ctl.parentElement?.parentElement!; //查找文件列表面板。
                 if (filesPanel.id === "ctl5") { //批量上传文件
                     let uploadSuccessItems = filesPanel.querySelectorAll(".uploadItem[data-uploadstate='success']");
                     let savePaths = "";
@@ -378,7 +378,7 @@
      * @param e
      */
     function onerror(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs): void {
-        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         let progress = ctl.querySelector("progress");
         if (progress) {
             progress.style.display = 'none';
@@ -409,7 +409,7 @@
      * @param e
      */
     function onabort(e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs): void {
-        let ctl = document.getElementById(e.CustomParameter) as HTMLElement;
+        let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         let progress = ctl.querySelector("progress");
         if (progress) {
             progress.style.display = "none";
@@ -501,16 +501,16 @@
 </div>';
                     let item = htmlCreator.firstElementChild as HTMLDivElement; //新建上传元素。
                     (item.querySelector(".deleteButton") as HTMLButtonElement).onclick = function (e) {
-                        let panel = (this as HTMLButtonElement).parentElement;
+                        let panel = (this as HTMLButtonElement).parentElement!;
                         let uploader: Thinksea.Net.FileUploader.HttpFileUpload = (panel as any).uploader as Thinksea.Net.FileUploader.HttpFileUpload;
                         if (uploader) {
                             uploader.cancelUpload();
                         }
-                        let filesControl = panel.parentElement;
+                        let filesControl = panel.parentElement!;
                         panel.remove();
                         uploadNextItem(filesControl);
                     };
-                    fileInsertMark.parentElement.insertBefore(item, fileInsertMark); //将上传元素添加到文件列表面板。
+                    fileInsertMark.parentElement!.insertBefore(item, fileInsertMark); //将上传元素添加到文件列表面板。
                     (item as any).file = files[i]; //将文件关联到上传元素。
                 }
                 uploadNextItem(ctl);
@@ -587,7 +587,7 @@
         };
         //#endregion
 
-        initUploadControl(document.getElementById("ctl5")); //批量上传文件
+        initUploadControl(document.getElementById("ctl5")!); //批量上传文件
 
         if (document.forms.length > 0) {
             document.forms[0].onsubmit = function () {

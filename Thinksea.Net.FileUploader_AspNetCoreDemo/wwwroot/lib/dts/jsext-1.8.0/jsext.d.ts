@@ -86,7 +86,7 @@ interface Date {
      *     console.log('d.format("yyyy年 MMM dd dddd", "zh_cn")-->' + d.format("yyyy年 MMM dd dddd", "zh_cn"));    //2015年 一月 30 星期五
      *     console.log('d.format("yyyy MMM dd dddd", "en")-->' + d.format("yyyy MMM dd dddd", "en"));    //2015 Jan 30 Friday
      */
-    format(pattern: string, local?: string): string;
+    format(pattern: string, local?: "en" | "zh_cn"): string;
     formatLocal: {
         "en": {
             Month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -278,7 +278,7 @@ interface String {
      *     alert("aaabccdeaabaaa".trimStart(['a', 'b'])) //输出“ccdeaabaaa”
      *     alert("aaabccdeaabaaa".trimStart('a', 'b')) //输出“ccdeaabaaa”
      */
-    trimStart(trimChars: string | string[] | null): string;
+    trimStart(trimChars?: string | string[] | null): string;
     /**
      * 从当前 String 对象移除数组中指定的一组字符的所有尾部匹配项。（为 JavaScript String 对象添加的扩展方法。）
      * @param trimChars：要删除的字符的数组，或 null。如果 trimChars 为 null 或空数组，则改为删除空白字符。
@@ -288,7 +288,7 @@ interface String {
      *     alert("aaabccdeaabaaa".trimEnd(['a', 'b'])) //输出“aaabccde”
      *     alert("aaabccdeaabaaa".trimEnd('a', 'b')) //输出“aaabccde”
      */
-    trimEnd(trimChars: string | string[] | null): string;
+    trimEnd(trimChars?: string | string[] | null): string;
     /**
      * 获取文件全名。（为 JavaScript String 对象添加的扩展方法。）
      * @returns 文件名。
@@ -310,7 +310,7 @@ interface String {
      * @param name 参数名。
      * @returns 指定参数的值，如果找不到这个参数则返回 null。
      */
-    getUriParameter(name: string): string;
+    getUriParameter(name: string): string | null;
     /**
      * 为指定的 URI 设置参数。
      * @param name 参数名。
@@ -356,7 +356,7 @@ interface String {
      *     alert("http://www.thinksea.com".getUriPath());//输出 http://www.thinksea.com/
      *     alert("http://www.thinksea.com/a.aspx/?id=1&name=2".getUriPath());//输出 http://www.thinksea.com/a.aspx/
      */
-    getUriPath(): string;
+    getUriPath(): string | null;
     /**
      * 返回当前路径与指定路径的组合。
      * @param uri2 第2个 uri 字符串。
@@ -393,9 +393,9 @@ interface String {
     toColorRGB(): string;
 }
 /**
- * 封装了 URI 扩展处理功能。（***此对象仅供内部代码使用，请勿引用。）
+ * 封装了 URI 扩展处理功能。
  */
-declare class UriExtTool {
+declare class UriBuilder {
     /**
      * URI 基本路径信息。
      */
@@ -410,10 +410,17 @@ declare class UriExtTool {
     private mark;
     /**
      * 用指定的 URI 创建此实例。
-     * @param uri 一个可能包含参数的 uri 字符串。
-     * @returns URI 解析实例。
+     * @param uri 一个 uri 字符串。
      */
-    static Create(uri: string): UriExtTool;
+    constructor(uri: string);
+    /**
+     * 对参数按照参数名升序排序。
+     */
+    sortQuery(): void;
+    /**
+     * 删除值为 null 或 undefined 或者空字符串的参数。
+     */
+    removeNullOrEmpty(): void;
     /**
      * 返回此实例的字符串表示形式。
      * @returns 返回一个 URI，此实例到字符串表示形式。
@@ -424,7 +431,7 @@ declare class UriExtTool {
      * @param name 参数名。
      * @returns 指定参数的值，如果找不到这个参数则返回 null。
      */
-    getUriParameter(name: string): string;
+    getUriParameter(name: string): string | null;
     /**
      * 为指定的 URI 设置参数。
      * @param name 参数名。
@@ -443,9 +450,9 @@ declare class UriExtTool {
      */
     clearUriParameter(retainSharp: boolean): void;
 }
-declare namespace UriExtTool {
+declare namespace UriBuilder {
     /**
-     * 定义 URI 的基础参数数据结构。（***此对象仅供内部代码使用，请勿引用。）
+     * 定义 URI 的参数数据结构。（***此对象仅供内部代码使用，请勿引用。）
      */
     class QueryItem {
         /**
@@ -455,13 +462,13 @@ declare namespace UriExtTool {
         /**
          * 参数值。
          */
-        value: string;
+        value: string | null;
         /**
          * 用指定的数据初始化此实例。
          * @param key 参数名
          * @param value 参数值
          */
-        constructor(key: string, value: string);
+        constructor(key: string, value: string | null);
         /**
          * 返回此实例的字符串表示形式。
          */
@@ -493,7 +500,7 @@ declare function htmlDecode(str: string): string;
  */
 declare function isMobile(): boolean;
 declare namespace isMobile {
-    let _isMobile: boolean;
+    let _isMobile: boolean | null;
 }
 /**
  * 判断用户端访问环境是否移动电话或平板浏览器。
@@ -503,7 +510,7 @@ declare namespace isMobile {
  */
 declare function isMobileOrPad(): boolean;
 declare namespace isMobileOrPad {
-    let _isMobileOrPad: boolean;
+    let _isMobileOrPad: boolean | null;
 }
 /**
  * 判断是否在微信浏览器内访问网页。
