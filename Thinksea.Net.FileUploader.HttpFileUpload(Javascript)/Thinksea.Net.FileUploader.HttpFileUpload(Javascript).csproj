@@ -25,4 +25,8 @@
     </PackageReference>
   </ItemGroup>
 
+    <Target Name="GenerateErpAPIDeclaration" AfterTargets="Build">
+	    <!-- 在编译项目后生成.d.ts（TypeScript 声明文件），调用为生成d.ts创建的专用配置文件 -->
+	    <Exec Command="npx tsc --project tsconfig.dts.json" />
+    </Target>
 </Project>
