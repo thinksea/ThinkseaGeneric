@@ -437,7 +437,7 @@ declare class UriBuilder {
      * @param name 参数名。
      * @param value 新的参数值。
      */
-    setUriParameter(name: string, value: string): void;
+    setUriParameter(name: string, value: string | null): void;
     /**
      * 从指定的 URI 删除参数。
      * @param name 参数名。
@@ -483,16 +483,16 @@ declare namespace UriBuilder {
 declare function xmlEncode(str: string): string;
 /**
  * 将字符串转换为 HTML 编码的字符串。
- * @param str 要编码的字符串。
+ * @param str 要编码的字符串。当取值为 null 时，返回空字符串 ""。
  * @returns 编码后的 HTML 文本。
  */
-declare function htmlEncode(str: string): string;
+declare function htmlEncode(str: string | null): string;
 /**
  * 将已经进行过 HTML 编码的字符串转换为已解码的字符串。
- * @param str 要解码的字符串。
+ * @param str 要解码的字符串。当取值为 null 时，返回空字符串 ""。
  * @returns 解码后的 HTML 文本。
  */
-declare function htmlDecode(str: string): string;
+declare function htmlDecode(str: string | null): string;
 /**
  * 判断用户端访问环境是否移动电话浏览器。
  * @returns 如果是移动电话则返回 true；否则返回 false。
