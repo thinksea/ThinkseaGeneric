@@ -318,7 +318,7 @@ interface String {
      * @returns 已经设置了指定参数名和参数值的 uri 字符串。
      * @description 如果参数存在则更改它的值，否则添加这个参数。
      */
-    setUriParameter(name: string, value: string): string;
+    setUriParameter(name: string, value: string | null): string;
     /**
      * 从指定的 URI 删除参数。
      * @param name 参数名。
