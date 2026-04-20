@@ -8,7 +8,7 @@
   "compilerOptions": {
     "strict": true, //是否启用严格模式
     "noImplicitAny": true, //不允许变量或函数参数具有隐式 any 类型。
-    //"noImplicitThis": false, //不允许 this 上下文隐式定义。
+    "noImplicitThis": true, //不允许 this 上下文隐式定义。
     //"strictNullChecks": false, //不允许出现 null 或 undefined 的可能性。
     //"strictPropertyInitialization": false, //验证构造函数内部初始化前后已定义的属性。
     //"strictBindCallApply": false, //对 bind, call, apply 更严格的类型检测。
