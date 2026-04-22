@@ -1,6 +1,6 @@
 ﻿/**
  * 封装了基于 HTTP 协议的文件上传客户端功能。（组件“Thinksea.Net.FileUploader”的 javascript 版本）
- * @version 4.2.0
+ * @version 5.0.0
  * @description 此组件依赖于下列组件
  * 1、jsext 1.8.0 source link：https://github.com/thinksea/jsext
  * 2、谷歌的 JS 散列算法组件“CryptoJS”（版本 4.1.1）支持。 source link：https://github.com/brix/crypto-js
@@ -10,6 +10,84 @@ namespace Thinksea.Net.FileUploader {
     * 散列算法对象。
     */
     declare let CryptoJS: any;
+
+    /**
+     * 定义开始上传文件事件参数。
+     */
+    export interface BeginUploadEventArgs {
+        /**
+         * 文件大小（单位：字节）
+         */
+        readonly FileLength: GLint64;
+        /**
+         * 上传起始位置。
+         */
+        readonly StartPosition: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    };
+
+    /**
+     * 文件上传进度更改事件参数。
+     */
+    export interface UploadProgressChangedEventArgs {
+        /**
+         * 文件大小（单位：字节）
+         */
+        readonly FileLength: GLint64;
+        /**
+         * 获取已成功上传的数据大小。
+         */
+        readonly FinishedSize: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+        /**
+         * 获取需要返回到客户端的数据。
+         */
+        readonly ResultData: any;
+    };
+
+    /**
+     * 断点上传信息事件参数。
+     */
+    export interface BreakpointUploadEventArgs {
+        /**
+         * 获取或设置断点上传起始位置，设置为 0 时表示重新上传。
+         */
+        readonly Breakpoint: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    };
+
+    /**
+     * 定义上传过程中出现错误事件参数。
+     */
+    export interface UploadErrorEventArgs {
+        /**
+         * 错误消息文本。
+         */
+        readonly Message: string;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    };
+
+    /**
+     * 定义上传中止事件参数。
+     */
+    export interface AbortEventArgs {
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    };
 
     /**
      * 封装了服务器返回到客户端的数据格式标准。
@@ -33,6 +111,7 @@ namespace Thinksea.Net.FileUploader {
 
     /**
      * 封装了上传文件功能实现。
+     * @deprecated 此类已废弃，请使用 HttpFileUploadAsync 类替代。
      */
     export class HttpFileUpload {
         /**
@@ -43,27 +122,27 @@ namespace Thinksea.Net.FileUploader {
          * 当开始上传文件时引发此事件。
          * @param e 事件参数。
          */
-        public beginUpload: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs) => void) | null = null;
+        public beginUpload: ((e: Thinksea.Net.FileUploader.BeginUploadEventArgs) => void) | null = null;
         /**
          * 当发现可用的断点上传信息时引发此事件。
          * @param e 事件参数。
          */
-        public findBreakpoint: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BreakpointUploadEventArgs) => void) | null = null;
+        public findBreakpoint: ((e: Thinksea.Net.FileUploader.BreakpointUploadEventArgs) => void) | null = null;
         /**
          * 当上传进度更改后引发此事件。
          * @param e 上传进度事件数据。
          */
-        public uploadProgressChanged: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs) => void) | null = null;
+        public uploadProgressChanged: ((e: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs) => void) | null = null;
         /**
          * 当上传过程中出现错误时引发此事件。
          * @param e 事件参数。
          */
-        public errorOccurred: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs) => void) | null = null;
+        public errorOccurred: ((e: Thinksea.Net.FileUploader.UploadErrorEventArgs) => void) | null = null;
         /**
          * 当上传中止时引发此事件。
          * @param e 事件参数。
          */
-        public onabort: ((e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs) => void) | null = null;
+        public onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void) | null = null;
 
         /**
          * 自定义参数。
@@ -144,7 +223,7 @@ namespace Thinksea.Net.FileUploader {
                 end = Math.min(pos + chunkSize, file.size);
                 if (_self.cancelling === true) {
                     if (_self.onabort) {
-                        let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                        let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                             CustomParameter: _self.customParameter,
                         };
                         _self.onabort(e);
@@ -173,7 +252,7 @@ namespace Thinksea.Net.FileUploader {
             let _self = this;
             if (_self.cancelling === true) {
                 if (_self.onabort) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
                     _self.onabort(e);
@@ -192,7 +271,7 @@ namespace Thinksea.Net.FileUploader {
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
                 xhr.addEventListener("error", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                         Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
                             (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
                             'Upload failed',
@@ -203,7 +282,7 @@ namespace Thinksea.Net.FileUploader {
             }
             if (_self.onabort) {
                 xhr.addEventListener("abort", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
                     _self.onabort!(e);
@@ -221,7 +300,7 @@ namespace Thinksea.Net.FileUploader {
                     {
                         let pos = file.size;
                         if (_self.uploadProgressChanged) {
-                            let data: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs = {
+                            let data: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs = {
                                 FinishedSize: pos,
                                 FileLength: file.size,
                                 CustomParameter: _self.customParameter,
@@ -236,7 +315,7 @@ namespace Thinksea.Net.FileUploader {
                 }
                 else {
                     if (_self.errorOccurred) {
-                        let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                             Message: result.Message,
                             CustomParameter: _self.customParameter,
                         };
@@ -264,7 +343,7 @@ namespace Thinksea.Net.FileUploader {
             let _self = this;
             if (_self.cancelling === true) {
                 if (_self.onabort) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
                     _self.onabort(e);
@@ -283,7 +362,7 @@ namespace Thinksea.Net.FileUploader {
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
                 xhr.addEventListener("error", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                         Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
                             (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
                             'Upload failed',
@@ -294,7 +373,7 @@ namespace Thinksea.Net.FileUploader {
             }
             if (_self.onabort) {
                 xhr.addEventListener("abort", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
                     _self.onabort!(e);
@@ -311,7 +390,7 @@ namespace Thinksea.Net.FileUploader {
                     let breakpoint: GLint64 = result.Data;
 
                     if (_self.findBreakpoint && breakpoint !== 0) {
-                        let p: Thinksea.Net.FileUploader.HttpFileUpload.BreakpointUploadEventArgs = {
+                        let p: Thinksea.Net.FileUploader.BreakpointUploadEventArgs = {
                             Breakpoint: breakpoint,
                             CustomParameter: _self.customParameter,
                         };
@@ -323,7 +402,7 @@ namespace Thinksea.Net.FileUploader {
                 }
                 else {
                     if (_self.errorOccurred) {
-                        let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                             Message: result.Message,
                             CustomParameter: _self.customParameter,
                         };
@@ -351,7 +430,7 @@ namespace Thinksea.Net.FileUploader {
         private beginUploadFile(file: File, startPosition: GLint64): void {
             let _self = this;
             if (_self.beginUpload) {
-                let e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs = {
+                let e: Thinksea.Net.FileUploader.BeginUploadEventArgs = {
                     FileLength: file.size,
                     CustomParameter: _self.customParameter,
                     StartPosition: startPosition,
@@ -373,7 +452,7 @@ namespace Thinksea.Net.FileUploader {
             //xhr.upload.addEventListener("progress", uploadProgress, false);
             if (_self.errorOccurred) {
                 xhr.addEventListener("error", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                         Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
                             (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
                             'Upload failed',
@@ -384,7 +463,7 @@ namespace Thinksea.Net.FileUploader {
             }
             if (_self.onabort) {
                 xhr.addEventListener("abort", function (e2: ProgressEvent) {
-                    let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                         CustomParameter: _self.customParameter,
                     };
                     _self.onabort!(e);
@@ -400,7 +479,7 @@ namespace Thinksea.Net.FileUploader {
                 if (ErrorCode == 0) {
                     pos = end;
                     if (_self.uploadProgressChanged) {
-                        let data: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs = {
+                        let data: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs = {
                             FinishedSize: pos,
                             FileLength: file.size,
                             CustomParameter: _self.customParameter,
@@ -415,7 +494,7 @@ namespace Thinksea.Net.FileUploader {
                 }
                 else {
                     if (_self.errorOccurred) {
-                        let e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs = {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
                             Message: result.Message,
                             CustomParameter: _self.customParameter,
                         };
@@ -438,7 +517,7 @@ namespace Thinksea.Net.FileUploader {
                 end = Math.min(pos + chunkSize, file.size);
                 if (_self.cancelling === true) {
                     if (_self.onabort) {
-                        let e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs = {
+                        let e: Thinksea.Net.FileUploader.AbortEventArgs = {
                             CustomParameter: _self.customParameter,
                         };
                         _self.onabort(e);
@@ -487,86 +566,457 @@ namespace Thinksea.Net.FileUploader {
     }
 
     /**
-     * 封装了上传文件功能实现。
+     * 封装了上传文件功能实现（异步版本）。
      */
-    export namespace HttpFileUpload {
+    export class HttpFileUploadAsync {
         /**
-         * 定义开始上传文件事件参数。
+         * 文件上传服务地址。
          */
-        export interface BeginUploadEventArgs {
-            /**
-             * 文件大小（单位：字节）
-             */
-            readonly FileLength: GLint64;
-            /**
-             * 上传起始位置。
-             */
-            readonly StartPosition: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        };
+        public uploadServiceUrl: string = "";
+        /**
+         * 当开始上传文件时引发此事件。
+         * @param e 事件参数。
+         */
+        public beginUpload: ((e: Thinksea.Net.FileUploader.BeginUploadEventArgs) => void | Promise<void>) | null = null;
+        /**
+         * 当发现可用的断点上传信息时引发此事件。
+         * @param e 事件参数。
+         */
+        public findBreakpoint: ((e: Thinksea.Net.FileUploader.BreakpointUploadEventArgs) => void | Promise<void>) | null = null;
+        /**
+         * 当上传进度更改后引发此事件。
+         * @param e 上传进度事件数据。
+         */
+        public uploadProgressChanged: ((e: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs) => void | Promise<void>) | null = null;
+        /**
+         * 当上传过程中出现错误时引发此事件。
+         * @param e 事件参数。
+         */
+        public errorOccurred: ((e: Thinksea.Net.FileUploader.UploadErrorEventArgs) => void | Promise<void>) | null = null;
+        /**
+         * 当上传中止时引发此事件。
+         * @param e 事件参数。
+         */
+        public onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void | Promise<void>) | null = null;
 
         /**
-         * 文件上传进度更改事件参数。
+         * 自定义参数。
          */
-        export interface UploadProgressChangedEventArgs {
-            /**
-             * 文件大小（单位：字节）
-             */
-            readonly FileLength: GLint64;
-            /**
-             * 获取已成功上传的数据大小。
-             */
-            readonly FinishedSize: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-            /**
-             * 获取需要返回到客户端的数据。
-             */
-            readonly ResultData: any;
-        };
+        private customParameter?: string;
 
         /**
-         * 断点上传信息事件参数。
+         * 文件完整性校验码，例如 SHA1 或 MD5 等。
          */
-        export interface BreakpointUploadEventArgs {
-            /**
-             * 获取或设置断点上传起始位置，设置为 0 时表示重新上传。
-             */
-            readonly Breakpoint: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        };
+        private checkCode: string | null = null;
+
 
         /**
-         * 定义上传过程中出现错误事件参数。
+         * 一个标识，用于指示是否应该中止上传。
          */
-        export interface UploadErrorEventArgs {
-            /**
-             * 错误消息文本。
-             */
-            readonly Message: string;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        };
+        private cancelling: boolean = false;
 
         /**
-         * 定义上传中止事件参数。
+         * 将 ArrayBuffer 对象转换为 CryptoJS 的 WordArray 对象。
+         * @param ab 一个 ArrayBuffer 对象。
+         * @returns CryptoJS 的 WordArray 对象。
          */
-        export interface AbortEventArgs {
+        private static arrayBufferToWordArray(ab: ArrayBuffer): any {
+            let i8a: Uint8Array = new Uint8Array(ab);
+            let a = [];
+            for (let i = 0; i < i8a.length; i += 4) {
+                a.push(i8a[i] << 24 | i8a[i + 1] << 16 | i8a[i + 2] << 8 | i8a[i + 3]);
+            }
+            return CryptoJS.lib.WordArray.create(a, i8a.length);
+        }
+
+        /**
+         * 获取文件的完整性校验码。
+         * @param file 待上传的文件。
+         */
+        private async getCheckCode(file: File): Promise<void> {
+            //    let files: FileList = event.target.files;
+            //    if (!files) {
+            //        alert("At least one selected file is invalid - do not select any folders.\
+            //Please reselect and try again.");
+            //        return false;
+            //    }
+
+            //    let file = files[0];
+
+            let _self = this;
+            let chunkSize = 204800;
+            let pos = 0, end = 0;
+            let sha1Instance = CryptoJS.algo.SHA1.create();
+            let reader = new FileReader();
+
             /**
-             * 自定义参数。
+             * 当文件加载完成时回调此方法。
              */
-            readonly CustomParameter?: string;
-        };
+            reader.onload = async function (e): Promise<void> {
+                pos = end;
+                //sha1Instance.update(CryptoJS.enc.Latin1.parse(e.target.result));
+                sha1Instance.update(Thinksea.Net.FileUploader.HttpFileUploadAsync.arrayBufferToWordArray((e.target as any).result));
+                //let present = ((pos * 1.0) / file.size) * 100;
+                //$("#div_load").css("width", Math.round(present) + "%");
+                if (pos < file.size) {
+                    await progressiveReadNext();
+                }
+                else {
+                    let sha1Value: object = sha1Instance.finalize();
+                    _self.checkCode = sha1Value.toString().toUpperCase(); //文件完整性校验码（SHA1 算法）
+                    //console.log(sha1Value.toString());
+                    //$("#sha1_show").html(sha1Value.toString());
+                    await _self.startFastUpload(file);
+
+                }
+            }
+
+            /**
+             * 采用这种分块处理的方式可以处理大文件。
+             */
+            async function progressiveReadNext(): Promise<void> {
+                end = Math.min(pos + chunkSize, file.size);
+                if (_self.cancelling === true) {
+                    if (_self.onabort) {
+                        let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                            CustomParameter: _self.customParameter,
+                        };
+                        await _self.onabort(e);
+                    }
+                    return;
+                }
+                let blob;
+                if (file.slice) {
+                    blob = file.slice(pos, end);
+                } else if ((file as any).webkitSlice) {
+                    blob = (file as any).webkitSlice(pos, end);
+                } else if ((File.prototype as any).mozSlice) {
+                    blob = (file as any).mozSlice(pos, end);
+                }
+                //reader.readAsBinaryString(blob);
+                reader.readAsArrayBuffer(blob);
+            }
+            await progressiveReadNext();
+        }
+
+        /**
+         * 开始上传文件，支持秒传。
+         * @param file 待上传的文件。
+         */
+        private async startFastUpload(file: File): Promise<void> {
+            let _self = this;
+            if (_self.cancelling === true) {
+                if (_self.onabort) {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.onabort(e);
+                }
+                return;
+            }
+
+            let url = _self.uploadServiceUrl;
+            url = url.setUriParameter("cmd", "fastupload")
+                .setUriParameter("filename", file.name)
+                .setUriParameter("filesize", file.size.toString())
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
+
+            let xhr = new XMLHttpRequest();
+            //xhr.upload.addEventListener("progress", uploadProgress, false);
+            if (_self.errorOccurred) {
+                xhr.addEventListener("error", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.errorOccurred!(e);
+                }, false);
+            }
+            if (_self.onabort) {
+                xhr.addEventListener("abort", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.onabort!(e);
+                }, false);
+            }
+            /**
+             * 当文件片段发送完成时回调此方法。
+             */
+            xhr.addEventListener("load", async function (evt: Event): Promise<void> {
+                let response: string = (evt.target as XMLHttpRequest).responseText;
+                let result: Thinksea.Net.FileUploader.ServiceResult = JSON.parse(response);
+                let ErrorCode = result.ErrorCode;
+                if (ErrorCode == 0) {
+                    if (result.Data !== null) //断点续传成功
+                    {
+                        let pos = file.size;
+                        if (_self.uploadProgressChanged) {
+                            let data: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs = {
+                                FinishedSize: pos,
+                                FileLength: file.size,
+                                CustomParameter: _self.customParameter,
+                                ResultData: result.Data,
+                            };
+                            await _self.uploadProgressChanged(data);
+                        }
+                    }
+                    else { //无法秒传，开始尝试断点续传。
+                        await _self.startBreakpointUpload(file);
+                    }
+                }
+                else {
+                    if (_self.errorOccurred) {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                            Message: result.Message,
+                            CustomParameter: _self.customParameter,
+                        };
+                        //new upload.HttpFileUpload.UploadErrorEventArgs("", {
+                        //    message: result.Message
+                        //});
+                        await _self.errorOccurred(e);
+                    }
+                    else {
+                        alert("上传出现错误。" + result.Message);
+                    }
+                }
+
+            }, false);
+
+            xhr.open("POST", url);
+            xhr.send();
+        }
+
+        /**
+         * 开始上传文件，支持断点续传。
+         * @param file 待上传的文件。
+         */
+        private async startBreakpointUpload(file: File): Promise<void> {
+            let _self = this;
+            if (_self.cancelling === true) {
+                if (_self.onabort) {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.onabort(e);
+                }
+                return;
+            }
+
+            let url = _self.uploadServiceUrl;
+            url = url.setUriParameter("cmd", "getoffset")
+                .setUriParameter("filename", file.name)
+                .setUriParameter("filesize", file.size.toString())
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
+
+            let xhr = new XMLHttpRequest();
+            //xhr.upload.addEventListener("progress", uploadProgress, false);
+            if (_self.errorOccurred) {
+                xhr.addEventListener("error", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.errorOccurred!(e);
+                }, false);
+            }
+            if (_self.onabort) {
+                xhr.addEventListener("abort", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.onabort!(e);
+                }, false);
+            }
+            /**
+             * 当文件片段发送完成时回调此方法。
+             */
+            xhr.addEventListener("load", async function (evt: Event): Promise<void> {
+                let response: string = (evt.target as XMLHttpRequest).responseText;
+                let result: Thinksea.Net.FileUploader.ServiceResult = JSON.parse(response);
+                let ErrorCode = result.ErrorCode;
+                if (ErrorCode == 0) {
+                    let breakpoint: GLint64 = result.Data;
+
+                    if (_self.findBreakpoint && breakpoint !== 0) {
+                        let p: Thinksea.Net.FileUploader.BreakpointUploadEventArgs = {
+                            Breakpoint: breakpoint,
+                            CustomParameter: _self.customParameter,
+                        };
+                        await _self.findBreakpoint(p);
+                        breakpoint = p.Breakpoint;
+                    }
+
+                    await _self.beginUploadFile(file, breakpoint);
+                }
+                else {
+                    if (_self.errorOccurred) {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                            Message: result.Message,
+                            CustomParameter: _self.customParameter,
+                        };
+                        //new upload.HttpFileUpload.UploadErrorEventArgs("", {
+                        //    message: result.Message
+                        //});
+                        await _self.errorOccurred(e);
+                    }
+                    else {
+                        alert("上传出现错误。" + result.Message);
+                    }
+                }
+
+            }, false);
+
+            xhr.open("POST", url);
+            xhr.send();
+        }
+
+        /**
+         * 从指定的位置开始上传文件。
+         * @param file 待上传的文件。
+         * @param startPosition 上传起始位置。
+         */
+        private async beginUploadFile(file: File, startPosition: GLint64): Promise<void> {
+            let _self = this;
+            if (_self.beginUpload) {
+                let e: Thinksea.Net.FileUploader.BeginUploadEventArgs = {
+                    FileLength: file.size,
+                    CustomParameter: _self.customParameter,
+                    StartPosition: startPosition,
+                };
+                await _self.beginUpload(e);
+            }
+
+            let url = _self.uploadServiceUrl;
+            url = url.setUriParameter("cmd", "upload")
+                .setUriParameter("filename", file.name)
+                .setUriParameter("filesize", file.size.toString())
+                .setUriParameter("checkcode", _self.checkCode ?? "")
+                .setUriParameter("param", _self.customParameter ?? "");
+
+            let chunkSize = 204800;
+            let pos: GLint64 = startPosition, end: GLint64 = startPosition;
+
+            let xhr = new XMLHttpRequest();
+            //xhr.upload.addEventListener("progress", uploadProgress, false);
+            if (_self.errorOccurred) {
+                xhr.addEventListener("error", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                        Message: (e2 as any).message ||      // 兼容旧代码实现 ErrorEvent 【可能是书写错误】
+                            (e2.target as XMLHttpRequest)?.statusText ||  // 兼容 ProgressEvent【标准实现】
+                            'Upload failed',
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.errorOccurred!(e);
+                }, false);
+            }
+            if (_self.onabort) {
+                xhr.addEventListener("abort", async function (e2: ProgressEvent): Promise<void> {
+                    let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                        CustomParameter: _self.customParameter,
+                    };
+                    await _self.onabort!(e);
+                }, false);
+            }
+            /**
+             * 当文件片段发送完成时回调此方法。
+             */
+            xhr.addEventListener("load", async function (evt: Event): Promise<void> {
+                let response: string = (evt.target as XMLHttpRequest).responseText;
+                let result: Thinksea.Net.FileUploader.ServiceResult = JSON.parse(response);
+                let ErrorCode = result.ErrorCode;
+                if (ErrorCode == 0) {
+                    pos = end;
+                    if (_self.uploadProgressChanged) {
+                        let data: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs = {
+                            FinishedSize: pos,
+                            FileLength: file.size,
+                            CustomParameter: _self.customParameter,
+                            ResultData: result.Data,
+                        };
+                        await _self.uploadProgressChanged(data);
+                    }
+
+                    if (pos < file.size) {
+                        await progressiveUploadNext();
+                    }
+                }
+                else {
+                    if (_self.errorOccurred) {
+                        let e: Thinksea.Net.FileUploader.UploadErrorEventArgs = {
+                            Message: result.Message,
+                            CustomParameter: _self.customParameter,
+                        };
+                        //new upload.HttpFileUpload.UploadErrorEventArgs("", {
+                        //    message: result.Message
+                        //});
+                        await _self.errorOccurred(e);
+                    }
+                    else {
+                        alert("上传出现错误。" + result.Message);
+                    }
+                }
+
+            }, false);
+
+            /**
+             * 采用这种分块处理的方式可以处理大文件。
+             */
+            async function progressiveUploadNext(): Promise<void> {
+                end = Math.min(pos + chunkSize, file.size);
+                if (_self.cancelling === true) {
+                    if (_self.onabort) {
+                        let e: Thinksea.Net.FileUploader.AbortEventArgs = {
+                            CustomParameter: _self.customParameter,
+                        };
+                        await _self.onabort(e);
+                    }
+                    return;
+                }
+                let blob;
+                if (file.slice) {
+                    blob = file.slice(pos, end);
+                } else if ((file as any).webkitSlice) {
+                    blob = (file as any).webkitSlice(pos, end);
+                } else if ((File.prototype as any).mozSlice) {
+                    blob = (file as any).mozSlice(pos, end);
+                }
+
+                let fd = new FormData();
+                //fd.delete("fileToUpload");
+                fd.append("fileToUpload", blob);
+                let u = url.setUriParameter("offset", pos.toString());
+                xhr.open("POST", u);
+                xhr.send(fd);
+            }
+
+            await progressiveUploadNext();
+        }
+
+        /**
+         * 开始上传指定文件。
+         * @param file 待上传的文件。
+         * @param customParameter 自定义参数。
+         */
+        public async startUpload(file: File, customParameter?: string): Promise<void> {
+            let _self = this;
+            _self.customParameter = customParameter;
+            _self.cancelling = false;
+            await _self.getCheckCode(file);
+        }
+
+        /**
+         * 放弃上传文件。
+         */
+        public cancelUpload(): void {
+            this.cancelling = true;
+        }
 
     }
 

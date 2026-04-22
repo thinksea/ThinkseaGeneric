@@ -6,6 +6,11 @@
 特别声明：部分内容来源于互联网，由于时间较为久远已不知原作者归属，如侵犯了您的权益请发送邮件至“thinksea@163.com”，感谢原作者做出的贡献。
 
 =======
+###### version：2026-4-22
+
++ 更新组件 Thinksea.Net.FileUploader ，新增异步实现 Thinksea.Net.FileUploader.HttpFileUploadAsync
++ 原组件 Thinksea.Net.FileUploader.HttpFileUpload 标注为已废弃，建议使用 HttpFileUploadAsync 替代。
+
 ###### version：2026-4-15
 
 + 执行严格模式的 TypeScript 编译检查

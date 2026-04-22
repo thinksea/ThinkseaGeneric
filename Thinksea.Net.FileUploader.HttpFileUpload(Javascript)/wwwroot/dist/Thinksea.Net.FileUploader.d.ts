@@ -1,11 +1,84 @@
 ﻿/**
  * 封装了基于 HTTP 协议的文件上传客户端功能。（组件“Thinksea.Net.FileUploader”的 javascript 版本）
- * @version 4.2.0
+ * @version 5.0.0
  * @description 此组件依赖于下列组件
  * 1、jsext 1.8.0 source link：https://github.com/thinksea/jsext
  * 2、谷歌的 JS 散列算法组件“CryptoJS”（版本 4.1.1）支持。 source link：https://github.com/brix/crypto-js
  */
 declare namespace Thinksea.Net.FileUploader {
+    /**
+     * 定义开始上传文件事件参数。
+     */
+    interface BeginUploadEventArgs {
+        /**
+         * 文件大小（单位：字节）
+         */
+        readonly FileLength: GLint64;
+        /**
+         * 上传起始位置。
+         */
+        readonly StartPosition: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    }
+    /**
+     * 文件上传进度更改事件参数。
+     */
+    interface UploadProgressChangedEventArgs {
+        /**
+         * 文件大小（单位：字节）
+         */
+        readonly FileLength: GLint64;
+        /**
+         * 获取已成功上传的数据大小。
+         */
+        readonly FinishedSize: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+        /**
+         * 获取需要返回到客户端的数据。
+         */
+        readonly ResultData: any;
+    }
+    /**
+     * 断点上传信息事件参数。
+     */
+    interface BreakpointUploadEventArgs {
+        /**
+         * 获取或设置断点上传起始位置，设置为 0 时表示重新上传。
+         */
+        readonly Breakpoint: GLint64;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    }
+    /**
+     * 定义上传过程中出现错误事件参数。
+     */
+    interface UploadErrorEventArgs {
+        /**
+         * 错误消息文本。
+         */
+        readonly Message: string;
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    }
+    /**
+     * 定义上传中止事件参数。
+     */
+    interface AbortEventArgs {
+        /**
+         * 自定义参数。
+         */
+        readonly CustomParameter?: string;
+    }
     /**
      * 封装了服务器返回到客户端的数据格式标准。
      */
@@ -25,6 +98,7 @@ declare namespace Thinksea.Net.FileUploader {
     }
     /**
      * 封装了上传文件功能实现。
+     * @deprecated 此类已废弃，请使用 HttpFileUploadAsync 类替代。
      */
     class HttpFileUpload {
         /**
@@ -35,27 +109,27 @@ declare namespace Thinksea.Net.FileUploader {
          * 当开始上传文件时引发此事件。
          * @param e 事件参数。
          */
-        beginUpload: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs) => void) | null;
+        beginUpload: ((e: Thinksea.Net.FileUploader.BeginUploadEventArgs) => void) | null;
         /**
          * 当发现可用的断点上传信息时引发此事件。
          * @param e 事件参数。
          */
-        findBreakpoint: ((e: Thinksea.Net.FileUploader.HttpFileUpload.BreakpointUploadEventArgs) => void) | null;
+        findBreakpoint: ((e: Thinksea.Net.FileUploader.BreakpointUploadEventArgs) => void) | null;
         /**
          * 当上传进度更改后引发此事件。
          * @param e 上传进度事件数据。
          */
-        uploadProgressChanged: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs) => void) | null;
+        uploadProgressChanged: ((e: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs) => void) | null;
         /**
          * 当上传过程中出现错误时引发此事件。
          * @param e 事件参数。
          */
-        errorOccurred: ((e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs) => void) | null;
+        errorOccurred: ((e: Thinksea.Net.FileUploader.UploadErrorEventArgs) => void) | null;
         /**
          * 当上传中止时引发此事件。
          * @param e 事件参数。
          */
-        onabort: ((e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs) => void) | null;
+        onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void) | null;
         /**
          * 自定义参数。
          */
@@ -107,81 +181,86 @@ declare namespace Thinksea.Net.FileUploader {
         cancelUpload(): void;
     }
     /**
-     * 封装了上传文件功能实现。
+     * 封装了上传文件功能实现（异步版本）。
      */
-    namespace HttpFileUpload {
+    class HttpFileUploadAsync {
         /**
-         * 定义开始上传文件事件参数。
+         * 文件上传服务地址。
          */
-        interface BeginUploadEventArgs {
-            /**
-             * 文件大小（单位：字节）
-             */
-            readonly FileLength: GLint64;
-            /**
-             * 上传起始位置。
-             */
-            readonly StartPosition: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        }
+        uploadServiceUrl: string;
         /**
-         * 文件上传进度更改事件参数。
+         * 当开始上传文件时引发此事件。
+         * @param e 事件参数。
          */
-        interface UploadProgressChangedEventArgs {
-            /**
-             * 文件大小（单位：字节）
-             */
-            readonly FileLength: GLint64;
-            /**
-             * 获取已成功上传的数据大小。
-             */
-            readonly FinishedSize: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-            /**
-             * 获取需要返回到客户端的数据。
-             */
-            readonly ResultData: any;
-        }
+        beginUpload: ((e: Thinksea.Net.FileUploader.BeginUploadEventArgs) => void | Promise<void>) | null;
         /**
-         * 断点上传信息事件参数。
+         * 当发现可用的断点上传信息时引发此事件。
+         * @param e 事件参数。
          */
-        interface BreakpointUploadEventArgs {
-            /**
-             * 获取或设置断点上传起始位置，设置为 0 时表示重新上传。
-             */
-            readonly Breakpoint: GLint64;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        }
+        findBreakpoint: ((e: Thinksea.Net.FileUploader.BreakpointUploadEventArgs) => void | Promise<void>) | null;
         /**
-         * 定义上传过程中出现错误事件参数。
+         * 当上传进度更改后引发此事件。
+         * @param e 上传进度事件数据。
          */
-        interface UploadErrorEventArgs {
-            /**
-             * 错误消息文本。
-             */
-            readonly Message: string;
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        }
+        uploadProgressChanged: ((e: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs) => void | Promise<void>) | null;
         /**
-         * 定义上传中止事件参数。
+         * 当上传过程中出现错误时引发此事件。
+         * @param e 事件参数。
          */
-        interface AbortEventArgs {
-            /**
-             * 自定义参数。
-             */
-            readonly CustomParameter?: string;
-        }
+        errorOccurred: ((e: Thinksea.Net.FileUploader.UploadErrorEventArgs) => void | Promise<void>) | null;
+        /**
+         * 当上传中止时引发此事件。
+         * @param e 事件参数。
+         */
+        onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void | Promise<void>) | null;
+        /**
+         * 自定义参数。
+         */
+        private customParameter?;
+        /**
+         * 文件完整性校验码，例如 SHA1 或 MD5 等。
+         */
+        private checkCode;
+        /**
+         * 一个标识，用于指示是否应该中止上传。
+         */
+        private cancelling;
+        /**
+         * 将 ArrayBuffer 对象转换为 CryptoJS 的 WordArray 对象。
+         * @param ab 一个 ArrayBuffer 对象。
+         * @returns CryptoJS 的 WordArray 对象。
+         */
+        private static arrayBufferToWordArray;
+        /**
+         * 获取文件的完整性校验码。
+         * @param file 待上传的文件。
+         */
+        private getCheckCode;
+        /**
+         * 开始上传文件，支持秒传。
+         * @param file 待上传的文件。
+         */
+        private startFastUpload;
+        /**
+         * 开始上传文件，支持断点续传。
+         * @param file 待上传的文件。
+         */
+        private startBreakpointUpload;
+        /**
+         * 从指定的位置开始上传文件。
+         * @param file 待上传的文件。
+         * @param startPosition 上传起始位置。
+         */
+        private beginUploadFile;
+        /**
+         * 开始上传指定文件。
+         * @param file 待上传的文件。
+         * @param customParameter 自定义参数。
+         */
+        startUpload(file: File, customParameter?: string): Promise<void>;
+        /**
+         * 放弃上传文件。
+         */
+        cancelUpload(): void;
     }
 }

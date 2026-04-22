@@ -268,7 +268,7 @@
      * 当开始上传时调用此方法。
      * @param e
      */
-    function beginUpload(e: Thinksea.Net.FileUploader.HttpFileUpload.BeginUploadEventArgs): void {
+    function beginUpload(e: Thinksea.Net.FileUploader.BeginUploadEventArgs): void {
         let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         ctl.setAttribute("data-begin_upload_time", new Date().toString());
         ctl.setAttribute("data-start_position", e.StartPosition.toString());
@@ -278,7 +278,7 @@
      * 当上传进度更改时调用此方法。
      * @param e
      */
-    function progressChanged(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadProgressChangedEventArgs): void {
+    function progressChanged(e: Thinksea.Net.FileUploader.UploadProgressChangedEventArgs): void {
         //#region 处理上传进度已更改事件。
         //let sPosition: string = convertToFileSize(e.FinishedSize, "0.#");
         //let sTotalSize: string = convertToFileSize(e.FileLength, "0.#");
@@ -377,7 +377,7 @@
      * 当上传出现错误时调用此方法。
      * @param e
      */
-    function onerror(e: Thinksea.Net.FileUploader.HttpFileUpload.UploadErrorEventArgs): void {
+    function onerror(e: Thinksea.Net.FileUploader.UploadErrorEventArgs): void {
         let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         let progress = ctl.querySelector("progress");
         if (progress) {
@@ -408,7 +408,7 @@
      * 当上传中止时调用此方法。
      * @param e
      */
-    function onabort(e: Thinksea.Net.FileUploader.HttpFileUpload.AbortEventArgs): void {
+    function onabort(e: Thinksea.Net.FileUploader.AbortEventArgs): void {
         let ctl = document.getElementById(e.CustomParameter!) as HTMLElement;
         let progress = ctl.querySelector("progress");
         if (progress) {
