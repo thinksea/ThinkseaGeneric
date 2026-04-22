@@ -189,6 +189,33 @@ declare namespace Thinksea.Net.FileUploader {
          */
         uploadServiceUrl: string;
         /**
+         * 一个标识，用于指示当前是否正在上传文件，true 表示正在上传；false 表示没有上传任务正在进行。
+         */
+        private isUploading;
+        /**
+         * 一个标识，用于指示是否应该中止上传。
+         */
+        private cancelling;
+        /**
+         * 分块上传的块大小。（单位：字节）
+         * 建议取值范围为 200KB ~ 10MB 之间，过小会增加上传请求次数，过大会增加单次上传的时间和失败风险。
+         * 默认值为 2MB。
+         */
+        private _uploadChunkSize;
+        /**
+         * 获取或设置分块上传的块大小。（单位：字节）
+         */
+        get uploadChunkSize(): GLint;
+        set uploadChunkSize(value: GLint);
+        /**
+         * 自定义参数。
+         */
+        private customParameter?;
+        /**
+         * 文件完整性校验码，例如 SHA1 或 MD5 等。
+         */
+        private checkCode;
+        /**
          * 当开始上传文件时引发此事件。
          * @param e 事件参数。
          */
@@ -213,18 +240,6 @@ declare namespace Thinksea.Net.FileUploader {
          * @param e 事件参数。
          */
         onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void | Promise<void>) | null;
-        /**
-         * 自定义参数。
-         */
-        private customParameter?;
-        /**
-         * 文件完整性校验码，例如 SHA1 或 MD5 等。
-         */
-        private checkCode;
-        /**
-         * 一个标识，用于指示是否应该中止上传。
-         */
-        private cancelling;
         /**
          * 将 ArrayBuffer 对象转换为 CryptoJS 的 WordArray 对象。
          * @param ab 一个 ArrayBuffer 对象。

@@ -344,13 +344,24 @@ var Thinksea;
             class HttpFileUploadAsync {
                 constructor() {
                     this.uploadServiceUrl = "";
+                    this.isUploading = false;
+                    this.cancelling = false;
+                    this._uploadChunkSize = 2 * 1024 * 1024;
+                    this.checkCode = null;
                     this.beginUpload = null;
                     this.findBreakpoint = null;
                     this.uploadProgressChanged = null;
                     this.errorOccurred = null;
                     this.onabort = null;
-                    this.checkCode = null;
-                    this.cancelling = false;
+                }
+                get uploadChunkSize() {
+                    return this._uploadChunkSize;
+                }
+                set uploadChunkSize(value) {
+                    if (this.isUploading) {
+                        throw new Error("上传过程中无法更改块大小");
+                    }
+                    this._uploadChunkSize = value;
                 }
                 static arrayBufferToWordArray(ab) {
                     let i8a = new Uint8Array(ab);
@@ -363,7 +374,7 @@ var Thinksea;
                 getCheckCode(file) {
                     return __awaiter(this, void 0, void 0, function* () {
                         let _self = this;
-                        let chunkSize = 204800;
+                        let chunkSize = 1048576;
                         let pos = 0, end = 0;
                         let sha1Instance = CryptoJS.algo.SHA1.create();
                         let reader = new FileReader();
@@ -391,6 +402,7 @@ var Thinksea;
                                         };
                                         yield _self.onabort(e);
                                     }
+                                    _self.isUploading = false;
                                     return;
                                 }
                                 let blob;
@@ -420,6 +432,7 @@ var Thinksea;
                                 };
                                 yield _self.onabort(e);
                             }
+                            _self.isUploading = false;
                             return;
                         }
                         let url = _self.uploadServiceUrl;
@@ -440,6 +453,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.errorOccurred(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -450,6 +464,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.onabort(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -470,6 +485,7 @@ var Thinksea;
                                             };
                                             yield _self.uploadProgressChanged(data);
                                         }
+                                        _self.isUploading = false;
                                     }
                                     else {
                                         yield _self.startBreakpointUpload(file);
@@ -482,6 +498,7 @@ var Thinksea;
                                             CustomParameter: _self.customParameter,
                                         };
                                         yield _self.errorOccurred(e);
+                                        _self.isUploading = false;
                                     }
                                     else {
                                         alert("上传出现错误。" + result.Message);
@@ -504,6 +521,7 @@ var Thinksea;
                                 };
                                 yield _self.onabort(e);
                             }
+                            _self.isUploading = false;
                             return;
                         }
                         let url = _self.uploadServiceUrl;
@@ -524,6 +542,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.errorOccurred(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -534,6 +553,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.onabort(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -565,6 +585,7 @@ var Thinksea;
                                     else {
                                         alert("上传出现错误。" + result.Message);
                                     }
+                                    _self.isUploading = false;
                                 }
                             });
                         }, false);
@@ -590,7 +611,7 @@ var Thinksea;
                             .setUriParameter("filesize", file.size.toString())
                             .setUriParameter("checkcode", (_a = _self.checkCode) !== null && _a !== void 0 ? _a : "")
                             .setUriParameter("param", (_b = _self.customParameter) !== null && _b !== void 0 ? _b : "");
-                        let chunkSize = 204800;
+                        let chunkSize = _self.uploadChunkSize;
                         let pos = startPosition, end = startPosition;
                         let xhr = new XMLHttpRequest();
                         if (_self.errorOccurred) {
@@ -604,6 +625,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.errorOccurred(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -614,6 +636,7 @@ var Thinksea;
                                         CustomParameter: _self.customParameter,
                                     };
                                     yield _self.onabort(e);
+                                    _self.isUploading = false;
                                 });
                             }, false);
                         }
@@ -636,6 +659,9 @@ var Thinksea;
                                     if (pos < file.size) {
                                         yield progressiveUploadNext();
                                     }
+                                    else {
+                                        _self.isUploading = false;
+                                    }
                                 }
                                 else {
                                     if (_self.errorOccurred) {
@@ -648,6 +674,7 @@ var Thinksea;
                                     else {
                                         alert("上传出现错误。" + result.Message);
                                     }
+                                    _self.isUploading = false;
                                 }
                             });
                         }, false);
@@ -661,6 +688,7 @@ var Thinksea;
                                         };
                                         yield _self.onabort(e);
                                     }
+                                    _self.isUploading = false;
                                     return;
                                 }
                                 let blob;
@@ -687,6 +715,7 @@ var Thinksea;
                     return __awaiter(this, void 0, void 0, function* () {
                         let _self = this;
                         _self.customParameter = customParameter;
+                        _self.isUploading = true;
                         _self.cancelling = false;
                         yield _self.getCheckCode(file);
                     });
