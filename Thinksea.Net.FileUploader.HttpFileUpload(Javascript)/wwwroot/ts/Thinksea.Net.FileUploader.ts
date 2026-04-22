@@ -296,7 +296,7 @@ namespace Thinksea.Net.FileUploader {
                 let result: Thinksea.Net.FileUploader.ServiceResult = JSON.parse(response);
                 let ErrorCode = result.ErrorCode;
                 if (ErrorCode == 0) {
-                    if (result.Data !== null) //断点续传成功
+                    if (result.Data !== null) //秒传成功（文件已在服务器端存在）
                     {
                         let pos = file.size;
                         if (_self.uploadProgressChanged) {
@@ -573,6 +573,47 @@ namespace Thinksea.Net.FileUploader {
          * 文件上传服务地址。
          */
         public uploadServiceUrl: string = "";
+
+        /**
+         * 一个标识，用于指示当前是否正在上传文件，true 表示正在上传；false 表示没有上传任务正在进行。
+         */
+        private isUploading: boolean = false;
+
+        /**
+         * 一个标识，用于指示是否应该中止上传。
+         */
+        private cancelling: boolean = false;
+
+        /**
+         * 分块上传的块大小。（单位：字节）
+         * 建议取值范围为 200KB ~ 10MB 之间，过小会增加上传请求次数，过大会增加单次上传的时间和失败风险。
+         * 默认值为 2MB。
+         */
+        private _uploadChunkSize: GLint = 2 * 1024 * 1024;
+        /**
+         * 获取或设置分块上传的块大小。（单位：字节）
+         */
+        public get uploadChunkSize(): GLint {
+            return this._uploadChunkSize;
+        }
+
+        public set uploadChunkSize(value: GLint) {
+            if (this.isUploading) {
+                throw new Error("上传过程中无法更改块大小");
+            }
+            this._uploadChunkSize = value;
+        }
+
+        /**
+         * 自定义参数。
+         */
+        private customParameter?: string;
+
+        /**
+         * 文件完整性校验码，例如 SHA1 或 MD5 等。
+         */
+        private checkCode: string | null = null;
+
         /**
          * 当开始上传文件时引发此事件。
          * @param e 事件参数。
@@ -598,22 +639,6 @@ namespace Thinksea.Net.FileUploader {
          * @param e 事件参数。
          */
         public onabort: ((e: Thinksea.Net.FileUploader.AbortEventArgs) => void | Promise<void>) | null = null;
-
-        /**
-         * 自定义参数。
-         */
-        private customParameter?: string;
-
-        /**
-         * 文件完整性校验码，例如 SHA1 或 MD5 等。
-         */
-        private checkCode: string | null = null;
-
-
-        /**
-         * 一个标识，用于指示是否应该中止上传。
-         */
-        private cancelling: boolean = false;
 
         /**
          * 将 ArrayBuffer 对象转换为 CryptoJS 的 WordArray 对象。
@@ -644,7 +669,7 @@ namespace Thinksea.Net.FileUploader {
             //    let file = files[0];
 
             let _self = this;
-            let chunkSize = 204800;
+            let chunkSize = 1048576; //定义计算文件校验码时分块读取文件的块大小，此处定义为 1MB。
             let pos = 0, end = 0;
             let sha1Instance = CryptoJS.algo.SHA1.create();
             let reader = new FileReader();
@@ -657,21 +682,24 @@ namespace Thinksea.Net.FileUploader {
                 //sha1Instance.update(CryptoJS.enc.Latin1.parse(e.target.result));
                 sha1Instance.update(Thinksea.Net.FileUploader.HttpFileUploadAsync.arrayBufferToWordArray((e.target as any).result));
                 //let present = ((pos * 1.0) / file.size) * 100;
-                //$("#div_load").css("width", Math.round(present) + "%");
-                if (pos < file.size) {
+                //$("#div_load").css("width", Math.round(present) + "%"); //更新计算校验码的进度显示
+                if (pos < file.size) { //继续计算下一块的校验码
                     await progressiveReadNext();
                 }
                 else {
+                    //所有块的校验码计算完成，获取最终的校验码值。
                     let sha1Value: object = sha1Instance.finalize();
                     _self.checkCode = sha1Value.toString().toUpperCase(); //文件完整性校验码（SHA1 算法）
                     //console.log(sha1Value.toString());
                     //$("#sha1_show").html(sha1Value.toString());
-                    await _self.startFastUpload(file);
 
+                    //开始尝试上传文件。
+                    await _self.startFastUpload(file);
                 }
             }
 
             /**
+             * 计算下一块的校验码。
              * 采用这种分块处理的方式可以处理大文件。
              */
             async function progressiveReadNext(): Promise<void> {
@@ -683,6 +711,7 @@ namespace Thinksea.Net.FileUploader {
                         };
                         await _self.onabort(e);
                     }
+                    _self.isUploading = false;
                     return;
                 }
                 let blob;
@@ -696,7 +725,7 @@ namespace Thinksea.Net.FileUploader {
                 //reader.readAsBinaryString(blob);
                 reader.readAsArrayBuffer(blob);
             }
-            await progressiveReadNext();
+            await progressiveReadNext();//开始计算第一块的校验码
         }
 
         /**
@@ -712,6 +741,7 @@ namespace Thinksea.Net.FileUploader {
                     };
                     await _self.onabort(e);
                 }
+                _self.isUploading = false;
                 return;
             }
 
@@ -733,6 +763,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.errorOccurred!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             if (_self.onabort) {
@@ -741,6 +772,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.onabort!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             /**
@@ -751,7 +783,7 @@ namespace Thinksea.Net.FileUploader {
                 let result: Thinksea.Net.FileUploader.ServiceResult = JSON.parse(response);
                 let ErrorCode = result.ErrorCode;
                 if (ErrorCode == 0) {
-                    if (result.Data !== null) //断点续传成功
+                    if (result.Data !== null) //秒传成功（文件已在服务器端存在）。注意：根据服务端协议：ErrorCode == 0 且 Data !== null 表示秒传成功
                     {
                         let pos = file.size;
                         if (_self.uploadProgressChanged) {
@@ -763,6 +795,7 @@ namespace Thinksea.Net.FileUploader {
                             };
                             await _self.uploadProgressChanged(data);
                         }
+                        _self.isUploading = false;
                     }
                     else { //无法秒传，开始尝试断点续传。
                         await _self.startBreakpointUpload(file);
@@ -778,6 +811,7 @@ namespace Thinksea.Net.FileUploader {
                         //    message: result.Message
                         //});
                         await _self.errorOccurred(e);
+                        _self.isUploading = false;
                     }
                     else {
                         alert("上传出现错误。" + result.Message);
@@ -803,6 +837,7 @@ namespace Thinksea.Net.FileUploader {
                     };
                     await _self.onabort(e);
                 }
+                _self.isUploading = false;
                 return;
             }
 
@@ -824,6 +859,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.errorOccurred!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             if (_self.onabort) {
@@ -832,6 +868,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.onabort!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             /**
@@ -869,6 +906,7 @@ namespace Thinksea.Net.FileUploader {
                     else {
                         alert("上传出现错误。" + result.Message);
                     }
+                    _self.isUploading = false;
                 }
 
             }, false);
@@ -900,7 +938,7 @@ namespace Thinksea.Net.FileUploader {
                 .setUriParameter("checkcode", _self.checkCode ?? "")
                 .setUriParameter("param", _self.customParameter ?? "");
 
-            let chunkSize = 204800;
+            let chunkSize = _self.uploadChunkSize;
             let pos: GLint64 = startPosition, end: GLint64 = startPosition;
 
             let xhr = new XMLHttpRequest();
@@ -914,6 +952,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.errorOccurred!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             if (_self.onabort) {
@@ -922,6 +961,7 @@ namespace Thinksea.Net.FileUploader {
                         CustomParameter: _self.customParameter,
                     };
                     await _self.onabort!(e);
+                    _self.isUploading = false;
                 }, false);
             }
             /**
@@ -946,6 +986,10 @@ namespace Thinksea.Net.FileUploader {
                     if (pos < file.size) {
                         await progressiveUploadNext();
                     }
+                    else {
+                        //文件上传完成。
+                        _self.isUploading = false;
+                    }
                 }
                 else {
                     if (_self.errorOccurred) {
@@ -961,6 +1005,7 @@ namespace Thinksea.Net.FileUploader {
                     else {
                         alert("上传出现错误。" + result.Message);
                     }
+                    _self.isUploading = false;
                 }
 
             }, false);
@@ -977,6 +1022,7 @@ namespace Thinksea.Net.FileUploader {
                         };
                         await _self.onabort(e);
                     }
+                    _self.isUploading = false;
                     return;
                 }
                 let blob;
@@ -1007,6 +1053,7 @@ namespace Thinksea.Net.FileUploader {
         public async startUpload(file: File, customParameter?: string): Promise<void> {
             let _self = this;
             _self.customParameter = customParameter;
+            _self.isUploading = true;
             _self.cancelling = false;
             await _self.getCheckCode(file);
         }
