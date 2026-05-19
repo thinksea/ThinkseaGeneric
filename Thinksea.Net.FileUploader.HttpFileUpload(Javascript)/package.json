@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "chokidar": "^5.0.0",
+    "cssnano": "^8.0.1",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.4.0",
+    "glob": "^13.0.6",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1",
+    "terser": "^5.47.1",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "build-ts": "npx tsc",
+    "build-dts": "npx tsc --project tsconfig.dts.json",
+    "esbuild-minify": "npx esbuild wwwroot/dist/Thinksea.Net.FileUploader.js --minify --outfile=wwwroot/dist/Thinksea.Net.FileUploader.min.js",
+    "terser-minify": "terser wwwroot/dist/Thinksea.Net.FileUploader.js -c -m -o wwwroot/dist/Thinksea.Net.FileUploader.min.js",
+    "build-debug": "npm run build-ts && npm run build-dts && npm run esbuild-minify",
+    "build-release": "npm run build-ts && npm run build-dts && npm run terser-minify",
+    "watch-ts": "npx tsc --watch",
+    "watch-esbuild": "npx esbuild wwwroot/dist/Thinksea.Net.FileUploader.js --minify --outfile=wwwroot/dist/Thinksea.Net.FileUploader.min.js --watch",
+    "dev": "npm-run-all --parallel watch-ts watch-esbuild"
+  }
+}

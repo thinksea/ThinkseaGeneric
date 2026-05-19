@@ -8,15 +8,9 @@
     <Title>Thinksea.Net.FileUploader.HttpFileUpload_Javascript</Title>
     <Description>此项目仅用于管理组件“Thinksea.Net.FileUploader”的 javascript 版本</Description>
     <Copyright>Copyright ©  Thinksea 2020</Copyright>
+	<!--禁止 Visual Studio 自动编译 TypeScript 文件，改为使用 npm 脚本进行编译和压缩。PS：此项未开启的原因是为了在开发过程中编译 TypeScript 项目时能够即时看到编译错误并且充分使用 Visual Studio 的错误定位功能尽早发现编译期错误。-->
+	<!--<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>-->
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="bundleconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bundleconfig.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="6.0.3">
@@ -24,9 +18,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-    <Target Name="GenerateErpAPIDeclaration" AfterTargets="Build">
-	    <!-- 在编译项目后生成.d.ts（TypeScript 声明文件），调用为生成d.ts创建的专用配置文件 -->
-	    <Exec Command="npx tsc --project tsconfig.dts.json" />
-    </Target>
 </Project>
